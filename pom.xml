@@ -10,6 +10,7 @@
     </parent>
     <groupId>fi.tarina</groupId>
     <artifactId>tarinamittaus</artifactId>
+    <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>Tarinamittaus</name>
     <description>Tärinämittaus project for Väylävirasto</description>
@@ -53,9 +54,31 @@
             <artifactId>spring-restdocs-mockmvc</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
+        <finalName>TarinamittausUI</finalName>
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
