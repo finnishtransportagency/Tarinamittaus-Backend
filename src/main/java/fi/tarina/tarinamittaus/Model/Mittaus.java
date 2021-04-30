@@ -1,11 +1,9 @@
 package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Timestamp;
 import java.io.Serializable;
@@ -23,6 +21,7 @@ public class Mittaus implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @Id
     @Column(name = "KOHDE_ID", unique = true, nullable = false)
     @SequenceGenerator(
@@ -85,7 +84,6 @@ public class Mittaus implements Serializable {
 
     public void addAsennettuAnturi(AsennettuAnturi anturi) {
         this.asennettuAnturiSet.add(anturi);
-//        anturi.setMittaus(this);
     }
 
     public Mittaus(Timestamp alkuaika,

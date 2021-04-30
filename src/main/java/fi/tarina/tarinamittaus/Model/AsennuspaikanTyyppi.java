@@ -18,6 +18,7 @@ public class AsennuspaikanTyyppi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @Id
     @Column(name = "PAIKKATYYPPI_ID", unique = true, nullable = false)
     @SequenceGenerator(
@@ -38,6 +39,7 @@ public class AsennuspaikanTyyppi implements Serializable {
     @Column(name = "LISATIEDOT" )
     private @Setter @Getter String lisatiedot;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "asennuspaikanTyyppi",
             fetch = FetchType.LAZY,
             cascade = javax.persistence.CascadeType.ALL)
@@ -45,7 +47,6 @@ public class AsennuspaikanTyyppi implements Serializable {
 
     public void addAsennettuAnturi(AsennettuAnturi anturi) {
         this.asennettuAnturiSet.add(anturi);
-//        anturi.setAsennuspaikanTyyppi(this);
     }
 
     public AsennuspaikanTyyppi(String selite, String lisatiedot) {

@@ -2,12 +2,9 @@ package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "ASENNETTUANTURI", schema = "TARINAM")
@@ -18,6 +15,7 @@ public class AsennettuAnturi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @Id
     @Column(name = "ASENNUSKOHTAINEN_ID", nullable = false, unique = true)
     @SequenceGenerator(
@@ -55,7 +53,6 @@ public class AsennettuAnturi implements Serializable {
     @JoinColumn(name = "MITTAUS", nullable = false)
     private @Setter @Getter Mittaus mittaus;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ASENNUSPAIKKA", nullable = false)
     private @Setter @Getter AsennuspaikanTyyppi asennuspaikanTyyppi;

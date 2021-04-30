@@ -8,6 +8,8 @@ import fi.tarina.tarinamittaus.Model.Mittaus;
 import fi.tarina.tarinamittaus.Repository.AnturiRepository;
 import fi.tarina.tarinamittaus.Repository.MittausRepository;
 import fi.tarina.tarinamittaus.Repository.AsennuspaikanTyyppiRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,8 @@ import java.time.LocalDate;
 
 @Configuration
 public class MittausConfig {
+
+    private final Logger LOG = LoggerFactory.getLogger(MittausConfig.class);
 
     @Bean
     CommandLineRunner commandLineRunner(AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository,
@@ -53,7 +57,9 @@ public class MittausConfig {
             as1.setAsennuspaikanTyyppi(paikka);
             as1.setMittaus(m1);
 
-            System.out.println("pippipaidf" + as1);
+            LOG.info("paikka " + paikka);
+            LOG.info("anturi configissa" + as1);
+            LOG.info("mittaus configissa" + m1);
 
             mittausRepository.save(m1);
             asennuspaikanTyyppiRepository.save(paikka);
