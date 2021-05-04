@@ -25,13 +25,8 @@ public class MittausController {
 
 
     @PostMapping
-    public void registerNewMittaus(@RequestBody Mittaus mittaus) {
-        mittausService.addNewMittaus(mittaus);
-    }
-
-    @PostMapping(value = "/testi")
-    public Mittaus saveMittausTesti(@RequestBody Mittaus mittaus) {
-        return mittausService.saveMittaus(mittaus);
+    public Mittaus saveMittaus(@RequestBody Mittaus mittausRequest) {
+        return mittausService.saveMittaus(mittausRequest);
     }
 
 }

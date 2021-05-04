@@ -16,6 +16,7 @@ public class AnturikohtaisetTunnusarvot implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @Id
     @Column(name = "TUNNUSARVO_ID", nullable = false, unique = true)
     @SequenceGenerator(

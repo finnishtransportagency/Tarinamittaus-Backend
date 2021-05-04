@@ -67,10 +67,12 @@ public class MittausService {
             );
 
             AsennuspaikanTyyppi asennuspaikanTyyppi = asennettuAnturiRequest.getAsennuspaikanTyyppi();
-            AsennuspaikanTyyppi as1 =  this.asennuspaikanTyyppiRepository.save(asennuspaikanTyyppi);
-            LOG.info("asennuspaikanTyyppi " + as1);
+            AsennuspaikanTyyppi savedAsennuspaikanTyyppi =
+                    this.asennuspaikanTyyppiRepository.save(asennuspaikanTyyppi);
 
-            asennettuAnturi.setAsennuspaikanTyyppi(as1);
+            LOG.info("savedAsennuspaikanTyyppi " + savedAsennuspaikanTyyppi);
+
+            asennettuAnturi.setAsennuspaikanTyyppi(savedAsennuspaikanTyyppi);
             asennettuAnturi.setMittaus(mittaus);
             AsennettuAnturi savedAnturi = this.anturiRepository.save(asennettuAnturi);
 
@@ -89,7 +91,6 @@ public class MittausService {
 
             LOG.info("asennettuAnturi " + asennettuAnturi);
         }
-        LOG.info("mittaussss: " + mittaus);
 
         return savedMittaus;
 
