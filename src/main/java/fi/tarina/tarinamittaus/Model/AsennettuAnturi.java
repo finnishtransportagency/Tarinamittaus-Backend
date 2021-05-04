@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ASENNETTUANTURI", schema = "TARINAM")
@@ -39,7 +41,7 @@ public class AsennettuAnturi implements Serializable {
     private @Setter @Getter String gpsLong;
 
     @Column(name = "ETAISYYS_RADASTA_JOS_ERI")
-    private @Setter @Getter Long etaisyysRadastaJosEri;
+    private @Setter @Getter Double etaisyysRadastaJosEri;
 
     @Column(name = "KERROS")
     private @Setter @Getter Integer kerros;
@@ -49,22 +51,32 @@ public class AsennettuAnturi implements Serializable {
 
     // MITTAUS is foreign key in the table
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "MITTAUS", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "MITTAUS")
     private @Setter @Getter Mittaus mittaus;
 
-    @ManyToOne
-    @JoinColumn(name = "ASENNUSPAIKKA", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ASENNUSPAIKKA")
     private @Setter @Getter AsennuspaikanTyyppi asennuspaikanTyyppi;
 
-//    @OneToMany(mappedBy = "asennettuAnturi", fetch = FetchType.LAZY)
-//    @Cascade({CascadeType.ALL})
-//    private @Setter @Getter Set<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet;
+    @OneToMany(mappedBy = "asennettuAnturi",
+            fetch = FetchType.LAZY,
+            cascade = javax.persistence.CascadeType.ALL,
+            orphanRemoval = true)
+    private @Setter @Getter Set<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet = new HashSet<>();
+
+    public AsennettuAnturi(AsennuspaikanTyyppi asennuspaikanTyyppi) {
+        this.asennuspaikanTyyppi = asennuspaikanTyyppi;
+    }
+
+    public void addTunnusarvotToSet(AnturikohtaisetTunnusarvot arvot) {
+        this.anturikohtaisetTunnusarvotSet.add(arvot);
+    }
 
     public AsennettuAnturi(String malli,
                            String gpsLat,
                            String gpsLong,
-                           Long etaisyysRadastaJosEri,
+                           Double etaisyysRadastaJosEri,
                            Integer kerros,
                            String sijoituspaikanLisaselite) {
         this.malli = malli;
