@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -37,6 +38,7 @@ public class MittausService {
         this.tunnusarvotRepository = tunnusarvotRepository;
     }
 
+    @Transactional
     public Mittaus saveMittaus(Mittaus mittausRequest) {
         Mittaus mittaus = new Mittaus(
                 mittausRequest.getAlkuaika(),
