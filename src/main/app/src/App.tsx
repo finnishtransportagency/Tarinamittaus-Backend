@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
+import urljoin from "url-join";
+import { resourceLimits } from 'node:worker_threads';
+import routes from './App.routes';
+import { v4 as uuid } from 'uuid';
+
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            <Switch>
+                {routes.map((route) => (
+                    <Route key={uuid()} {...route} />
+                ))}
+            </Switch>
+            <Redirect to='/mittaus' />
+        </Router>
     );
 }
 
 export default App;
+
+const BaseRestURL =
+    process.env.REACT_APP_BASE_REST_URL || "tietokatalogi/rest";
+
+export function fullURL(...urls: string[]) {
+    // NB: user with browserhistory
+    // return urljoin(`/${BaseURL}`, ...urls);
+    return urljoin(...urls);
+}
+
+export function fullRestURL(...urls: string[]) {
+    return urljoin(`/${BaseRestURL}`, ...urls);
+}
