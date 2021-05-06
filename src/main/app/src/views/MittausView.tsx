@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import MittausStore from '../stores/MittausStore';
 
 
-const Basic = observer( ({mittaus}: {mittaus: MittausStore}) =>
+const MittausView = observer( ({mittaus}: {mittaus: MittausStore}) =>
   <div>
     <Formik
       initialValues={{ ...mittaus }}
@@ -250,7 +250,7 @@ const Basic = observer( ({mittaus}: {mittaus: MittausStore}) =>
     </Formik>
   </div>
 );
-export default Basic;
+export default MittausView;
 
 export const DisplayFormikState = (props: any) =>
   <div style={{ margin: '1rem 0' }}>
