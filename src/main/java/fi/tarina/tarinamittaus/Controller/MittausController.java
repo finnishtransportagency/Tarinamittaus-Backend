@@ -3,8 +3,13 @@ package fi.tarina.tarinamittaus.Controller;
 import fi.tarina.tarinamittaus.Model.Mittaus;
 import fi.tarina.tarinamittaus.Service.MittausService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,8 +30,14 @@ public class MittausController {
 
 
     @PostMapping
-    public Mittaus saveMittaus(@RequestBody Mittaus mittausRequest) {
-        return mittausService.saveMittaus(mittausRequest);
+    public ResponseEntity<Mittaus> saveMittaus(@Valid @RequestBody Mittaus mittausRequest) {
+        try {
+            Mittaus savedMittaus = mittausService.saveMittaus(mittausRequest);
+            return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }
