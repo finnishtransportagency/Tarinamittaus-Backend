@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -26,7 +25,6 @@ public class MittausConfig {
 
     private final Logger LOG = LoggerFactory.getLogger(MittausConfig.class);
 
-    @Bean
     CommandLineRunner commandLineRunner(AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository,
                                         MittausRepository mittausRepository,
                                         AnturiRepository anturiRepository,
