@@ -14,7 +14,7 @@ import MittausForm from './MittausForm';
 const MittausView = observer(({ mittaus }: { mittaus: MittausStore }) => {
   return (
     <>
-      <h1>Lisää uusi mittaus</h1>
+      <h1>Tärinätietojen syöttölomake</h1>
       <MittausForm mittaus={mittaus} />
     </>
   )

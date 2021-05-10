@@ -5,6 +5,8 @@ import MittausStore from '../stores/MittausStore'
 import { FormikCustomDatePicker } from '../components/CustomDatePicker';
 import { CustomNumber } from '../components/CustomNumber';
 import { CustomText } from '../components/CustomText';
+import AsennettuAnturiForm from './AsennettuAnturiForm';
+import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
 
 
 const validationSchema = Yup.object().shape({
@@ -26,13 +28,13 @@ const validationSchema = Yup.object().shape({
     then: Yup.bool().required('Asianhallinta id tai pdf raportin linkki eivät kumpikaan voi olla tyhjiä'),
     otherwise: Yup.bool()
   }),
-  rakennuksen_pinta_ala: Yup.number().positive().required(),
-  perustamistapa: Yup.string().trim().required(),
-  julkisivumateriaali: Yup.string().trim().required(),
-  runkomateriaali: Yup.string().trim().required(),
-  rakennusvuosi: Yup.number().positive().integer().min(1500).max(new Date().getFullYear()).required(),
-  katuosoite: Yup.string().trim().required(),
-  postinumero: Yup.string().trim().required()
+  rakennuksen_pinta_ala: Yup.number().positive(),
+  julkisivumateriaali: Yup.string().trim(),
+  runkomateriaali: Yup.string().trim(),
+  perustamistapa: Yup.string().trim(),
+  rakennusvuosi: Yup.number().positive().integer().min(1500).max(new Date().getFullYear()),
+  katuosoite: Yup.string().trim(),
+  postinumero: Yup.string().trim()
     .matches(/^[0-9]+$/, "Postinumero ei voi sisältää kirjaimia")
     .min(5, 'Täytyy olla 5 numeroa')
     .max(5, 'Täytyy olla 5 numeroa'),
@@ -43,6 +45,7 @@ const validationSchema = Yup.object().shape({
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   return (
     <>
+    <h2>Mittauksen tiedot</h2>
       <Formik
         initialValues={{ ...mittaus }}
         validationSchema={validationSchema}
@@ -76,6 +79,9 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               readOnly={false}
             />
             {/* tähän anturi komponentit */}
+            <AsennettuAnturiForm asennettuAnturi={new AsennettuAnturiStore} />
+            <h4>Kohdetiedot (Anturin 1 sijainnin perusteella</h4>
+            <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
               label="Rakennuksen pinta-ala"
               name="rakennuksen_pinta_ala"
