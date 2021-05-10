@@ -1,28 +1,47 @@
-import React from "react";
 import { useField } from "formik";
 
-export const CustomNumber = ({ label, name, readOnly }: {label:string, name:string, readOnly:boolean} ) => {
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+export const CustomNumber = ({ label, name, readOnly }: { label: string, name: string, readOnly: boolean }) => {
     const [field, meta] = useField(name);
 
     return (
-        <div className="col-sm-12">
-            <label htmlFor={name} className="row">
-                {label}
-            </label>
-            <div className="row">
-                <input
+        <Form.Group as={Row} >
+            <Form.Label column sm="4" htmlFor={name} >{label}</Form.Label>
+            <Col sm="8">
+                <Form.Control
                     {...field}
                     id={name}
                     placeholder=""
                     type="number"
-                    className="tk-field form-control"
                     readOnly={readOnly}
                 />
-            </div>
-            {meta.touched && meta.error &&
-                <small className="react-form-message react-form-message-error">
-                    {meta.error}
-                </small>}
-        </div>
+                {meta.touched && meta.error &&
+                    <small className="react-form-message react-form-message-error">
+                        {meta.error}
+                    </small>}
+            </Col>
+        </Form.Group>
+        // <Row>
+        //     <label htmlFor={name}>
+        //         {label}
+        //     </label>
+        //     <div>
+        //         <input
+        //             {...field}
+        //             id={name}
+        //             placeholder=""
+        //             type="number"
+        //             className="tk-field form-control"
+        //             readOnly={readOnly}
+        //         />
+        //     </div>
+        //     {meta.touched && meta.error &&
+        //         <small className="react-form-message react-form-message-error">
+        //             {meta.error}
+        //         </small>}
+        // </Row>
     );
 };

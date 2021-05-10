@@ -9,14 +9,15 @@ import { CustomText } from '../components/CustomText';
 import { FormikCustomDatePicker } from '../components/CustomDatePicker';
 import { CustomNumber } from '../components/CustomNumber';
 import MittausForm from './MittausForm';
+import Container from 'react-bootstrap/Container';
 
 
 const MittausView = observer(({ mittaus }: { mittaus: MittausStore }) => {
   return (
-    <>
+    <Container>
       <h1>Tärinätietojen syöttölomake</h1>
       <MittausForm mittaus={mittaus} />
-    </>
+    </Container>
   )
 })
 export default MittausView;

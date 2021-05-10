@@ -4,6 +4,10 @@ import { fi } from "date-fns/locale";
 import { format, parse, isValid, isDate } from "date-fns";
 import { useField } from "formik";
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -21,11 +25,11 @@ export const FormikCustomDatePicker = ({ label, name, readOnly }: {label:string,
     const dateFormat = "yyyy-MM-dd";
 
     return (
-        <div className="col-sm-12">
-            <label htmlFor={name} className="row">
+        <Form.Group as={Row}>
+            <Form.Label column sm="4" htmlFor={name}>
                 {label}
-            </label>
-            <div className="row">
+            </Form.Label>
+            <Col sm="8">
                 <DatePicker
                     locale={fi}
                     dateFormat={dateFormat}
@@ -37,8 +41,8 @@ export const FormikCustomDatePicker = ({ label, name, readOnly }: {label:string,
                         helpers.setValue(newDate);
                     }}
                 />
-            </div>
-        </div>
+            </Col>
+        </Form.Group>
     );
 };
 

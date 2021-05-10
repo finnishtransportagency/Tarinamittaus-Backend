@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "mobx-react";
 
+//Importing the bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MittausStore from './stores/MittausStore';
 
 

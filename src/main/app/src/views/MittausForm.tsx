@@ -7,6 +7,7 @@ import { CustomNumber } from '../components/CustomNumber';
 import { CustomText } from '../components/CustomText';
 import AsennettuAnturiForm from './AsennettuAnturiForm';
 import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
+import Form from 'react-bootstrap/Form';
 
 
 const validationSchema = Yup.object().shape({
@@ -57,7 +58,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         }}
       >
         {formik => (
-          <form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={formik.handleSubmit}>
             <FormikCustomDatePicker
               label="Mittauksen alkuaika"
               name="alkauaika"
@@ -79,7 +80,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               readOnly={false}
             />
             {/* tähän anturi komponentit */}
-            <AsennettuAnturiForm asennettuAnturi={new AsennettuAnturiStore} />
+            {/* <AsennettuAnturiForm asennettuAnturi={new AsennettuAnturiStore} /> */}
             <h4>Kohdetiedot (Anturin 1 sijainnin perusteella</h4>
             <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
@@ -134,7 +135,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               Submit
             </button>
             <DisplayFormikState props={formik} />
-          </form>
+          </Form>
 
         )}
       </Formik>

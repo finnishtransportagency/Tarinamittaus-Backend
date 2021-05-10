@@ -1,28 +1,29 @@
 import React from "react";
 import { useField } from "formik";
+import Row from 'react-bootstrap/Row';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
 
-export const CustomText = ({ label, name, readOnly }: {label:string, name:string, readOnly:boolean} ) => {
+export const CustomText = ({ label, name, readOnly }: { label: string, name: string, readOnly: boolean }) => {
     const [field, meta] = useField(name);
 
     return (
-        <div className="col-sm-12">
-            <label htmlFor={name} className="row">
-                {label}
-            </label>
-            <div className="row">
-                <input
+        <Form.Group as={Row}>
+            <Form.Label column sm="4" htmlFor={name} >{label}</Form.Label>
+            <Col sm="8">
+
+                <Form.Control
                     {...field}
                     id={name}
                     placeholder=""
                     type="text"
-                    className="tk-field form-control"
                     readOnly={readOnly}
                 />
-            </div>
+            </Col>
             {meta.touched && meta.error &&
                 <small className="react-form-message react-form-message-error">
                     {meta.error}
                 </small>}
-        </div>
+        </Form.Group>
     );
 };
