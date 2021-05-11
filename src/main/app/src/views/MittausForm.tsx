@@ -1,5 +1,5 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, FieldArray as FFieldArray } from 'formik'
 import * as Yup from "yup";
 import MittausStore from '../stores/MittausStore'
 import { FormikCustomDatePicker } from '../components/CustomDatePicker';
@@ -7,8 +7,9 @@ import { CustomNumber } from '../components/CustomNumber';
 import { CustomText } from '../components/CustomText';
 import AsennettuAnturiForm from './AsennettuAnturiForm';
 import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
-import Form from 'react-bootstrap/Form';
-
+import { Form as FForm } from 'formik';
+import { Button } from 'react-bootstrap';
+import { values } from 'mobx';
 
 const validationSchema = Yup.object().shape({
   alkuaika: Yup.date().required().default(() => new Date()),
@@ -22,10 +23,10 @@ const validationSchema = Yup.object().shape({
   mittaus_asianhallinta_id: Yup.string().trim(),
   pdf_raportin_linkki: Yup.string().trim(),
   //ghost field for checking that both cannot be null: https://github.com/jquense/yup/issues/176
-  as_id_OR_pdf: Yup.bool().when(['mittaus_asianhallinta_id','pdf_raportin_linkki'], {
+  as_id_OR_pdf: Yup.bool().when(['mittaus_asianhallinta_id', 'pdf_raportin_linkki'], {
     is: (mittaus_asianhallinta_id: string, pdf_raportin_linkki: string) =>
       (!mittaus_asianhallinta_id && !pdf_raportin_linkki)
-       || (!!mittaus_asianhallinta_id && !!pdf_raportin_linkki),
+      || (!!mittaus_asianhallinta_id && !!pdf_raportin_linkki),
     then: Yup.bool().required('Asianhallinta id tai pdf raportin linkki eivät kumpikaan voi olla tyhjiä'),
     otherwise: Yup.bool()
   }),
@@ -42,11 +43,15 @@ const validationSchema = Yup.object().shape({
   created_by_lx: Yup.string().trim().required()
 })
 
+const AddAnturi = () => {
+
+
+}
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   return (
     <>
-    <h2>Mittauksen tiedot</h2>
+      <h2>Mittauksen tiedot</h2>
       <Formik
         initialValues={{ ...mittaus }}
         validationSchema={validationSchema}
@@ -58,7 +63,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         }}
       >
         {formik => (
-          <Form onSubmit={formik.handleSubmit}>
+          <FForm onSubmit={formik.handleSubmit}>
             <FormikCustomDatePicker
               label="Mittauksen alkuaika"
               name="alkauaika"
@@ -80,7 +85,35 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               readOnly={false}
             />
             {/* tähän anturi komponentit */}
-            {/* <AsennettuAnturiForm asennettuAnturi={new AsennettuAnturiStore} /> */}
+            <FFieldArray
+              name="asennettuanturi"
+              render={arrayHelpers => (
+                <div>
+                  {formik.values.asennettuanturi && formik.values.asennettuanturi.length > 0 ? (
+                    formik.values.asennettuanturi.map((anturi, index) => (
+                      <div key={index}>
+                        <AsennettuAnturiForm asennettuanturi={`asennettuanturi[${index}]`} />
+                        <Button
+                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                        >
+                          -
+                       </Button>
+                        <Button
+                          onClick={() => arrayHelpers.insert(index, new AsennettuAnturiStore)} // insert an empty string at a position
+                        >
+                          +
+                       </Button>
+                      </div>
+                    ))
+                  ) : (
+                    <Button onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}>
+                      {/* show this when user has removed all friends from the list */}
+                     Lisää anturi
+                    </Button>
+                  )}
+                </div>
+              )}
+            />
             <h4>Kohdetiedot (Anturin 1 sijainnin perusteella</h4>
             <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
@@ -123,19 +156,19 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               name="created_by_lx"
               readOnly={false}
             />
-            <button
+            <Button
               type="button"
               className="outline"
               onClick={formik.handleReset}
               disabled={!formik.dirty || formik.isSubmitting}
             >
               Reset
-            </button>
-            <button type="submit" disabled={formik.isSubmitting}>
+            </Button>
+            <Button type="submit" disabled={formik.isSubmitting}>
               Submit
-            </button>
+            </Button>
             <DisplayFormikState props={formik} />
-          </Form>
+          </FForm>
 
         )}
       </Formik>
