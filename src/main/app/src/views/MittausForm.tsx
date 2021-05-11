@@ -100,7 +100,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   {formik.values.asennettuanturi && formik.values.asennettuanturi.length > 0 ? (
                     formik.values.asennettuanturi.map((anturi, index) => (
                       <div key={index}>
-                        <AsennettuAnturiForm asennettuAnturi={anturi} />
+                        <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuanturi.${index}`} />
                         <Button
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >
