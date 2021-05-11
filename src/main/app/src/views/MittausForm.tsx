@@ -52,7 +52,7 @@ const validationSchema = Yup.object().shape({
     .min(5, 'Täytyy olla 5 numeroa')
     .max(5, 'Täytyy olla 5 numeroa'),
   created_by_lx: Yup.string().trim().required(),
-  asennettuanturi: validationSchemaAsennettuAnturi
+  asennettuanturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
 
@@ -100,7 +100,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   {formik.values.asennettuanturi && formik.values.asennettuanturi.length > 0 ? (
                     formik.values.asennettuanturi.map((anturi, index) => (
                       <div key={index}>
-                        <AsennettuAnturiForm {...anturi} />
+                        <AsennettuAnturiForm asennettuAnturi={anturi} />
                         <Button
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >
