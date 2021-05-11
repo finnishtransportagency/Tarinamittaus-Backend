@@ -21,7 +21,7 @@ const AsennettuAnturiForm = ({ asennettuAnturi }: { asennettuAnturi: AsennettuAn
   return (
     <>
     <h3>Anturien ja anturikohtaisten arvojen lisääminen</h3>
-      <Formik
+      {/* <Formik
         initialValues={{ ...asennettuAnturi }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -31,8 +31,8 @@ const AsennettuAnturiForm = ({ asennettuAnturi }: { asennettuAnturi: AsennettuAn
           }, 400);
         }}
       >
-        {formik =>
-          <form onSubmit={formik.handleSubmit}>
+        {formik => */}
+          {/* <form onSubmit={formik.handleSubmit}> */}
             <CustomNumber
               label="gps_lat"
               name="gps_lat"
@@ -63,9 +63,9 @@ const AsennettuAnturiForm = ({ asennettuAnturi }: { asennettuAnturi: AsennettuAn
               name="malli"
               readOnly={false}
             />
-          </form>
-        }
-      </Formik>
+          {/* </form> */}
+      {/* //   }
+      // </Formik> */}
 
     </>
   )

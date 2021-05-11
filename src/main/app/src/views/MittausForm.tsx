@@ -11,6 +11,17 @@ import { Form as FForm } from 'formik';
 import { Button } from 'react-bootstrap';
 import { values } from 'mobx';
 
+const validationSchemaAsennettuAnturi = Yup.object({
+  malli: Yup.string().required('Malli vaaditaan'),
+  gps_lat: Yup.number().min(-90).max(90).required('Koordinaatit eivät voi olla tyhjiä'),
+  gps_long: Yup.number().min(0).max(180).required('Koordinaatit eivät voi olla tyhjiä'),
+  etaisyys_radasta_jos_eri: Yup.number().positive().required(),
+  kerros: Yup.number().integer().positive().required(),
+  sijoituspaikan_lisaselite: Yup.string()
+  // asennuspaikantyyppi:
+  // anturikohtaisettunnusarvot:
+})
+
 const validationSchema = Yup.object().shape({
   alkuaika: Yup.date().required().default(() => new Date()),
   loppuaika: Yup
@@ -40,13 +51,10 @@ const validationSchema = Yup.object().shape({
     .matches(/^[0-9]+$/, "Postinumero ei voi sisältää kirjaimia")
     .min(5, 'Täytyy olla 5 numeroa')
     .max(5, 'Täytyy olla 5 numeroa'),
-  created_by_lx: Yup.string().trim().required()
+  created_by_lx: Yup.string().trim().required(),
+  asennettuanturi: validationSchemaAsennettuAnturi
 })
 
-const AddAnturi = () => {
-
-
-}
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   return (
@@ -92,7 +100,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   {formik.values.asennettuanturi && formik.values.asennettuanturi.length > 0 ? (
                     formik.values.asennettuanturi.map((anturi, index) => (
                       <div key={index}>
-                        <AsennettuAnturiForm asennettuanturi={`asennettuanturi[${index}]`} />
+                        <AsennettuAnturiForm {...anturi} />
                         <Button
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >
