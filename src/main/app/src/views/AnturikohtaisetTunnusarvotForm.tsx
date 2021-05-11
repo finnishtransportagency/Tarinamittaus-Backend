@@ -1,8 +1,8 @@
-import { Field, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { CustomNumber } from '../components/CustomNumber'
 import AnturikohtaisetTunnusarvotStore from '../stores/AnturikohtaisetTunnusarvotStore'
-import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum'
+import MittausSuuntaTypeEnum, { SuuntaTestiConst } from '../types/enums/mittausSuuntaType.enum'
 import * as Yup from 'yup';
 
 
@@ -14,48 +14,35 @@ const validationSchema = Yup.object({
 })
 
 
-const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot }: { tunnusarvot: AnturikohtaisetTunnusarvotStore }) => {
+const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvot: AnturikohtaisetTunnusarvotStore, namespace: string }) => {
+  console.log('AnturikohtaisetTunnusarvotForm');
   return (
     <>
-    <h4>Tärinän tunnusluvut ja huippuarvot</h4>
-      <Formik
-        initialValues={{ ...tunnusarvot }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {formik => (
-          <form onSubmit={formik.handleSubmit}>
-            <Field name="mittaussuunta_xyz" as="select">
-              {Object.keys(MittausSuuntaTypeEnum).map(key =>
-                <option value={key}>{key}</option>
-              )}
-            </Field>
-            <CustomNumber
-              label='Tärinän maksimiarvo'
-              name='tarinan_maksimiarvo'
-              readOnly={false}
-            />
-            <CustomNumber
-              label='Hallitseva taajuus'
-              name='hallitseva_taajuus'
-              readOnly={false}
-            />
-            <CustomNumber
-              label='Tärinän tunnusluku vw95 rms'
-              name='tarinan_tunnusluku_vw95_rms'
-              readOnly={false}
-            />
-          </form>
+      <h4>Tärinän tunnusluvut ja huippuarvot</h4>
+      <p>Suunta x on radansuuntainen</p>
+      <p>Suunta y on kohtisuoraan rataan nähden</p>
+      <p>Suunta z on pystysuuntainen värähtely</p>
+
+      <Field name={`${namespace}.mittaussuunta_xyz`} as="select">
+        {Object.keys(MittausSuuntaTypeEnum).map(key =>
+          <option value={key}>{key}</option>
         )}
-
-      </Formik>
-
-
+      </Field>
+      <CustomNumber
+        label='Tärinän maksimiarvo'
+        name={`${namespace}.tarinan_maksimiarvo`}
+        readOnly={false}
+      />
+      <CustomNumber
+        label='Hallitseva taajuus'
+        name={`${namespace}.hallitseva_taajuus`}
+        readOnly={false}
+      />
+      <CustomNumber
+        label='Tärinän tunnusluku vw95 rms'
+        name={`${namespace}.tarinan_tunnusluku_vw95_rms`}
+        readOnly={false}
+      />
     </>
   )
 }

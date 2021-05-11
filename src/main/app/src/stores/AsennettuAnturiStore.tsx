@@ -14,5 +14,4 @@ export default class AsennettuAnturiStore implements IAsennettuAnturi {
   @observable sijoituspaikan_lisaselite = '';
   @observable asennuspaikantyyppi = new AsennuspaikanTyyppiStore();
   @observable anturikohtaisettunnusarvot = [];
-
 }

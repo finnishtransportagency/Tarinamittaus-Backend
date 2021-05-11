@@ -7,5 +7,4 @@ export default class AnturikohtaisetTunnusarvotStore implements IAnturikohtaiset
   @observable tarinan_maksimiarvo = 0;
   @observable hallitseva_taajuus = 0;
   @observable tarinan_tunnusluku_vw95_rms = 0;
-
 }

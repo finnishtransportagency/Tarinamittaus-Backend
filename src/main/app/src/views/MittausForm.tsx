@@ -10,6 +10,25 @@ import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
 import { Form as FForm } from 'formik';
 import { Button } from 'react-bootstrap';
 import { values } from 'mobx';
+import SeliteTypeEnum from '../types/enums/seliteType.enum';
+import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
+
+const validationSchemaTunnusarvot = Yup.object({
+  mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
+  tarinan_maksimiarvo: Yup.number().positive().required(),
+  hallitseva_taajuus: Yup.number().positive().required(),
+  tarinan_tunnusluku_vw95_rms: Yup.number().positive().required()
+})
+
+
+const validationSchemaAsennuspaikanTyyppi = Yup.object({
+  selite: Yup.mixed<string>().oneOf(Object.values(SeliteTypeEnum)).required(),
+  lisatiedot: Yup.string().when(['selite'], {
+    is: ( selite: string ) => selite === SeliteTypeEnum.muu,
+    then: Yup.string().required('Anna lisätiedot'),
+    otherwise: Yup.string()
+  })
+})
 
 const validationSchemaAsennettuAnturi = Yup.object({
   malli: Yup.string().required('Malli vaaditaan'),
@@ -17,9 +36,9 @@ const validationSchemaAsennettuAnturi = Yup.object({
   gps_long: Yup.number().min(0).max(180).required('Koordinaatit eivät voi olla tyhjiä'),
   etaisyys_radasta_jos_eri: Yup.number().positive().required(),
   kerros: Yup.number().integer().positive().required(),
-  sijoituspaikan_lisaselite: Yup.string()
-  // asennuspaikantyyppi:
-  // anturikohtaisettunnusarvot:
+  sijoituspaikan_lisaselite: Yup.string(),
+  asennuspaikantyyppi: validationSchemaAsennuspaikanTyyppi,
+  anturikohtaisettunnusarvot: Yup.array().of(validationSchemaTunnusarvot).max(3)
 })
 
 const validationSchema = Yup.object().shape({
@@ -193,7 +212,7 @@ export const DisplayFormikState = (props: any) =>
     <pre
       style={{
         background: '#f6f8fa',
-        fontSize: '.65rem',
+        fontSize: '1.25rem',
         padding: '.5rem',
       }}
     >

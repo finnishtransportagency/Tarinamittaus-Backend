@@ -5,3 +5,5 @@ enum MittausSuuntaTypeEnum {
 }
 
 export default MittausSuuntaTypeEnum;
+
+export const SuuntaTestiConst = ['X', 'Y', 'Z'] as const;
