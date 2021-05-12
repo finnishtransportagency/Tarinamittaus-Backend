@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 
 import { CustomNumber } from "../components/CustomNumber";
 import { CustomText } from "../components/CustomText";
-import AnturikohtaisetTunnusarvotStore from "../stores/AnturikohtaisetTunnusarvotStore";
 import AsennettuAnturiStore from "../stores/AsennettuAnturiStore";
 import MittausSuuntaTypeEnum from "../types/enums/mittausSuuntaType.enum";
 import AnturikohtaisetTunnusarvotForm from "./AnturikohtaisetTunnusarvotForm";

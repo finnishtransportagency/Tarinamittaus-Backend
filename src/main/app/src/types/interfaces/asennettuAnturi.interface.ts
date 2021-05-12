@@ -1,4 +1,4 @@
-import IAnturikohtaisetTunnusarvot from "./anturikohtaisetTunnusarvot.interface";
+import { IAnturikohtaisetTunnusarvo } from "./anturikohtaisetTunnusarvot.interface";
 import IAsennuspaikantyyppi from "./asennuspaikanTyyppi.interface";
 
 
@@ -10,5 +10,5 @@ export default interface IAsennettuAnturi {
   kerros: number
   sijoituspaikan_lisaselite: string
   asennuspaikantyyppi: IAsennuspaikantyyppi
-  anturikohtaisettunnusarvot: IAnturikohtaisetTunnusarvot[]
+  anturikohtaisettunnusarvot: IAnturikohtaisetTunnusarvo[]
 }

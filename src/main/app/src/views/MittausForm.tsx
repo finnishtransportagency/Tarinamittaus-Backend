@@ -15,9 +15,9 @@ import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
-  tarinan_maksimiarvo: Yup.number().positive().required(),
-  hallitseva_taajuus: Yup.number().positive().required(),
-  tarinan_tunnusluku_vw95_rms: Yup.number().positive().required()
+  tarinan_maksimiarvo: Yup.number().positive(),
+  hallitseva_taajuus: Yup.number().positive(),
+  tarinan_tunnusluku_vw95_rms: Yup.number().positive()
 })
 
 

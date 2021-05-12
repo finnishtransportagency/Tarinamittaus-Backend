@@ -1,7 +1,7 @@
 import { observable } from "mobx";
-import anturikohtaisetTunnusarvotInterface from "../types/interfaces/anturikohtaisetTunnusarvot.interface";
+import MittausSuuntaTypeEnum from "../types/enums/mittausSuuntaType.enum";
+import { IAnturikohtaisetTunnusarvo } from "../types/interfaces/anturikohtaisetTunnusarvot.interface";
 import IAsennettuAnturi from "../types/interfaces/asennettuAnturi.interface";
-import asennuspaikanTyyppiInterface from "../types/interfaces/asennuspaikanTyyppi.interface";
 import AsennuspaikanTyyppiStore from "./AsennuspaikanTyyppiStore";
 
 
@@ -13,5 +13,26 @@ export default class AsennettuAnturiStore implements IAsennettuAnturi {
   @observable kerros = 0;
   @observable sijoituspaikan_lisaselite = '';
   @observable asennuspaikantyyppi = new AsennuspaikanTyyppiStore();
-  @observable anturikohtaisettunnusarvot = [];
+  @observable anturikohtaisettunnusarvot = tunnusArvot;
 }
+
+let tunnusArvot: IAnturikohtaisetTunnusarvo[] = [
+  {
+    mittaussuunta_xyz: MittausSuuntaTypeEnum.X,
+    tarinan_maksimiarvo: 0,
+    hallitseva_taajuus: 0,
+    tarinan_tunnusluku_vw95_rms: 0,
+  },
+  {
+    mittaussuunta_xyz: MittausSuuntaTypeEnum.Y,
+    tarinan_maksimiarvo: 0,
+    hallitseva_taajuus: 0,
+    tarinan_tunnusluku_vw95_rms: 0,
+  },
+  {
+    mittaussuunta_xyz: MittausSuuntaTypeEnum.Z,
+    tarinan_maksimiarvo: 0,
+    hallitseva_taajuus: 0,
+    tarinan_tunnusluku_vw95_rms: 0,
+  }
+];
