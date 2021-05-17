@@ -17,46 +17,48 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
       <p>Suunta y on kohtisuoraan rataan nähden</p>
       <p>Suunta z on pystysuuntainen värähtely</p>
 
-      <Container>
-        <Row>
-          {tunnusarvot.map((tunnusarvo, index) => (
-            <div key={index}>
-              <Col>
-                <Form.Label >Hallitseva taajuus Hz {tunnusarvo.mittaussuunta_xyz}-akseli</Form.Label>
+        <Form.Group>
+          <Row>
+            {tunnusarvot.map((tunnusarvo, index) => (
+              <Col key={index} sm="4">
+                <Form.Label >Hallitseva taajuus Hz ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
                 <Field
-                  label='Hallitseva taajuus'
                   type="number"
                   name={`${namespace}.${index}.hallitseva_taajuus`}
                   readOnly={false}
                 />
-
-
-
-                <Form.Label >Tärinän maksimiarvo mm/s</Form.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Group>
+        <Form.Group>
+          <Row>
+            {tunnusarvot.map((tunnusarvo, index) => (
+              <Col key={index} sm="4">
+                <Form.Label >Tärinän maksimiarvo mm/s ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
                 <Field
-                  label='Tärinän maksimiarvo'
                   type="number"
                   name={`${namespace}.${index}.tarinan_maksimiarvo`}
                   readOnly={false}
                 />
-
-
-
-
-                <Form.Label >Tärinän tunnusluku mm/s Vw95_RMS</Form.Label>
+              </Col>
+            ))}
+          </Row>
+        </Form.Group>
+        <Form.Group>
+          <Row>
+            {tunnusarvot.map((tunnusarvo, index) => (
+              <Col key={index} sm="4">
+                <Form.Label >Tärinän tunnusluku mm/s Vw95_RMS ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
                 <Field
-                  label='Tärinän tunnusluku vw95 rms'
                   type="number"
                   name={`${namespace}.${index}.tarinan_tunnusluku_vw95_rms`}
                   readOnly={false}
                 />
-
               </Col>
-
-            </div>
-          ))}
-        </Row>
-      </Container>
+            ))}
+          </Row>
+        </Form.Group>
     </div>
   )
 }
