@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ANTURIKOHTAISETTUNNUSARVOT", schema = "TARINAM")
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class AnturikohtaisetTunnusarvot implements Serializable {
 
@@ -62,6 +61,9 @@ public class AnturikohtaisetTunnusarvot implements Serializable {
         this.tarinan_maksimiarvo = tarinan_maksimiarvo;
         this.hallitseva_taajuus = hallitseva_taajuus;
         this.tarinan_tunnusluku_vw95_rms = tarinan_tunnusluku_vw95_rms;
+    }
+
+    public AnturikohtaisetTunnusarvot() {
     }
 
     public static long getSerialVersionUID() {

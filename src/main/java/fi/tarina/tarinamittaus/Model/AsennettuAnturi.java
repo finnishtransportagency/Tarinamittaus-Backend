@@ -12,7 +12,6 @@ import java.util.Set;
 @Entity
 @Table(name = "ASENNETTUANTURI", schema = "TARINAM")
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class AsennettuAnturi implements Serializable {
 
@@ -36,9 +35,11 @@ public class AsennettuAnturi implements Serializable {
     private String malli;
 
     @Column(name = "GPS_LAT")
+    @JsonProperty("gps_lat")
     private Double gpsLat;
 
     @Column(name = "GPS_LONG")
+    @JsonProperty("gps_long")
     private Double gpsLong;
 
     @Column(name = "ETAISYYS_RADASTA_JOS_ERI")
@@ -73,6 +74,9 @@ public class AsennettuAnturi implements Serializable {
 
     public void addTunnusarvotToSet(AnturikohtaisetTunnusarvot arvot) {
         this.anturikohtaisetTunnusarvotSet.add(arvot);
+    }
+
+    public AsennettuAnturi() {
     }
 
     public AsennettuAnturi(String malli,

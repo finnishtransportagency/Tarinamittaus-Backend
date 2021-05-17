@@ -16,7 +16,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "MITTAUS", schema = "TARINAM")
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Mittaus implements Serializable {
 
@@ -112,6 +111,9 @@ public class Mittaus implements Serializable {
         this.katuosoite = katuosoite;
         this.postinumero = postinumero;
         this.created_by_lx = created_by_lx;
+    }
+
+    public Mittaus() {
     }
 
     public static long getSerialVersionUID() {

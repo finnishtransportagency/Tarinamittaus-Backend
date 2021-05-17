@@ -13,7 +13,6 @@ import java.util.Set;
 @Entity
 @Table(name = "ASENNUSPAIKANTYYPPI", schema = "TARINAM")
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class AsennuspaikanTyyppi implements Serializable {
 
@@ -54,6 +53,9 @@ public class AsennuspaikanTyyppi implements Serializable {
     public AsennuspaikanTyyppi(String selite, String lisatiedot) {
         this.selite = selite;
         this.lisatiedot = lisatiedot;
+    }
+
+    public AsennuspaikanTyyppi() {
     }
 
     public static long getSerialVersionUID() {
