@@ -55,8 +55,7 @@ const validationSchema = Yup.object().shape({
   //ghost field for checking that both cannot be null: https://github.com/jquense/yup/issues/176
   as_id_OR_pdf: Yup.bool().when(['mittaus_asianhallinta_id', 'pdf_raportin_linkki'], {
     is: (mittaus_asianhallinta_id: string, pdf_raportin_linkki: string) =>
-      (!mittaus_asianhallinta_id && !pdf_raportin_linkki)
-      || (!!mittaus_asianhallinta_id && !!pdf_raportin_linkki),
+      (!mittaus_asianhallinta_id && !pdf_raportin_linkki),
     then: Yup.bool().required('Asianhallinta id tai pdf raportin linkki eivät kumpikaan voi olla tyhjiä'),
     otherwise: Yup.bool()
   }),
@@ -84,6 +83,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
+            console.log(JSON.stringify(values));
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
