@@ -12,12 +12,13 @@ import { Button } from 'react-bootstrap';
 import { values } from 'mobx';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
+import axios from 'axios';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
-  tarinan_maksimiarvo: Yup.number().positive(),
-  hallitseva_taajuus: Yup.number().positive(),
-  tarinan_tunnusluku_vw95_rms: Yup.number().positive()
+  tarinan_maksimiarvo: Yup.number().min(0),
+  hallitseva_taajuus: Yup.number().min(0),
+  tarinan_tunnusluku_vw95_rms: Yup.number().min(0)
 })
 
 
@@ -34,11 +35,11 @@ const validationSchemaAsennettuAnturi = Yup.object({
   malli: Yup.string().required('Malli vaaditaan'),
   gps_lat: Yup.number().min(-90).max(90).required('Koordinaatit eivät voi olla tyhjiä'),
   gps_long: Yup.number().min(0).max(180).required('Koordinaatit eivät voi olla tyhjiä'),
-  etaisyys_radasta_jos_eri: Yup.number().positive().required(),
-  kerros: Yup.number().integer().positive().required(),
+  etaisyys_radasta_jos_eri: Yup.number().min(0).required(),
+  kerros: Yup.number().integer().required(),
   sijoituspaikan_lisaselite: Yup.string(),
-  asennuspaikantyyppi: validationSchemaAsennuspaikanTyyppi,
-  anturikohtaisettunnusarvot: Yup.array().of(validationSchemaTunnusarvot).max(3)
+  asennuspaikanTyyppi: validationSchemaAsennuspaikanTyyppi,
+  anturikohtaisetTunnusarvot: Yup.array().of(validationSchemaTunnusarvot).max(3)
 })
 
 const validationSchema = Yup.object().shape({
@@ -52,7 +53,7 @@ const validationSchema = Yup.object().shape({
     .required(),
   mittaus_asianhallinta_id: Yup.string().trim(),
   pdf_raportin_linkki: Yup.string().trim(),
-  //ghost field for checking that both cannot be null: https://github.com/jquense/yup/issues/176
+  //ghost field for checking that both mittaus_asianhallinta_id and pdf_raportin_linkki be null: https://github.com/jquense/yup/issues/176
   as_id_OR_pdf: Yup.bool().when(['mittaus_asianhallinta_id', 'pdf_raportin_linkki'], {
     is: (mittaus_asianhallinta_id: string, pdf_raportin_linkki: string) =>
       (!mittaus_asianhallinta_id && !pdf_raportin_linkki),
@@ -70,7 +71,7 @@ const validationSchema = Yup.object().shape({
     .min(5, 'Täytyy olla 5 numeroa')
     .max(5, 'Täytyy olla 5 numeroa'),
   created_by_lx: Yup.string().trim().required(),
-  asennettuanturi: Yup.array().of(validationSchemaAsennettuAnturi)
+  asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
 
@@ -82,18 +83,24 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         initialValues={{ ...mittaus }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            console.log(JSON.stringify(values));
-            alert(JSON.stringify(values, null, 2));
+          console.log(JSON.stringify(values));
+          axios.post(`http://localhost:8080/mittaus/`, { ...values })
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
             setSubmitting(false);
-          }, 400);
+          })
+          .catch(err => {
+            console.log(err);
+            setSubmitting(false);
+          })
         }}
       >
         {formik => (
           <FForm onSubmit={formik.handleSubmit}>
             <FormikCustomDatePicker
               label="Mittauksen alkuaika"
-              name="alkauaika"
+              name="alkuaika"
               readOnly={false}
             />
             <FormikCustomDatePicker
@@ -113,13 +120,13 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
             />
             {/* tähän anturi komponentit */}
             <FFieldArray
-              name="asennettuanturi"
+              name="asennettuAnturi"
               render={arrayHelpers => (
                 <div>
-                  {formik.values.asennettuanturi && formik.values.asennettuanturi.length > 0 ? (
-                    formik.values.asennettuanturi.map((anturi, index) => (
+                  {formik.values.asennettuAnturi && formik.values.asennettuAnturi.length > 0 ? (
+                    formik.values.asennettuAnturi.map((anturi, index) => (
                       <div key={index}>
-                        <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuanturi.${index}`} />
+                        <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} />
                         <Button
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >

@@ -36,7 +36,7 @@ const AsennettuAnturiForm = ({ asennettuAnturi, namespace }: { asennettuAnturi: 
         readOnly={false}
       />
       <p>Tip: Asennuskerros: Maa tai sokkeli = 0, 1 kerros = 1 jne. kellari = -1</p>
-      <AsennuspaikanTyyppiForm namespace={`${namespace}.asennuspaikantyyppi`} paikka={asennettuAnturi.asennuspaikantyyppi} />
+      <AsennuspaikanTyyppiForm namespace={`${namespace}.asennuspaikanTyyppi`} paikka={asennettuAnturi.asennuspaikanTyyppi} />
       <CustomNumber
         label="Etaisyys radasta jos eri"
         name={`${namespace}.etaisyys_radasta_jos_eri`}
@@ -47,7 +47,7 @@ const AsennettuAnturiForm = ({ asennettuAnturi, namespace }: { asennettuAnturi: 
         name={`${namespace}.malli`}
         readOnly={false}
       />
-      <AnturikohtaisetTunnusarvotForm namespace={`${namespace}.anturikohtaisettunnusarvot`} tunnusarvot={asennettuAnturi.anturikohtaisettunnusarvot} />
+      <AnturikohtaisetTunnusarvotForm namespace={`${namespace}.anturikohtaisetTunnusarvot`} tunnusarvot={asennettuAnturi.anturikohtaisetTunnusarvot} />
 
     </>
   )

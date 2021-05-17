@@ -19,6 +19,6 @@ export default class MittausStore implements IMittaus {
   @observable katuosoite = '';
   @observable postinumero = '';
   @observable created_by_lx = '';
-  @observable asennettuanturi = [];
+  @observable asennettuAnturi = [];
 
 }

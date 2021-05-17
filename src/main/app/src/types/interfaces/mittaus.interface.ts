@@ -14,5 +14,5 @@ export default interface IMittaus {
   katuosoite: string
   postinumero: string
   created_by_lx: string
-  asennettuanturi: IAsennettuAnturi[]
+  asennettuAnturi: IAsennettuAnturi[]
 }

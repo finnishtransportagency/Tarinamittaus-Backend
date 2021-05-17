@@ -4,11 +4,11 @@ import IAsennuspaikantyyppi from "./asennuspaikanTyyppi.interface";
 
 export default interface IAsennettuAnturi {
   malli: string
-  gps_lat: string
-  gps_long: string
+  gps_lat: number
+  gps_long: number
   etaisyys_radasta_jos_eri: number
   kerros: number
   sijoituspaikan_lisaselite: string
-  asennuspaikantyyppi: IAsennuspaikantyyppi
-  anturikohtaisettunnusarvot: IAnturikohtaisetTunnusarvo[]
+  asennuspaikanTyyppi: IAsennuspaikantyyppi
+  anturikohtaisetTunnusarvot: IAnturikohtaisetTunnusarvo[]
 }

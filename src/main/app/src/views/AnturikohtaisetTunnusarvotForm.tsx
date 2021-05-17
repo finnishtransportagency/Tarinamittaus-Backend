@@ -2,13 +2,13 @@ import { Field, Formik } from 'formik'
 import React from 'react'
 import { CustomNumber } from '../components/CustomNumber'
 // import { AnturikohtaisetTunnusarvotStore } from '../stores/AnturikohtaisetTunnusarvotStore'
-import MittausSuuntaTypeEnum, { SuuntaTestiConst } from '../types/enums/mittausSuuntaType.enum'
+import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum'
 import * as Yup from 'yup';
 import { IAnturikohtaisetTunnusarvo } from '../types/interfaces/anturikohtaisetTunnusarvot.interface'
 import { Col, Row, Form, Container } from 'react-bootstrap';
 
 
-const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvot: IAnturikohtaisetTunnusarvo[] , namespace: string }) => {
+const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvot: IAnturikohtaisetTunnusarvo[], namespace: string }) => {
   console.log('AnturikohtaisetTunnusarvotForm', namespace);
   return (
     <div key={namespace}>
@@ -31,6 +31,7 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
                 />
 
 
+
                 <Form.Label >Tärinän maksimiarvo mm/s</Form.Label>
                 <Field
                   label='Tärinän maksimiarvo'
@@ -38,6 +39,7 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
                   name={`${namespace}.${index}.tarinan_maksimiarvo`}
                   readOnly={false}
                 />
+
 
 
 
@@ -50,6 +52,7 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
                 />
 
               </Col>
+
             </div>
           ))}
         </Row>
