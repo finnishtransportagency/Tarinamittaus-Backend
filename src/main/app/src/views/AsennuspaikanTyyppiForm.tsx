@@ -13,13 +13,10 @@ const AsennuspaikanTyyppiForm = ({ paikka, namespace }: { paikka: AsennuspaikanT
       <Form.Group as={Row} >
         <Form.Label column sm="4">Anturin sijoituspaikka</Form.Label>
         <Col sm="8">
-
-
           <Field name={`${namespace}.selite`} as="select" >
             {Object.keys(SeliteTypeEnum).map(key =>
               <option value={key} key={key}>{key}</option>
             )}
-
           </Field>
         </Col>
       </Form.Group>

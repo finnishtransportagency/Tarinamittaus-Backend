@@ -1,11 +1,6 @@
-import { Form, FieldArray as FFieldArray } from "formik";
-import React from "react";
-import { Button } from 'react-bootstrap';
-
 import { CustomNumber } from "../components/CustomNumber";
 import { CustomText } from "../components/CustomText";
 import AsennettuAnturiStore from "../stores/AsennettuAnturiStore";
-import MittausSuuntaTypeEnum from "../types/enums/mittausSuuntaType.enum";
 import AnturikohtaisetTunnusarvotForm from "./AnturikohtaisetTunnusarvotForm";
 import AsennuspaikanTyyppiForm from "./AsennuspaikanTyyppiForm";
 
