@@ -36,13 +36,13 @@ public class Mittaus implements Serializable {
     private Integer kohde_id;
 
     @Column(name = "ALKUAIKA")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="Europe/Helsinki")
-    @ApiModelProperty(value = "value to show", example = "2021-04-27T07:44:20.000Z")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Helsinki")
+    @ApiModelProperty(value = "value to show", example = "2021-04-27")
     private Timestamp alkuaika;
 
     @Column(name = "LOPPUAIKA")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="Europe/Helsinki")
-    @ApiModelProperty(value = "value to show", example = "2021-04-27T07:44:20.000Z")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Helsinki")
+    @ApiModelProperty(value = "value to show", example = "2021-04-27")
     private Timestamp loppuaika;
 
     @Column(name = "MITTAUS_ASIANHALLINTA_ID")
