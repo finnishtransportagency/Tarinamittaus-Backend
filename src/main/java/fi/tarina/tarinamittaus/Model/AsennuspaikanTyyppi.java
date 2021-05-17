@@ -1,6 +1,7 @@
 package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.tarina.tarinamittaus.validator.Selite;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -30,20 +31,21 @@ public class AsennuspaikanTyyppi implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "seq_gen"
     )
-    private @Setter @Getter Integer paikkatyyppi_id;
+    private Integer paikkatyyppi_id;
 
     @Column(name = "SELITE")
     @ApiModelProperty(value = "maa", example = "maa")
-    private @Setter @Getter String selite;
+    @Selite
+    private String selite;
 
     @Column(name = "LISATIEDOT" )
-    private @Setter @Getter String lisatiedot;
+    private String lisatiedot;
 
     @JsonIgnore
     @OneToMany(mappedBy = "asennuspaikanTyyppi",
             fetch = FetchType.LAZY,
             cascade = javax.persistence.CascadeType.ALL)
-    private @Setter @Getter Set<AsennettuAnturi> asennettuAnturiSet = new HashSet<>();
+    private Set<AsennettuAnturi> asennettuAnturiSet = new HashSet<>();
 
     public void addAsennettuAnturi(AsennettuAnturi anturi) {
         this.asennettuAnturiSet.add(anturi);
@@ -52,5 +54,41 @@ public class AsennuspaikanTyyppi implements Serializable {
     public AsennuspaikanTyyppi(String selite, String lisatiedot) {
         this.selite = selite;
         this.lisatiedot = lisatiedot;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getPaikkatyyppi_id() {
+        return paikkatyyppi_id;
+    }
+
+    public void setPaikkatyyppi_id(Integer paikkatyyppi_id) {
+        this.paikkatyyppi_id = paikkatyyppi_id;
+    }
+
+    public String getSelite() {
+        return selite;
+    }
+
+    public void setSelite(String selite) {
+        this.selite = selite;
+    }
+
+    public String getLisatiedot() {
+        return lisatiedot;
+    }
+
+    public void setLisatiedot(String lisatiedot) {
+        this.lisatiedot = lisatiedot;
+    }
+
+    public Set<AsennettuAnturi> getAsennettuAnturiSet() {
+        return asennettuAnturiSet;
+    }
+
+    public void setAsennettuAnturiSet(Set<AsennettuAnturi> asennettuAnturiSet) {
+        this.asennettuAnturiSet = asennettuAnturiSet;
     }
 }
