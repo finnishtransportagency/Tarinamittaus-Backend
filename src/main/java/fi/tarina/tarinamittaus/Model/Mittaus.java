@@ -2,6 +2,7 @@ package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -80,6 +81,7 @@ public class Mittaus implements Serializable {
             fetch = FetchType.LAZY,
             cascade = javax.persistence.CascadeType.ALL,
             orphanRemoval = true)
+    @JsonProperty("asennettuAnturi")
     private Set<AsennettuAnturi> asennettuAnturiSet = new HashSet<>();
 
     public void addAsennettuAnturi(AsennettuAnturi anturi) {

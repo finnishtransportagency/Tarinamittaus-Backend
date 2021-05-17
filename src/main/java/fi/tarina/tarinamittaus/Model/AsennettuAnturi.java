@@ -1,6 +1,7 @@
 package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,10 +36,10 @@ public class AsennettuAnturi implements Serializable {
     private String malli;
 
     @Column(name = "GPS_LAT")
-    private String gpsLat;
+    private Double gpsLat;
 
     @Column(name = "GPS_LONG")
-    private String gpsLong;
+    private Double gpsLong;
 
     @Column(name = "ETAISYYS_RADASTA_JOS_ERI")
     private Double etaisyysRadastaJosEri;
@@ -63,6 +64,7 @@ public class AsennettuAnturi implements Serializable {
             fetch = FetchType.LAZY,
             cascade = javax.persistence.CascadeType.ALL,
             orphanRemoval = true)
+    @JsonProperty("anturikohtaisetTunnusarvot")
     private Set<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet = new HashSet<>();
 
     public AsennettuAnturi(AsennuspaikanTyyppi asennuspaikanTyyppi) {
@@ -74,8 +76,8 @@ public class AsennettuAnturi implements Serializable {
     }
 
     public AsennettuAnturi(String malli,
-                           String gpsLat,
-                           String gpsLong,
+                           Double gpsLat,
+                           Double gpsLong,
                            Double etaisyysRadastaJosEri,
                            Integer kerros,
                            String sijoituspaikanLisaselite) {
@@ -107,19 +109,19 @@ public class AsennettuAnturi implements Serializable {
         this.malli = malli;
     }
 
-    public String getGpsLat() {
+    public Double getGpsLat() {
         return gpsLat;
     }
 
-    public void setGpsLat(String gpsLat) {
+    public void setGpsLat(Double gpsLat) {
         this.gpsLat = gpsLat;
     }
 
-    public String getGpsLong() {
+    public Double getGpsLong() {
         return gpsLong;
     }
 
-    public void setGpsLong(String gpsLong) {
+    public void setGpsLong(Double gpsLong) {
         this.gpsLong = gpsLong;
     }
 

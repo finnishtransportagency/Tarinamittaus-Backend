@@ -15,15 +15,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
 @Configuration
-public class MittausConfig {
+public class MittausConfig implements WebMvcConfigurer {
 
     private final Logger LOG = LoggerFactory.getLogger(MittausConfig.class);
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET")
+                .allowedMethods("POST");
+    }
 
     CommandLineRunner commandLineRunner(AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository,
                                         MittausRepository mittausRepository,
@@ -50,8 +60,8 @@ public class MittausConfig {
             );
             AsennettuAnturi as1 = new AsennettuAnturi(
                     "malli1",
-                    "lat",
-                    "long",
+                    45.5,
+                    75.5,
                     3.0,
                     2,
                     "selite"

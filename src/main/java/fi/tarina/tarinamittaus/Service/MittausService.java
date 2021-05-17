@@ -38,6 +38,7 @@ public class MittausService {
         this.tunnusarvotRepository = tunnusarvotRepository;
     }
 
+    //TODO: This should be refactored someway to make it prettier :)
     @Transactional
     public Mittaus saveMittaus(Mittaus mittausRequest) {
         Mittaus mittaus = new Mittaus(
