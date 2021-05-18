@@ -12,7 +12,6 @@ import { Button } from 'react-bootstrap';
 import { values } from 'mobx';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
-import axios from 'axios';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -74,6 +73,24 @@ const validationSchema = Yup.object().shape({
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
+const postData = async (url = '', data = {}) => {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   return (
@@ -84,7 +101,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(JSON.stringify(values));
-          axios.post(`http://localhost:8080/mittaus/`, { ...values })
+          postData(`http://localhost:8080/mittaus/`, { ...values })
           .then(res => {
             console.log(res);
             console.log(res.data);
