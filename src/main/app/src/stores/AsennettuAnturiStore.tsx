@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import MittausSuuntaTypeEnum from "../types/enums/mittausSuuntaType.enum";
 import { IAnturikohtaisetTunnusarvo } from "../types/interfaces/anturikohtaisetTunnusarvot.interface";
 import IAsennettuAnturi from "../types/interfaces/asennettuAnturi.interface";
@@ -6,14 +6,27 @@ import AsennuspaikanTyyppiStore from "./AsennuspaikanTyyppiStore";
 
 
 export default class AsennettuAnturiStore implements IAsennettuAnturi {
-  @observable malli = '';
-  @observable gps_lat = 0;
-  @observable gps_long = 0;
-  @observable etaisyys_radasta_jos_eri = 0;
-  @observable kerros = 0;
-  @observable sijoituspaikan_lisaselite = '';
-  @observable asennuspaikanTyyppi = new AsennuspaikanTyyppiStore();
-  @observable anturikohtaisetTunnusarvot = tunnusArvot;
+  malli = '';
+  gps_lat = 0;
+  gps_long = 0;
+  etaisyys_radasta_jos_eri = 0;
+  kerros = 0;
+  sijoituspaikan_lisaselite = '';
+  asennuspaikanTyyppi = new AsennuspaikanTyyppiStore();
+  anturikohtaisetTunnusarvot = tunnusArvot;
+
+  constructor() {
+    makeObservable(this, {
+      malli: observable,
+      gps_lat: observable,
+      gps_long: observable,
+      etaisyys_radasta_jos_eri: observable,
+      kerros: observable,
+      sijoituspaikan_lisaselite: observable,
+      asennuspaikanTyyppi: observable,
+      anturikohtaisetTunnusarvot: observable
+    })
+  }
 }
 
 let tunnusArvot: IAnturikohtaisetTunnusarvo[] = [

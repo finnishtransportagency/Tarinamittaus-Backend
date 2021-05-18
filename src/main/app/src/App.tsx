@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import urljoin from "url-join";
-import { resourceLimits } from 'node:worker_threads';
 import routes from './App.routes';
 import { v4 as uuid } from 'uuid';
 
