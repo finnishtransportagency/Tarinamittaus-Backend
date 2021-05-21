@@ -59,6 +59,9 @@ const webpackConfig = (): Configuration => ({
       },
     ],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({ template: './public/index.html', manifest: './public/manifest.json' }),
     new Dotenv({ path: './environment/.env.development' }),
