@@ -55,12 +55,15 @@
   "devDependencies": {
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
+    "@types/compression-webpack-plugin": "^6.0.5",
     "@types/dotenv-webpack": "^7.0.2",
     "@types/react-datepicker": "^3.1.8",
     "@types/react-router-dom": "^5.1.7",
     "@types/url-join": "^4.0.0",
     "@types/uuid": "^8.3.0",
+    "@types/webpack-manifest-plugin": "^3.0.4",
     "babel-loader": "^8.2.2",
+    "compression-webpack-plugin": "^7.1.2",
     "css-loader": "^5.2.5",
     "eslint-loader": "^4.0.2",
     "file-loader": "^6.2.0",
@@ -73,6 +76,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.37.0",
     "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-manifest-plugin": "^3.1.1"
   }
 }
