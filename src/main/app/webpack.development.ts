@@ -42,16 +42,8 @@ const webpackConfig = (): Configuration => ({
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.css$/,
-        use: [
-          require.resolve("style-loader"),
-          {
-            loader: require.resolve("css-loader"),
-            options: {
-              importLoaders: 1
-              }
-          },
-        ]
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
