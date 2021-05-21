@@ -98,7 +98,21 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
     <>
       <h2>Mittauksen tiedot</h2>
       <Formik
-        initialValues={{ ...mittaus }}
+        initialValues={{
+          alkuaika: '',
+          loppuaika: '',
+          mittaus_asianhallinta_id: '',
+          pdf_raportin_linkki: '',
+          rakennuksen_pinta_ala: '',
+          perustamistapa: '',
+          julkisivumateriaali: '',
+          runkomateriaali: '',
+          rakennusvuosi: '',
+          katuosoite: '',
+          postinumero: '',
+          created_by_lx: '',
+          asennettuAnturi: [],
+        }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(JSON.stringify(values));
