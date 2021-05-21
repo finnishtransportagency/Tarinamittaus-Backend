@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { CustomNumber } from "../components/CustomNumber";
 import { CustomText } from "../components/CustomText";
 import AsennettuAnturiStore from "../stores/AsennettuAnturiStore";

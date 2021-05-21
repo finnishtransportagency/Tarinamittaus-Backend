@@ -93,6 +93,7 @@ const postData = async (url = '', data = {}) => {
 
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
+  console.log("mittausform", mittaus)
   return (
     <>
       <h2>Mittauksen tiedot</h2>

@@ -1,5 +1,6 @@
+import React from 'react';
+
 import { Field } from 'formik'
-import React from 'react'
 import AsennuspaikanTyyppiStore from '../stores/AsennuspaikanTyyppiStore'
 import SeliteTypeEnum from '../types/enums/seliteType.enum'
 import { CustomText } from '../components/CustomText';

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Field } from 'formik'
 import { IAnturikohtaisetTunnusarvo } from '../types/interfaces/anturikohtaisetTunnusarvot.interface'
 import { Col, Row, Form } from 'react-bootstrap';
