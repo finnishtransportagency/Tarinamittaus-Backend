@@ -7,14 +7,10 @@ import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
 const webpackConfig = (): Configuration => ({
   mode: 'production',
-  entry: './core/presentation/index.tsx',
+  entry: './src/index.tsx',
   context: __dirname,
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    alias: {
-      '@core': path.resolve(__dirname, './core'),
-      '@warehouse': path.resolve(__dirname, './warehouse'),
-    },
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -45,6 +41,22 @@ const webpackConfig = (): Configuration => ({
       {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1000,
+          MimeType: "application/font-woff"
+        }
+      },
+      {
+        test: /\.(ttf|otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?|(jpg|gif)$/,
+        loader: 'file-loader'
       },
     ],
   },
