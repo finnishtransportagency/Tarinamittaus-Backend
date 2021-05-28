@@ -1,6 +1,10 @@
 import React from "react";
-// import PalveluGriddle from "./MittausGriddle";
-import { inject } from "mobx-react";
+import Table from 'react-bootstrap/Table'
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import IMittaus from "../types/interfaces/mittaus.interface";
+
 
 const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset = 0) => {
     // Default options are marked with *
@@ -18,15 +22,6 @@ const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset
     });
     return response.json(); // parses JSON response into native JavaScript objects
   }
-// @inject("mittausStore")
-// export default class MittausListView extends Component {
-
-//     render() {
-//         return getData();
-//         // return <MittausGriddle dataStore={this.props.mittausStore} />;
-//     }
-// }
-
 
 const MittausListView = () => {
     const [mittausData, setMittausData] = React.useState([]);
@@ -40,11 +35,42 @@ const MittausListView = () => {
     React.useEffect(() => {
         fetchAndSetData();
     }, []);
-
     return (
-        <ul>
-            {mittausData && mittausData.map(mittaus => (<li>{JSON.stringify(mittaus)}</li>))}
-        </ul>
+      <>
+        <div style={{'display': 'flex', 'float': 'right', 'padding': '5px 20px'}}>
+          <Link to="/mittaus">
+            <Button>Uusi</Button>
+          </Link>
+        </div>
+        <Table striped>
+          <thead>
+            <th>
+              Alkuaika - loppuaika
+            </th>
+            <th>
+              Katuosoite
+            </th>
+            <th>
+              Postinumero
+            </th>
+          </thead>
+          <tbody>
+            {mittausData ? mittausData.map((mittaus: IMittaus, idx) => (
+              <tr key={idx}>
+                <td>
+                  {`${mittaus.alkuaika} - ${mittaus.loppuaika}`}
+                </td>
+                <td>
+                  {mittaus.katuosoite || "ei osoitetta"}
+                </td>
+                <td>
+                  {mittaus.postinumero || "ei postinumeroa"}
+                </td>
+              </tr>
+            )) : "ei mittauksia"}
+          </tbody>
+        </Table>
+      </>
     );
 }
 

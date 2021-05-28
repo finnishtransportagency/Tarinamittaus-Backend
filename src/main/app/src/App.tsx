@@ -27,13 +27,13 @@ function App() {
                             </li>
                         </ul>
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={9} style={{ 'top': '50px' }}>
                         <Switch>
                             {routes.map((route, i) => (
                                 <Route key={i} {...route} />
                             ))}
                         </Switch>
-                        <Redirect to='/mittaus' />
+                        <Redirect to='/mittauslista' />
                     </Col>
 
                 </Row>
