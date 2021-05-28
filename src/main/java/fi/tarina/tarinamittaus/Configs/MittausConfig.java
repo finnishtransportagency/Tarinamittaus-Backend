@@ -31,8 +31,7 @@ public class MittausConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
-                .allowedMethods("GET")
-                .allowedMethods("POST");
+                .allowedMethods("GET", "POST");
     }
 
     CommandLineRunner commandLineRunner(AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository,
