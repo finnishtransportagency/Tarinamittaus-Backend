@@ -7,6 +7,7 @@ import { Provider } from "mobx-react";
 
 //Importing the bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/styles.css';
 
 import MittausStore from './stores/MittausStore';
 

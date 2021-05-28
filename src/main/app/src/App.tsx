@@ -1,20 +1,43 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
+
 import './App.css';
 import urljoin from "url-join";
 import routes from './App.routes';
-import { v4 as uuid } from 'uuid';
 
 
 function App() {
     return (
         <Router>
-            <Switch>
-                {routes.map((route) => (
-                    <Route key={uuid()} {...route} />
-                ))}
-            </Switch>
-            <Redirect to='/mittaus' />
+            <Container fluid>
+                <Row>
+                    <Col sm={2}>
+                        <h2>Tärinämittaus</h2>
+                        <ul className="nav nav-pills">
+                            <li className="nav-item" key={"mittauslista"}>
+                                <Link
+                                    to="/mittauslista"
+                                    className="nav-link"
+                                >
+                                    Mittauslista
+                                </Link>
+                            </li>
+                        </ul>
+                    </Col>
+                    <Col sm={9}>
+                        <Switch>
+                            {routes.map((route, i) => (
+                                <Route key={i} {...route} />
+                            ))}
+                        </Switch>
+                        <Redirect to='/mittaus' />
+                    </Col>
+
+                </Row>
+            </Container>
         </Router>
     );
 }
@@ -22,7 +45,7 @@ function App() {
 export default App;
 
 const BaseRestURL =
-    process.env.REACT_APP_BASE_REST_URL || "tietokatalogi/rest";
+    process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/rest";
 
 export function fullURL(...urls: string[]) {
     // NB: user with browserhistory
