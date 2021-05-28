@@ -2,6 +2,7 @@ import React from "react";
 import Table from 'react-bootstrap/Table'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Pagination from 'react-bootstrap/Pagination';
 
 import IMittaus from "../types/interfaces/mittaus.interface";
 
@@ -23,18 +24,28 @@ const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset
     return response.json(); // parses JSON response into native JavaScript objects
   }
 
+const itemsPerPage = 10;
+
 const MittausListView = () => {
     const [mittausData, setMittausData] = React.useState([]);
+    const [activePage, setActivePage] = React.useState(0);
+    const [nItems, setNItems] = React.useState(0);
 
     const fetchAndSetData = async () => {
         const data = await getData();
-        console.log(data);
         setMittausData(data);
+        setNItems(data.length);
     }
 
     React.useEffect(() => {
         fetchAndSetData();
     }, []);
+
+    const startIndex = activePage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const nPages = Math.ceil(nItems/itemsPerPage);
+    const pageIndexes = Array(nPages).fill(null).map((_, i) => i);
+    const displayedPageIndexes = pageIndexes.slice(Math.max(0, activePage - 5), Math.min(nPages, activePage + 6));
     return (
       <>
         <div style={{'display': 'flex', 'float': 'right', 'padding': '5px 20px'}}>
@@ -44,18 +55,20 @@ const MittausListView = () => {
         </div>
         <Table striped>
           <thead>
-            <th>
-              Alkuaika - loppuaika
-            </th>
-            <th>
-              Katuosoite
-            </th>
-            <th>
-              Postinumero
-            </th>
+            <tr>
+              <th>
+                Alkuaika - loppuaika
+              </th>
+              <th>
+                Katuosoite
+              </th>
+              <th>
+                Postinumero
+              </th>
+            </tr>
           </thead>
           <tbody>
-            {mittausData ? mittausData.map((mittaus: IMittaus, idx) => (
+            {mittausData ? mittausData.slice(startIndex, endIndex).map((mittaus: IMittaus, idx) => (
               <tr key={idx}>
                 <td>
                   {`${mittaus.alkuaika} - ${mittaus.loppuaika}`}
@@ -70,6 +83,20 @@ const MittausListView = () => {
             )) : "ei mittauksia"}
           </tbody>
         </Table>
+        <div style={{'display': 'flex', 'justifyContent': 'center'}}>
+          <Pagination>
+            <Pagination.First onClick={() => setActivePage(0)}/>
+            {displayedPageIndexes.map((i) => (
+              <Pagination.Item
+                key={i}
+                active={activePage === (i)}
+                onClick={() => setActivePage(i)}>
+                  {i + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Last onClick={() => setActivePage(nPages - 1)}/>
+          </Pagination>
+        </div>
       </>
     );
 }
