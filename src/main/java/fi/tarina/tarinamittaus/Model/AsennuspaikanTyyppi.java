@@ -41,14 +41,9 @@ public class AsennuspaikanTyyppi implements Serializable {
     private String lisatiedot;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "asennuspaikanTyyppi",
-            fetch = FetchType.LAZY,
-            cascade = javax.persistence.CascadeType.ALL)
-    private Set<AsennettuAnturi> asennettuAnturiSet = new HashSet<>();
+    @OneToOne(mappedBy = "asennuspaikanTyyppi")
+    private AsennettuAnturi asennettuAnturiSet;
 
-    public void addAsennettuAnturi(AsennettuAnturi anturi) {
-        this.asennettuAnturiSet.add(anturi);
-    }
 
     public AsennuspaikanTyyppi(String selite, String lisatiedot) {
         this.selite = selite;
@@ -86,11 +81,11 @@ public class AsennuspaikanTyyppi implements Serializable {
         this.lisatiedot = lisatiedot;
     }
 
-    public Set<AsennettuAnturi> getAsennettuAnturiSet() {
-        return asennettuAnturiSet;
+    public void setAsennettuAnturiSet(AsennettuAnturi asennettuAnturiSet) {
+        this.asennettuAnturiSet = asennettuAnturiSet;
     }
 
-    public void setAsennettuAnturiSet(Set<AsennettuAnturi> asennettuAnturiSet) {
-        this.asennettuAnturiSet = asennettuAnturiSet;
+    public AsennettuAnturi getAsennettuAnturiSet() {
+        return asennettuAnturiSet;
     }
 }

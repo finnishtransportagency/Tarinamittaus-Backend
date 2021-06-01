@@ -57,7 +57,7 @@ public class AsennettuAnturi implements Serializable {
     @JoinColumn(name = "MITTAUS")
     private Mittaus mittaus;
 
-    @ManyToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ASENNUSPAIKKA")
     private AsennuspaikanTyyppi asennuspaikanTyyppi;
 
