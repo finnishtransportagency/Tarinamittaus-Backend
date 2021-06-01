@@ -21,7 +21,6 @@ public class Mittaus implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
     @Id
     @Column(name = "KOHDE_ID", unique = true, nullable = false)
     @SequenceGenerator(
