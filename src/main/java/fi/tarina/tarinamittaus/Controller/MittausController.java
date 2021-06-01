@@ -27,6 +27,16 @@ public class MittausController {
         return mittausService.getMittausList();
     }
 
+    @GetMapping(path = "{id}")
+    public ResponseEntity<Mittaus> getById(@PathVariable("id") Integer id) {
+        try {
+            Mittaus mittaus = mittausService.getMittaus(id);
+            return new ResponseEntity<>(mittaus, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity<Mittaus> saveMittaus(@Valid @RequestBody Mittaus mittausRequest) {
@@ -36,7 +46,16 @@ public class MittausController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Mittaus> deleteMittaus(@PathVariable("id") Integer id) {
+        try {
+            this.mittausService.deleteMittaus(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
 }

@@ -11,10 +11,13 @@ import fi.tarina.tarinamittaus.Repository.AsennuspaikanTyyppiRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -102,6 +105,23 @@ public class MittausService {
 
     public List<Mittaus> getMittausList() {
         return mittausRepository.findAll();
+    }
+
+    public Mittaus getMittaus(Integer id) {
+        Optional<Mittaus> mittausOptional = mittausRepository.findById(id);
+        if (mittausOptional.isPresent()) {
+            return mittausOptional.get();
+        }
+        throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
+    }
+
+    public void deleteMittaus(Integer id) {
+        boolean exists = mittausRepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
+        } else {
+            mittausRepository.deleteById(id);
+        }
     }
 
 }
