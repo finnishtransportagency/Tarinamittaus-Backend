@@ -1,103 +1,23 @@
 package fi.tarina.tarinamittaus.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "ASENNETTUANTURI", schema = "TARINAM")
-@AllArgsConstructor
-@ToString
-public class AsennettuAnturi implements Serializable {
+public class AsennettuAnturiDto {
 
-    private static final long serialVersionUID = 1L;
-
-    @JsonIgnore
-    @Id
-    @Column(name = "ASENNUSKOHTAINEN_ID", nullable = false, unique = true)
-    @SequenceGenerator(
-            name = "seq_gen",
-            sequenceName = "asennettuanturi_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "seq_gen"
-    )
     private Integer asennuskohtainen_id;
-
-    @Column(name = "MALLI")
     private String malli;
-
-    @Column(name = "GPS_LAT")
-    @JsonProperty("gps_lat")
     private Double gpsLat;
-
-    @Column(name = "GPS_LONG")
-    @JsonProperty("gps_long")
     private Double gpsLong;
-
-    @Column(name = "ETAISYYS_RADASTA_JOS_ERI")
     private Double etaisyysRadastaJosEri;
-
-    @Column(name = "KERROS")
     private Integer kerros;
-
-    @Column(name = "SIJOITUSPAIKAN_LISASELITE")
     private String sijoituspaikanLisaselite;
-
-    // MITTAUS is foreign key in the table
-    @JsonIgnore
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "MITTAUS")
     private Mittaus mittaus;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ASENNUSPAIKKA")
     private AsennuspaikanTyyppi asennuspaikanTyyppi;
-
-    @OneToMany(mappedBy = "asennettuAnturi",
-            fetch = FetchType.LAZY,
-            cascade = javax.persistence.CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonProperty("anturikohtaisetTunnusarvot")
     private List<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet = new ArrayList<>();
-
-    public AsennettuAnturi(AsennuspaikanTyyppi asennuspaikanTyyppi) {
-        this.asennuspaikanTyyppi = asennuspaikanTyyppi;
-    }
-
-    public void addTunnusarvotToSet(AnturikohtaisetTunnusarvot arvot) {
-        this.anturikohtaisetTunnusarvotSet.add(arvot);
-    }
-
-    public AsennettuAnturi() {
-    }
-
-    public AsennettuAnturi(String malli,
-                           Double gpsLat,
-                           Double gpsLong,
-                           Double etaisyysRadastaJosEri,
-                           Integer kerros,
-                           String sijoituspaikanLisaselite) {
-        this.malli = malli;
-        this.gpsLat = gpsLat;
-        this.gpsLong = gpsLong;
-        this.etaisyysRadastaJosEri = etaisyysRadastaJosEri;
-        this.kerros = kerros;
-        this.sijoituspaikanLisaselite = sijoituspaikanLisaselite;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Integer getAsennuskohtainen_id() {
         return asennuskohtainen_id;
