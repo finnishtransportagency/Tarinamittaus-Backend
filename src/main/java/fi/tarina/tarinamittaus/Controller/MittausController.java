@@ -60,7 +60,7 @@ public class MittausController {
     }
 
     @PutMapping
-    public void updateMittaus(MittausDto dto) {
+    public void updateMittaus(@RequestBody MittausDto dto) {
         try {
             mittausService.updateMittaus(dto);
         } catch (Exception e) {
