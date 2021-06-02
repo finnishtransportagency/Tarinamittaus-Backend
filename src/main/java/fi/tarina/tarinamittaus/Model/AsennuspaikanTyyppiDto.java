@@ -1,13 +1,17 @@
 package fi.tarina.tarinamittaus.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class AsennuspaikanTyyppiDto {
+import java.io.Serializable;
+
+@JsonIgnoreProperties(value = {"paikkatyyppi_id", "asennettuAnturiSet"})
+public class AsennuspaikanTyyppiDto implements Serializable {
 
     private Integer paikkatyyppi_id;
     private String selite;
     private String lisatiedot;
-    private AsennettuAnturi asennettuAnturiSet;
+    private AsennettuAnturiDto asennettuAnturiDto;
 
     public Integer getPaikkatyyppi_id() {
         return paikkatyyppi_id;
@@ -33,11 +37,11 @@ public class AsennuspaikanTyyppiDto {
         this.lisatiedot = lisatiedot;
     }
 
-    public AsennettuAnturi getAsennettuAnturiSet() {
-        return asennettuAnturiSet;
+    public AsennettuAnturiDto getAsennettuAnturiDto() {
+        return asennettuAnturiDto;
     }
 
-    public void setAsennettuAnturiSet(AsennettuAnturi asennettuAnturiSet) {
-        this.asennettuAnturiSet = asennettuAnturiSet;
+    public void setAsennettuAnturiDto(AsennettuAnturiDto asennettuAnturiDto) {
+        this.asennettuAnturiDto = asennettuAnturiDto;
     }
 }

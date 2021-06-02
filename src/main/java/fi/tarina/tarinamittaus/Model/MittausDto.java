@@ -1,16 +1,27 @@
 package fi.tarina.tarinamittaus.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MittausDto {
+public class MittausDto implements Serializable {
 
     private Integer kohde_id;
+
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Helsinki")
+    @ApiModelProperty(value = "value to show", example = "2021-04-27")
     private Timestamp alkuaika;
+
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Helsinki")
+    @ApiModelProperty(value = "value to show", example = "2021-04-27")
     private Timestamp loppuaika;
+
     private String mittaus_asianhallinta_id;
     private String pdf_raportin_linkki;
     private Double rakennuksen_pinta_ala;
@@ -21,7 +32,7 @@ public class MittausDto {
     private String katuosoite;
     private String postinumero;
     private String created_by_lx;
-    private List<AsennettuAnturi> asennettuAnturiSet = new ArrayList<>();
+    private List<AsennettuAnturiDto> asennettuAnturiDtos = new ArrayList<>();
 
     public Integer getKohde_id() {
         return kohde_id;
@@ -127,11 +138,11 @@ public class MittausDto {
         this.created_by_lx = created_by_lx;
     }
 
-    public List<AsennettuAnturi> getAsennettuAnturiSet() {
-        return asennettuAnturiSet;
+    public List<AsennettuAnturiDto> getAsennettuAnturiDtos() {
+        return asennettuAnturiDtos;
     }
 
-    public void setAsennettuAnturiSet(List<AsennettuAnturi> asennettuAnturiSet) {
-        this.asennettuAnturiSet = asennettuAnturiSet;
+    public void setAsennettuAnturiDtos(List<AsennettuAnturiDto> asennettuAnturiDtos) {
+        this.asennettuAnturiDtos = asennettuAnturiDtos;
     }
 }

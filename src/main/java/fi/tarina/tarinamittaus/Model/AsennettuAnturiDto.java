@@ -1,11 +1,12 @@
 package fi.tarina.tarinamittaus.Model;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@JsonIgnoreProperties({"asennuskohtainen_id", "mittausDto"})
 public class AsennettuAnturiDto {
 
     private Integer asennuskohtainen_id;
@@ -15,9 +16,9 @@ public class AsennettuAnturiDto {
     private Double etaisyysRadastaJosEri;
     private Integer kerros;
     private String sijoituspaikanLisaselite;
-    private Mittaus mittaus;
-    private AsennuspaikanTyyppi asennuspaikanTyyppi;
-    private List<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet = new ArrayList<>();
+    private MittausDto mittausDto;
+    private AsennuspaikanTyyppiDto asennuspaikanTyyppiDto;
+    private List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos = new ArrayList<>();
 
     public Integer getAsennuskohtainen_id() {
         return asennuskohtainen_id;
@@ -75,27 +76,27 @@ public class AsennettuAnturiDto {
         this.sijoituspaikanLisaselite = sijoituspaikanLisaselite;
     }
 
-    public Mittaus getMittaus() {
-        return mittaus;
+    public MittausDto getMittausDto() {
+        return mittausDto;
     }
 
-    public void setMittaus(Mittaus mittaus) {
-        this.mittaus = mittaus;
+    public void setMittausDto(MittausDto mittausDto) {
+        this.mittausDto = mittausDto;
     }
 
-    public AsennuspaikanTyyppi getAsennuspaikanTyyppi() {
-        return asennuspaikanTyyppi;
+    public AsennuspaikanTyyppiDto getAsennuspaikanTyyppiDto() {
+        return asennuspaikanTyyppiDto;
     }
 
-    public void setAsennuspaikanTyyppi(AsennuspaikanTyyppi asennuspaikanTyyppi) {
-        this.asennuspaikanTyyppi = asennuspaikanTyyppi;
+    public void setAsennuspaikanTyyppiDto(AsennuspaikanTyyppiDto asennuspaikanTyyppiDto) {
+        this.asennuspaikanTyyppiDto = asennuspaikanTyyppiDto;
     }
 
-    public List<AnturikohtaisetTunnusarvot> getAnturikohtaisetTunnusarvotSet() {
-        return anturikohtaisetTunnusarvotSet;
+    public List<AnturikohtaisetTunnusarvotDto> getAnturikohtaisetTunnusarvotDtos() {
+        return anturikohtaisetTunnusarvotDtos;
     }
 
-    public void setAnturikohtaisetTunnusarvotSet(List<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet) {
-        this.anturikohtaisetTunnusarvotSet = anturikohtaisetTunnusarvotSet;
+    public void setAnturikohtaisetTunnusarvotDtos(List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos) {
+        this.anturikohtaisetTunnusarvotDtos = anturikohtaisetTunnusarvotDtos;
     }
 }

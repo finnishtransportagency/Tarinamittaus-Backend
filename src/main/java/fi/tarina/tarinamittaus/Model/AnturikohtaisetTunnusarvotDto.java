@@ -1,15 +1,22 @@
 package fi.tarina.tarinamittaus.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 
-public class AnturikohtaisetTunnusarvotDto {
+import java.io.Serializable;
+
+@JsonIgnoreProperties(value = {"tunnusarvo_id", "asennettuanturi"})
+public class AnturikohtaisetTunnusarvotDto implements Serializable {
 
     private Integer tunnusarvo_id;
+
+    @ApiModelProperty(value = "value to show", example = "X")
     private char mittaussuunta_xyz;
     private Double tarinan_maksimiarvo;
     private Double hallitseva_taajuus;
     private Double tarinan_tunnusluku_vw95_rms;
-    private AsennettuAnturi asennettuAnturi;
+    private AsennettuAnturiDto asennettuAnturiDto;
 
     public Integer getTunnusarvo_id() {
         return tunnusarvo_id;
@@ -51,11 +58,11 @@ public class AnturikohtaisetTunnusarvotDto {
         this.tarinan_tunnusluku_vw95_rms = tarinan_tunnusluku_vw95_rms;
     }
 
-    public AsennettuAnturi getAsennettuAnturi() {
-        return asennettuAnturi;
+    public AsennettuAnturiDto getAsennettuAnturiDto() {
+        return asennettuAnturiDto;
     }
 
-    public void setAsennettuAnturi(AsennettuAnturi asennettuAnturi) {
-        this.asennettuAnturi = asennettuAnturi;
+    public void setAsennettuAnturiDto(AsennettuAnturiDto asennettuAnturiDto) {
+        this.asennettuAnturiDto = asennettuAnturiDto;
     }
 }
