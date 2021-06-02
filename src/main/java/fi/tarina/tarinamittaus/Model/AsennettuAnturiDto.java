@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties({"asennuskohtainen_id", "mittausDto"})
+@JsonIgnoreProperties({"mittausDto"})
 public class AsennettuAnturiDto {
 
     private Integer asennuskohtainen_id;
@@ -98,5 +98,37 @@ public class AsennettuAnturiDto {
 
     public void setAnturikohtaisetTunnusarvotDtos(List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos) {
         this.anturikohtaisetTunnusarvotDtos = anturikohtaisetTunnusarvotDtos;
+    }
+
+    public AsennettuAnturiDto() {
+    }
+
+    public AsennettuAnturiDto(Integer asennuskohtainen_id, String malli, Double gpsLat, Double gpsLong, Double etaisyysRadastaJosEri, Integer kerros, String sijoituspaikanLisaselite, MittausDto mittausDto, AsennuspaikanTyyppiDto asennuspaikanTyyppiDto, List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos) {
+        this.asennuskohtainen_id = asennuskohtainen_id;
+        this.malli = malli;
+        this.gpsLat = gpsLat;
+        this.gpsLong = gpsLong;
+        this.etaisyysRadastaJosEri = etaisyysRadastaJosEri;
+        this.kerros = kerros;
+        this.sijoituspaikanLisaselite = sijoituspaikanLisaselite;
+        this.mittausDto = mittausDto;
+        this.asennuspaikanTyyppiDto = asennuspaikanTyyppiDto;
+        this.anturikohtaisetTunnusarvotDtos = anturikohtaisetTunnusarvotDtos;
+    }
+
+    @Override
+    public String toString() {
+        return "AsennettuAnturiDto{" +
+                "asennuskohtainen_id=" + asennuskohtainen_id +
+                ", malli='" + malli + '\'' +
+                ", gpsLat=" + gpsLat +
+                ", gpsLong=" + gpsLong +
+                ", etaisyysRadastaJosEri=" + etaisyysRadastaJosEri +
+                ", kerros=" + kerros +
+                ", sijoituspaikanLisaselite='" + sijoituspaikanLisaselite + '\'' +
+                ", mittausDto=" + mittausDto +
+                ", asennuspaikanTyyppiDto=" + asennuspaikanTyyppiDto +
+                ", anturikohtaisetTunnusarvotDtos=" + anturikohtaisetTunnusarvotDtos +
+                '}';
     }
 }

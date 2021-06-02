@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(value = {"tunnusarvo_id", "asennettuanturi"})
+@JsonIgnoreProperties(value = {"asennettuAnturiDto"})
 public class AnturikohtaisetTunnusarvotDto implements Serializable {
 
     private Integer tunnusarvo_id;
@@ -64,5 +64,29 @@ public class AnturikohtaisetTunnusarvotDto implements Serializable {
 
     public void setAsennettuAnturiDto(AsennettuAnturiDto asennettuAnturiDto) {
         this.asennettuAnturiDto = asennettuAnturiDto;
+    }
+
+    public AnturikohtaisetTunnusarvotDto() {
+    }
+
+    public AnturikohtaisetTunnusarvotDto(Integer tunnusarvo_id, char mittaussuunta_xyz, Double tarinan_maksimiarvo, Double hallitseva_taajuus, Double tarinan_tunnusluku_vw95_rms, AsennettuAnturiDto asennettuAnturiDto) {
+        this.tunnusarvo_id = tunnusarvo_id;
+        this.mittaussuunta_xyz = mittaussuunta_xyz;
+        this.tarinan_maksimiarvo = tarinan_maksimiarvo;
+        this.hallitseva_taajuus = hallitseva_taajuus;
+        this.tarinan_tunnusluku_vw95_rms = tarinan_tunnusluku_vw95_rms;
+        this.asennettuAnturiDto = asennettuAnturiDto;
+    }
+
+    @Override
+    public String toString() {
+        return "AnturikohtaisetTunnusarvotDto{" +
+                "tunnusarvo_id=" + tunnusarvo_id +
+                ", mittaussuunta_xyz=" + mittaussuunta_xyz +
+                ", tarinan_maksimiarvo=" + tarinan_maksimiarvo +
+                ", hallitseva_taajuus=" + hallitseva_taajuus +
+                ", tarinan_tunnusluku_vw95_rms=" + tarinan_tunnusluku_vw95_rms +
+                ", asennettuAnturiDto=" + asennettuAnturiDto +
+                '}';
     }
 }

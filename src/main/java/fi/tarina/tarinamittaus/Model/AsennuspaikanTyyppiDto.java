@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(value = {"paikkatyyppi_id", "asennettuAnturiSet"})
+@JsonIgnoreProperties(value = {"asennettuAnturiDto"})
 public class AsennuspaikanTyyppiDto implements Serializable {
 
     private Integer paikkatyyppi_id;
@@ -43,5 +43,25 @@ public class AsennuspaikanTyyppiDto implements Serializable {
 
     public void setAsennettuAnturiDto(AsennettuAnturiDto asennettuAnturiDto) {
         this.asennettuAnturiDto = asennettuAnturiDto;
+    }
+
+    public AsennuspaikanTyyppiDto() {
+    }
+
+    public AsennuspaikanTyyppiDto(Integer paikkatyyppi_id, String selite, String lisatiedot, AsennettuAnturiDto asennettuAnturiDto) {
+        this.paikkatyyppi_id = paikkatyyppi_id;
+        this.selite = selite;
+        this.lisatiedot = lisatiedot;
+        this.asennettuAnturiDto = asennettuAnturiDto;
+    }
+
+    @Override
+    public String toString() {
+        return "AsennuspaikanTyyppiDto{" +
+                "paikkatyyppi_id=" + paikkatyyppi_id +
+                ", selite='" + selite + '\'' +
+                ", lisatiedot='" + lisatiedot + '\'' +
+                ", asennettuAnturiDto=" + asennettuAnturiDto +
+                '}';
     }
 }

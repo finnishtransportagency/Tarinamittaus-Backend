@@ -2,6 +2,8 @@ package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -144,5 +146,45 @@ public class MittausDto implements Serializable {
 
     public void setAsennettuAnturiDtos(List<AsennettuAnturiDto> asennettuAnturiDtos) {
         this.asennettuAnturiDtos = asennettuAnturiDtos;
+    }
+
+    public MittausDto() {
+    }
+
+    public MittausDto(Integer kohde_id, Timestamp alkuaika, Timestamp loppuaika, String mittaus_asianhallinta_id, String pdf_raportin_linkki, Double rakennuksen_pinta_ala, String perustamistapa, String julkisivumateriaali, String runkomateriaali, Integer rakennusvuosi, String katuosoite, String postinumero, String created_by_lx, List<AsennettuAnturiDto> asennettuAnturiDtos) {
+        this.kohde_id = kohde_id;
+        this.alkuaika = alkuaika;
+        this.loppuaika = loppuaika;
+        this.mittaus_asianhallinta_id = mittaus_asianhallinta_id;
+        this.pdf_raportin_linkki = pdf_raportin_linkki;
+        this.rakennuksen_pinta_ala = rakennuksen_pinta_ala;
+        this.perustamistapa = perustamistapa;
+        this.julkisivumateriaali = julkisivumateriaali;
+        this.runkomateriaali = runkomateriaali;
+        this.rakennusvuosi = rakennusvuosi;
+        this.katuosoite = katuosoite;
+        this.postinumero = postinumero;
+        this.created_by_lx = created_by_lx;
+        this.asennettuAnturiDtos = asennettuAnturiDtos;
+    }
+
+    @Override
+    public String toString() {
+        return "MittausDto{" +
+                "kohde_id=" + kohde_id +
+                ", alkuaika=" + alkuaika +
+                ", loppuaika=" + loppuaika +
+                ", mittaus_asianhallinta_id='" + mittaus_asianhallinta_id + '\'' +
+                ", pdf_raportin_linkki='" + pdf_raportin_linkki + '\'' +
+                ", rakennuksen_pinta_ala=" + rakennuksen_pinta_ala +
+                ", perustamistapa='" + perustamistapa + '\'' +
+                ", julkisivumateriaali='" + julkisivumateriaali + '\'' +
+                ", runkomateriaali='" + runkomateriaali + '\'' +
+                ", rakennusvuosi=" + rakennusvuosi +
+                ", katuosoite='" + katuosoite + '\'' +
+                ", postinumero='" + postinumero + '\'' +
+                ", created_by_lx='" + created_by_lx + '\'' +
+                ", asennettuAnturiDtos=" + asennettuAnturiDtos +
+                '}';
     }
 }
