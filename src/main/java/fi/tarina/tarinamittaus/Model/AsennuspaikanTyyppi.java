@@ -18,7 +18,6 @@ public class AsennuspaikanTyyppi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
     @Id
     @Column(name = "PAIKKATYYPPI_ID", unique = true, nullable = false)
     @SequenceGenerator(

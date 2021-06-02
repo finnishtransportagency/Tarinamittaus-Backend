@@ -19,7 +19,6 @@ public class AsennettuAnturi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
     @Id
     @Column(name = "ASENNUSKOHTAINEN_ID", nullable = false, unique = true)
     @SequenceGenerator(
