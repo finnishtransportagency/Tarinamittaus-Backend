@@ -105,10 +105,12 @@ public class MittausService {
 
     }
 
+    @Transactional
     public List<Mittaus> getMittausList() {
         return mittausRepository.findAll();
     }
 
+    @Transactional
     public Mittaus getMittaus(Integer id) {
         Optional<Mittaus> mittausOptional = mittausRepository.findById(id);
         if (mittausOptional.isPresent()) {
@@ -117,6 +119,7 @@ public class MittausService {
         throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
     }
 
+    @Transactional
     public void deleteMittaus(Integer id) {
         boolean exists = mittausRepository.existsById(id);
         if (!exists) {
@@ -126,6 +129,7 @@ public class MittausService {
         }
     }
 
+    @Transactional
     public Mittaus updateMittaus(MittausDto dto) throws IllegalStateException {
         Mittaus mittaus = getMittaus(dto.getKohde_id());
         mittausMapper.updateMittausFromDto(dto, mittaus);
