@@ -1,6 +1,7 @@
 package fi.tarina.tarinamittaus.Controller;
 
 import fi.tarina.tarinamittaus.Model.Mittaus;
+import fi.tarina.tarinamittaus.Model.MittausDto;
 import fi.tarina.tarinamittaus.Service.MittausService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,15 @@ public class MittausController {
         try {
             this.mittausService.deleteMittaus(id);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @PutMapping
+    public void updateMittaus(MittausDto dto) {
+        try {
+            mittausService.updateMittaus(dto);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

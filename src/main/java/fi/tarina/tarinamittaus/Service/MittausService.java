@@ -1,13 +1,11 @@
 package fi.tarina.tarinamittaus.Service;
 
-import fi.tarina.tarinamittaus.Model.AnturikohtaisetTunnusarvot;
-import fi.tarina.tarinamittaus.Model.AsennettuAnturi;
-import fi.tarina.tarinamittaus.Model.AsennuspaikanTyyppi;
-import fi.tarina.tarinamittaus.Model.Mittaus;
+import fi.tarina.tarinamittaus.Model.*;
 import fi.tarina.tarinamittaus.Repository.AnturiRepository;
 import fi.tarina.tarinamittaus.Repository.AnturikohtaisetTunnusarvotRepository;
 import fi.tarina.tarinamittaus.Repository.MittausRepository;
 import fi.tarina.tarinamittaus.Repository.AsennuspaikanTyyppiRepository;
+import fi.tarina.tarinamittaus.Util.MittausMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +27,20 @@ public class MittausService {
     private final AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository;
     private final AnturiRepository anturiRepository;
     private final AnturikohtaisetTunnusarvotRepository tunnusarvotRepository;
+    private final MittausMapper mittausMapper;
 
     @Autowired
     public MittausService(MittausRepository mittausRepository,
                           AsennuspaikanTyyppiRepository asennuspaikanTyyppiRepository,
                           AnturiRepository anturiRepository,
-                          AnturikohtaisetTunnusarvotRepository tunnusarvotRepository) {
+                          AnturikohtaisetTunnusarvotRepository tunnusarvotRepository,
+                          MittausMapper mittausMapper
+                         ) {
         this.mittausRepository = mittausRepository;
         this.asennuspaikanTyyppiRepository = asennuspaikanTyyppiRepository;
         this.anturiRepository = anturiRepository;
         this.tunnusarvotRepository = tunnusarvotRepository;
+        this.mittausMapper = mittausMapper;
     }
 
     //TODO: This should be refactored someway to make it prettier :)
@@ -124,4 +126,10 @@ public class MittausService {
         }
     }
 
+    public Mittaus updateMittaus(MittausDto dto) throws IllegalStateException {
+        Mittaus mittaus = getMittaus(dto.getKohde_id());
+        mittausMapper.updateMittausFromDto(dto, mittaus);
+        mittausRepository.save(mittaus);
+        return mittaus;
+    }
 }
