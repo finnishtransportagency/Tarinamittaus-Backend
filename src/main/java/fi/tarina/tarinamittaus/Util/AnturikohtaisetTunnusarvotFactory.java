@@ -19,6 +19,7 @@ public class AnturikohtaisetTunnusarvotFactory {
 
     @ObjectFactory
     public AnturikohtaisetTunnusarvot create(AnturikohtaisetTunnusarvotDto dto){
+        if (dto.getTunnusarvo_id() == null) return new AnturikohtaisetTunnusarvot();
         Optional<AnturikohtaisetTunnusarvot> tunnusarvotOptional =
                 repository.findById(dto.getTunnusarvo_id());
         return tunnusarvotOptional.orElseGet(AnturikohtaisetTunnusarvot::new);

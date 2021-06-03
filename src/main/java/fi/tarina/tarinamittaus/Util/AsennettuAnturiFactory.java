@@ -18,6 +18,7 @@ public class AsennettuAnturiFactory {
 
     @ObjectFactory
     public AsennettuAnturi create(AsennettuAnturiDto dto) {
+        if(dto.getAsennuskohtainen_id()==null) return new AsennettuAnturi();
         Optional<AsennettuAnturi> anturi = anturiRepository.findById(dto.getAsennuskohtainen_id());
         return anturi.orElseGet(AsennettuAnturi::new);
     }
