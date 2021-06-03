@@ -6,10 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "ASENNETTUANTURI", schema = "TARINAM")
@@ -175,6 +172,34 @@ public class AsennettuAnturi implements Serializable {
     }
 
     public void setAnturikohtaisetTunnusarvotSet(List<AnturikohtaisetTunnusarvot> anturikohtaisetTunnusarvotSet) {
-        this.anturikohtaisetTunnusarvotSet = anturikohtaisetTunnusarvotSet;
+        this.anturikohtaisetTunnusarvotSet.clear();
+        if(anturikohtaisetTunnusarvotSet != null) {
+            this.anturikohtaisetTunnusarvotSet.addAll(anturikohtaisetTunnusarvotSet);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AsennettuAnturi)) return false;
+        AsennettuAnturi anturi = (AsennettuAnturi) o;
+        return getAsennuskohtainen_id().equals(anturi.getAsennuskohtainen_id()) && Objects.equals(
+                getMalli(), anturi.getMalli()) && Objects.equals(getGpsLat(),
+                                                                 anturi.getGpsLat()) && Objects.equals(
+                getGpsLong(), anturi.getGpsLong()) && Objects.equals(getEtaisyysRadastaJosEri(),
+                                                                     anturi.getEtaisyysRadastaJosEri()) && Objects.equals(
+                getKerros(), anturi.getKerros()) && Objects.equals(getSijoituspaikanLisaselite(),
+                                                                   anturi.getSijoituspaikanLisaselite()) && getMittaus().equals(
+                anturi.getMittaus()) && Objects.equals(getAsennuspaikanTyyppi(),
+                                                       anturi.getAsennuspaikanTyyppi()) && Objects.equals(
+                getAnturikohtaisetTunnusarvotSet(), anturi.getAnturikohtaisetTunnusarvotSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAsennuskohtainen_id(), getMalli(), getGpsLat(), getGpsLong(),
+                            getEtaisyysRadastaJosEri(), getKerros(), getSijoituspaikanLisaselite(),
+                            getMittaus(),
+                            getAsennuspaikanTyyppi(), getAnturikohtaisetTunnusarvotSet());
     }
 }

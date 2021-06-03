@@ -8,10 +8,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -230,6 +227,40 @@ public class Mittaus implements Serializable {
     }
 
     public void setAsennettuAnturiSet(List<AsennettuAnturi> asennettuAnturiSet) {
-        this.asennettuAnturiSet = asennettuAnturiSet;
+//        this.asennettuAnturiSet = asennettuAnturiSet;
+        this.asennettuAnturiSet.clear();
+        if(asennettuAnturiSet != null){
+            this.asennettuAnturiSet.addAll(asennettuAnturiSet);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Mittaus)) return false;
+        Mittaus mittaus = (Mittaus) o;
+        return getKohde_id().equals(mittaus.getKohde_id()) && Objects.equals(getAlkuaika(),
+                                                                             mittaus.getAlkuaika()) && Objects.equals(
+                getLoppuaika(), mittaus.getLoppuaika()) && Objects.equals(getMittaus_asianhallinta_id(),
+                                                                          mittaus.getMittaus_asianhallinta_id()) && Objects.equals(
+                getPdf_raportin_linkki(), mittaus.getPdf_raportin_linkki()) && Objects.equals(
+                getRakennuksen_pinta_ala(), mittaus.getRakennuksen_pinta_ala()) && Objects.equals(
+                getPerustamistapa(), mittaus.getPerustamistapa()) && Objects.equals(
+                getJulkisivumateriaali(), mittaus.getJulkisivumateriaali()) && Objects.equals(
+                getRunkomateriaali(), mittaus.getRunkomateriaali()) && Objects.equals(
+                getRakennusvuosi(), mittaus.getRakennusvuosi()) && Objects.equals(getKatuosoite(),
+                                                                                  mittaus.getKatuosoite()) && Objects.equals(
+                getPostinumero(), mittaus.getPostinumero()) && Objects.equals(getCreated_by_lx(),
+                                                                              mittaus.getCreated_by_lx()) && Objects.equals(
+                getAsennettuAnturiSet(), mittaus.getAsennettuAnturiSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getKohde_id(), getAlkuaika(), getLoppuaika(), getMittaus_asianhallinta_id(),
+                            getPdf_raportin_linkki(), getRakennuksen_pinta_ala(), getPerustamistapa(),
+                            getJulkisivumateriaali(), getRunkomateriaali(), getRakennusvuosi(),
+                            getKatuosoite(),
+                            getPostinumero(), getCreated_by_lx(), getAsennettuAnturiSet());
     }
 }

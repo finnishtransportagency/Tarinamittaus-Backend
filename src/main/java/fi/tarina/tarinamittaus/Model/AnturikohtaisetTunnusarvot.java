@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ANTURIKOHTAISETTUNNUSARVOT", schema = "TARINAM")
@@ -115,5 +116,25 @@ public class AnturikohtaisetTunnusarvot implements Serializable {
 
     public void setAsennettuAnturi(AsennettuAnturi asennettuAnturi) {
         this.asennettuAnturi = asennettuAnturi;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AnturikohtaisetTunnusarvot)) return false;
+        AnturikohtaisetTunnusarvot that = (AnturikohtaisetTunnusarvot) o;
+        return getMittaussuunta_xyz() == that.getMittaussuunta_xyz() && getTunnusarvo_id().equals(
+                that.getTunnusarvo_id()) && Objects.equals(getTarinan_maksimiarvo(),
+                                                           that.getTarinan_maksimiarvo()) && Objects.equals(
+                getHallitseva_taajuus(), that.getHallitseva_taajuus()) && Objects.equals(
+                getTarinan_tunnusluku_vw95_rms(),
+                that.getTarinan_tunnusluku_vw95_rms()) && getAsennettuAnturi().equals(
+                that.getAsennettuAnturi());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTunnusarvo_id(), getMittaussuunta_xyz(), getTarinan_maksimiarvo(),
+                            getHallitseva_taajuus(), getTarinan_tunnusluku_vw95_rms(), getAsennettuAnturi());
     }
 }
