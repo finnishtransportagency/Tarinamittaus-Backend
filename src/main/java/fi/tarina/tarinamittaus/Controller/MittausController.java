@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "mittaus/")
@@ -26,6 +27,13 @@ public class MittausController {
     @GetMapping
     public List<Mittaus> getMittausList() {
         return mittausService.getMittausList();
+    }
+
+    @GetMapping(path = "search")
+    public List<Mittaus> find(
+            @RequestParam Optional<String> searchKeyword) {
+        if (searchKeyword.isPresent()) return mittausService.searchMittausListByKeyword(searchKeyword.get());
+        throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(path = "{id}")
