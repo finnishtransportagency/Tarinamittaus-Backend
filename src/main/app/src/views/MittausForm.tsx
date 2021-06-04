@@ -9,10 +9,10 @@ import AsennettuAnturiForm from './AsennettuAnturiForm';
 import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
 import { Form as FForm } from 'formik';
 import { Button } from 'react-bootstrap';
-import { values } from 'mobx';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
 import { useParams } from 'react-router-dom';
+import IMittaus from '../types/interfaces/mittaus.interface';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -75,32 +75,59 @@ const validationSchema = Yup.object().shape({
 })
 
 const postData = async (url = '', data = {}) => {
-  // Default options are marked with *
   const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
 }
 
+const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset = 0) => {
+  const response = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  });
+  return response.json();
+}
+
+const initializeEmptyFields = (mittaus: IMittaus): IMittaus => Object.entries(mittaus)
+  .reduce((acc, [k, v]) => ({
+  ...acc,
+  [k]: v || "",
+}), {} as IMittaus);
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
+  const [fetchedValues, setFetchedValues] = React.useState<IMittaus | null>(null);
   console.log("mittausform", mittaus)
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+
+  React.useEffect(() => {
+    const fetchAndSetData = async () => {
+      const data = await getData(`http://localhost:8080/mittaus/${id}`);
+      setFetchedValues(initializeEmptyFields(data));
+    }
+    id && fetchAndSetData();
+}, [id]);
   return (
     <>
-      <h2>Mittauksen tiedot: {id}</h2>
+      <h2>Mittauksen tiedot: {id ? id : "ei tunnusta"}</h2>
       <Formik
-        initialValues={{
+        initialValues={ fetchedValues || {
           alkuaika: '',
           loppuaika: '',
           mittaus_asianhallinta_id: '',
@@ -116,6 +143,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
           asennettuAnturi: [],
         }}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
           console.log(JSON.stringify(values));
           postData(`http://localhost:8080/mittaus/`, { ...values })

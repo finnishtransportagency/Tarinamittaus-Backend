@@ -16,4 +16,3 @@ const MittausView = observer(({ mittaus }: { mittaus: MittausStore }) => {
   )
 })
 export default MittausView;
-
