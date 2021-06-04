@@ -25,12 +25,8 @@ public class MittausController {
         this.mittausService = mittausService;
     }
 
-    @GetMapping
-    public List<Mittaus> getMittausList() {
-        return mittausService.getMittausList();
-    }
 
-    @GetMapping(path = "search")
+    @GetMapping
     public List<Mittaus> find(
             MittausSearchParameters parameters
                              ) {
