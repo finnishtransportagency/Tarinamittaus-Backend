@@ -75,6 +75,7 @@ const validationSchema = Yup.object().shape({
 })
 
 // TODO: move api methods to different file
+const baseUrl = 'http://localhost:8080/mittaus/';
 const postData = async (url = '', data = {}) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -91,8 +92,8 @@ const postData = async (url = '', data = {}) => {
   return response.json();
 }
 
-const getData = async (url = 'http://localhost:8080/mittaus/') => {
-  return fetch(url, {
+const getData = async (id: string) => {
+  return fetch(baseUrl + id, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
@@ -111,7 +112,6 @@ const getData = async (url = 'http://localhost:8080/mittaus/') => {
 }
 
 const deleteData = async (id: string) => {
-  const baseUrl = 'http://localhost:8080/mittaus/';
   const response = await fetch(baseUrl + id, {
     method: 'DELETE',
     mode: 'cors',
@@ -139,7 +139,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
 
   React.useEffect(() => {
     const fetchAndSetData = async () => {
-      const data = await getData(`http://localhost:8080/mittaus/${id}`);
+      const data = await getData(id);
       if (!data) return;
       setFetchedValues(initializeEmptyFields(data));
     }
@@ -149,7 +149,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
     <>
-      <h2>Mittauksen tiedot: {id ? id : "ei tunnusta"}</h2>
+      <h2>Mittauksen tiedot: {id ? `(kohdetunnus ${id})` : "(Uusi mittaus)"}</h2>
       <Formik
         initialValues={ fetchedValues || {
           alkuaika: '',
