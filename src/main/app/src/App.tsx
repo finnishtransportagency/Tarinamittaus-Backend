@@ -33,7 +33,6 @@ function App() {
                                 <Route key={i} {...route} />
                             ))}
                         </Switch>
-                        <Redirect to='/mittauslista' />
                     </Col>
 
                 </Row>

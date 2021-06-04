@@ -12,6 +12,7 @@ import { Button } from 'react-bootstrap';
 import { values } from 'mobx';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
+import { useParams } from 'react-router-dom';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -94,9 +95,10 @@ const postData = async (url = '', data = {}) => {
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   console.log("mittausform", mittaus)
+  const { id } = useParams();
   return (
     <>
-      <h2>Mittauksen tiedot</h2>
+      <h2>Mittauksen tiedot: {id}</h2>
       <Formik
         initialValues={{
           alkuaika: '',

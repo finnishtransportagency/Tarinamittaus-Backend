@@ -15,6 +15,7 @@ const webpackConfig = (): Configuration => ({
     filename: 'bundle.js',
     libraryTarget: 'umd',
     libraryExport: 'default',
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {

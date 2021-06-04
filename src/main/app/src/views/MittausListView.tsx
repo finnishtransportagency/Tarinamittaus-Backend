@@ -71,7 +71,7 @@ const MittausListView = () => {
             {mittausData ? mittausData.slice(startIndex, endIndex).map((mittaus: IMittaus, idx) => (
               <tr key={idx}>
                 <td>
-                  {`${mittaus.alkuaika} - ${mittaus.loppuaika}`}
+                  <Link to={`/mittaus/${mittaus.kohde_id}`}>{`${mittaus.alkuaika} - ${mittaus.loppuaika}`}</Link>
                 </td>
                 <td>
                   {mittaus.katuosoite || "ei osoitetta"}
