@@ -92,6 +92,22 @@ const postData = async (url = '', data = {}) => {
   return response.json();
 }
 
+const putData = async (data = {}) => {
+  const response = await fetch(baseUrl, {
+    method: 'PUT',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  });
+  return response.json();
+}
+
 const getData = async (id: string) => {
   return fetch(baseUrl + id, {
     method: 'GET',
@@ -284,6 +300,13 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                       onClick={() => deleteData(id)}
                     >
                       Poista
+                  </Button>
+                  <Button
+                      type="button"
+                      variant="primary"
+                      onClick={() => putData(formik.values)}
+                    >
+                      Päivitä
                   </Button>
                 </> :
                 <>
