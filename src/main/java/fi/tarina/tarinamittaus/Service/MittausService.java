@@ -5,10 +5,14 @@ import fi.tarina.tarinamittaus.Repository.AnturiRepository;
 import fi.tarina.tarinamittaus.Repository.AnturikohtaisetTunnusarvotRepository;
 import fi.tarina.tarinamittaus.Repository.MittausRepository;
 import fi.tarina.tarinamittaus.Repository.AsennuspaikanTyyppiRepository;
+import fi.tarina.tarinamittaus.Specification.MittausSearchParameters;
+import fi.tarina.tarinamittaus.Specification.MittausSpecifications;
 import fi.tarina.tarinamittaus.Util.MittausMapper;
+import fi.tarina.tarinamittaus.Util.MittausMapperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -111,8 +115,13 @@ public class MittausService {
     }
 
     @Transactional
-    public List<Mittaus> searchMittausListByKeyword(String keyword) {
-        return mittausRepository.search(keyword);
+    public List<Mittaus> searchMittausListByKeyword(MittausSearchParameters params) {
+        System.out.println("params?? " + params.toString());
+        Specification specification1 = MittausSpecifications.mittausKeywordLike(params.getSearchKeyword());
+        Specification specification2 = MittausSpecifications.mittausSquareArea(params.getSquareArea());
+
+        Specification specification = Specification.where(specification1).and(specification2);
+        return mittausRepository.findAll(specification);
     }
 
     @Transactional

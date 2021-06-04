@@ -4,13 +4,15 @@ package fi.tarina.tarinamittaus.Repository;
 import fi.tarina.tarinamittaus.Model.AsennuspaikanTyyppi;
 import fi.tarina.tarinamittaus.Model.Mittaus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface MittausRepository extends JpaRepository<Mittaus, Integer> {
+public interface MittausRepository extends JpaRepository<Mittaus, Integer>,
+                                           JpaSpecificationExecutor<Mittaus> {
 
 //    Double rakennuksen_pinta_ala, " ",Integer rakennusvuosi, " ",
 

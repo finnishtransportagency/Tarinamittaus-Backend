@@ -3,6 +3,7 @@ package fi.tarina.tarinamittaus.Controller;
 import fi.tarina.tarinamittaus.Model.Mittaus;
 import fi.tarina.tarinamittaus.Model.MittausDto;
 import fi.tarina.tarinamittaus.Service.MittausService;
+import fi.tarina.tarinamittaus.Specification.MittausSearchParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,9 @@ public class MittausController {
 
     @GetMapping(path = "search")
     public List<Mittaus> find(
-            @RequestParam Optional<String> searchKeyword) {
-        if (searchKeyword.isPresent()) return mittausService.searchMittausListByKeyword(searchKeyword.get());
-        throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+            MittausSearchParameters parameters
+                             ) {
+         return mittausService.searchMittausListByKeyword(parameters);
     }
 
     @GetMapping(path = "{id}")
