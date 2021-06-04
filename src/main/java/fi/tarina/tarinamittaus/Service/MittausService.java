@@ -115,13 +115,22 @@ public class MittausService {
     }
 
     @Transactional
-    public List<Mittaus> searchMittausListByKeyword(MittausSearchParameters params) {
+    public List<Mittaus> searchMittausListByKeyword(MittausSearchParameters params) throws Exception {
         System.out.println("params?? " + params.toString());
-        Specification specification1 = MittausSpecifications.mittausKeywordLike(params.getSearchKeyword());
-        Specification specification2 = MittausSpecifications.mittausSquareArea(params.getSquareArea());
+        try {
+            Specification specification1 = MittausSpecifications.mittausKeywordLike(params.getSearchKeyword());
+            Specification specification2 = MittausSpecifications.mittausSquareArea(params);
+            Specification specification3 =
+                    MittausSpecifications.mittausConstructionYear(params);
 
-        Specification specification = Specification.where(specification1).and(specification2);
-        return mittausRepository.findAll(specification);
+            Specification specification = Specification
+                    .where(specification1)
+                    .and(specification2)
+                    .and(specification3);
+            return mittausRepository.findAll(specification);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Transactional

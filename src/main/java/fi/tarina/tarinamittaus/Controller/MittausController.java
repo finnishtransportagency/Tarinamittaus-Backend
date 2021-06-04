@@ -34,7 +34,11 @@ public class MittausController {
     public List<Mittaus> find(
             MittausSearchParameters parameters
                              ) {
-         return mittausService.searchMittausListByKeyword(parameters);
+        try {
+            return mittausService.searchMittausListByKeyword(parameters);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @GetMapping(path = "{id}")
