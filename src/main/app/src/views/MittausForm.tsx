@@ -74,6 +74,7 @@ const validationSchema = Yup.object().shape({
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
+// TODO: move api methods to different file
 const postData = async (url = '', data = {}) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -90,9 +91,29 @@ const postData = async (url = '', data = {}) => {
   return response.json();
 }
 
-const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset = 0) => {
-  const response = await fetch(url, {
+const getData = async (url = 'http://localhost:8080/mittaus/') => {
+  return fetch(url, {
     method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  }).then(data => data.json())
+    .then(json => json.status && json.status !== 200 ? null : json)
+    .catch(err => {
+      console.error(err);
+      return null;
+    });
+}
+
+const deleteData = async (id: string) => {
+  const baseUrl = 'http://localhost:8080/mittaus/';
+  const response = await fetch(baseUrl + id, {
+    method: 'DELETE',
     mode: 'cors',
     cache: 'no-cache',
     credentials: 'same-origin',
@@ -119,10 +140,13 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   React.useEffect(() => {
     const fetchAndSetData = async () => {
       const data = await getData(`http://localhost:8080/mittaus/${id}`);
+      if (!data) return;
       setFetchedValues(initializeEmptyFields(data));
     }
     id && fetchAndSetData();
-}, [id]);
+  }, [id]);
+
+  if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
     <>
       <h2>Mittauksen tiedot: {id ? id : "ei tunnusta"}</h2>
@@ -252,18 +276,33 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               name="created_by_lx"
               readOnly={false}
             />
-            <Button
-              type="button"
-              className="outline"
-              onClick={formik.handleReset}
-              disabled={!formik.dirty || formik.isSubmitting}
-            >
-              Reset
-            </Button>
-            <Button type="submit" disabled={formik.isSubmitting}>
-              Submit
-            </Button>
-            <DisplayFormikState props={formik} />
+            <div id="button_container">
+              {id ? <>
+                  <Button
+                      type="button"
+                      variant="danger"
+                      onClick={() => deleteData(id)}
+                    >
+                      Poista
+                  </Button>
+                </> :
+                <>
+                  <Button
+                    type="button"
+                    className="outline"
+                    onClick={formik.handleReset}
+                    disabled={!formik.dirty || formik.isSubmitting}
+                  >
+                    Tyhjennä
+                  </Button>
+                  <Button type="submit" disabled={formik.isSubmitting}>
+                    Lähetä
+                  </Button>
+                </>
+              }
+            </div>
+
+            {/* <DisplayFormikState props={formik} /> */}
           </FForm>
 
         )}
