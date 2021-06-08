@@ -2,6 +2,7 @@ import IAsennettuAnturi from "./asennettuAnturi.interface";
 
 
 export default interface IMittaus {
+  kohde_id: number
   alkuaika: string
   loppuaika: string
   mittaus_asianhallinta_id: string

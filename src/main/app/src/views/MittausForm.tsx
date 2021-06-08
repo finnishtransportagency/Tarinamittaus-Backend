@@ -9,9 +9,10 @@ import AsennettuAnturiForm from './AsennettuAnturiForm';
 import AsennettuAnturiStore from '../stores/AsennettuAnturiStore';
 import { Form as FForm } from 'formik';
 import { Button } from 'react-bootstrap';
-import { values } from 'mobx';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
+import { useParams } from 'react-router-dom';
+import IMittaus from '../types/interfaces/mittaus.interface';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -73,32 +74,100 @@ const validationSchema = Yup.object().shape({
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
+// TODO: move api methods to different file
+const baseUrl = 'http://localhost:8080/mittaus/';
 const postData = async (url = '', data = {}) => {
-  // Default options are marked with *
   const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
 }
 
+const putData = async (data = {}) => {
+  const response = await fetch(baseUrl, {
+    method: 'PUT',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  });
+  return response.json();
+}
+
+const getData = async (id: string) => {
+  return fetch(baseUrl + id, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  }).then(data => data.json())
+    .then(json => json.status && json.status !== 200 ? null : json)
+    .catch(err => {
+      console.error(err);
+      return null;
+    });
+}
+
+const deleteData = async (id: string) => {
+  const response = await fetch(baseUrl + id, {
+    method: 'DELETE',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  });
+  return response.json();
+}
+
+const initializeEmptyFields = (mittaus: IMittaus): IMittaus => Object.entries(mittaus)
+  .reduce((acc, [k, v]) => ({
+  ...acc,
+  [k]: v || "",
+}), {} as IMittaus);
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
+  const [fetchedValues, setFetchedValues] = React.useState<IMittaus | null>(null);
   console.log("mittausform", mittaus)
+  const { id } = useParams<{ id: string }>();
+
+  React.useEffect(() => {
+    const fetchAndSetData = async () => {
+      const data = await getData(id);
+      if (!data) return;
+      setFetchedValues(initializeEmptyFields(data));
+    }
+    id && fetchAndSetData();
+  }, [id]);
+
+  if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
     <>
-      <h2>Mittauksen tiedot</h2>
+      <h2>Mittauksen tiedot: {id ? `(kohdetunnus ${id})` : "(Uusi mittaus)"}</h2>
       <Formik
-        initialValues={{
+        initialValues={ fetchedValues || {
           alkuaika: '',
           loppuaika: '',
           mittaus_asianhallinta_id: '',
@@ -114,6 +183,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
           asennettuAnturi: [],
         }}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
           console.log(JSON.stringify(values));
           postData(`http://localhost:8080/mittaus/`, { ...values })
@@ -222,18 +292,40 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               name="created_by_lx"
               readOnly={false}
             />
-            <Button
-              type="button"
-              className="outline"
-              onClick={formik.handleReset}
-              disabled={!formik.dirty || formik.isSubmitting}
-            >
-              Reset
-            </Button>
-            <Button type="submit" disabled={formik.isSubmitting}>
-              Submit
-            </Button>
-            <DisplayFormikState props={formik} />
+            <div id="button_container">
+              {id ? <>
+                  <Button
+                      type="button"
+                      variant="danger"
+                      onClick={() => deleteData(id)}
+                    >
+                      Poista
+                  </Button>
+                  <Button
+                      type="button"
+                      variant="primary"
+                      onClick={() => putData(formik.values)}
+                    >
+                      Päivitä
+                  </Button>
+                </> :
+                <>
+                  <Button
+                    type="button"
+                    className="outline"
+                    onClick={formik.handleReset}
+                    disabled={!formik.dirty || formik.isSubmitting}
+                  >
+                    Tyhjennä
+                  </Button>
+                  <Button type="submit" disabled={formik.isSubmitting}>
+                    Lähetä
+                  </Button>
+                </>
+              }
+            </div>
+
+            {/* <DisplayFormikState props={formik} /> */}
           </FForm>
 
         )}
