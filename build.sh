@@ -13,8 +13,8 @@ pushd src/main/app
 npm install
 npm run build
 rm -rf ../webapp/build/*
-cp -r build/* ../webapp/
-rm -rf build
+cp -r dist/* ../webapp/
+rm -rf dist
 popd
 echo "... done!"
 
