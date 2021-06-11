@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
 
 import IMittaus from "../types/interfaces/mittaus.interface";
+import { fullRestURL } from "../App";
 
+const baseUrl = fullRestURL();
 
-const getData = async (url = 'http://localhost:8080/mittaus/', data = {}, offset = 0) => {
+const getData = async (url = baseUrl, data = {}, offset = 0) => {
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.

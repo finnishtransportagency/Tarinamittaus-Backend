@@ -13,6 +13,7 @@ import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
 import { useParams } from 'react-router-dom';
 import IMittaus from '../types/interfaces/mittaus.interface';
+import { fullRestURL } from '../App';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -75,7 +76,9 @@ const validationSchema = Yup.object().shape({
 })
 
 // TODO: move api methods to different file
-const baseUrl = 'http://localhost:8080/mittaus/';
+// const baseUrl = 'http://localhost:8080/mittaus/';
+const baseUrl = fullRestURL();
+
 const postData = async (url = '', data = {}) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -186,7 +189,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
           console.log(JSON.stringify(values));
-          postData(`http://localhost:8080/mittaus/`, { ...values })
+          postData(`${baseUrl}`, { ...values })
           .then(res => {
             console.log(res);
             console.log(res.data);
