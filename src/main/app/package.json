@@ -81,5 +81,11 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-manifest-plugin": "^3.1.1"
+  },
+  "homepage": ".",
+  "proxy": {
+    "/tarinamittaus/rest": {
+      "target": "http://localhost:8080"
+    }
   }
 }
