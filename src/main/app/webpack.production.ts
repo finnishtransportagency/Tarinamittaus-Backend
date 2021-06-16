@@ -4,6 +4,28 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+// import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin';
+
+import * as paths from './config/paths'
+
+// ----- THESE ARE FROM TIETOKATALOGI -----
+// Webpack uses `publicPath` to determine where the app is being served from.
+// It requires a trailing slash, or the file assets will get an incorrect path.
+const publicPath = paths.servedPath;
+// Some apps do not use client-side routing with pushState.
+// For these, "homepage" can be set to "." to enable relative asset paths.
+const shouldUseRelativeAssetPaths = publicPath === "./";
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
+const publicUrl = publicPath.slice(0, -1);
+// ----- THESE ARE FROM TIETOKATALOGI -----
+
+// Assert this just to be safe.
+// Development builds of React are slow and not intended for production.
+// if (env.stringified["process.env"].NODE_ENV !== '"production"') {
+//   throw new Error("Production builds must have NODE_ENV=production.");
+// }
 
 const webpackConfig = (): Configuration => ({
   mode: 'production',
@@ -17,6 +39,7 @@ const webpackConfig = (): Configuration => ({
     filename: 'bundle.js',
     libraryTarget: 'umd',
     libraryExport: 'default',
+    publicPath: publicPath
   },
   module: {
     rules: [
