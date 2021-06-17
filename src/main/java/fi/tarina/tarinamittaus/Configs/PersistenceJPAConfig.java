@@ -1,6 +1,5 @@
 package fi.tarina.tarinamittaus.Configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -19,13 +18,11 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class PersistenceJPAConfig{
 
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em
-                = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "fi.tarina.tarimittaus.Model" });
+        em.setPackagesToScan(new String[] { "fi.tarina.tarinamittaus.Model" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -41,9 +38,10 @@ public class PersistenceJPAConfig{
         dataSource.setUrl("jdbc:oracle:thin:@localhost:1521/xe");
         dataSource.setUsername("tarinam");
         dataSource.setPassword("livirules");
-        dataSource.setSchema("TARINAM");
+        //dataSource.setSchema("TARINAM");
         return dataSource;
     }
+
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -63,5 +61,4 @@ public class PersistenceJPAConfig{
 
         return properties;
     }
-
 }
