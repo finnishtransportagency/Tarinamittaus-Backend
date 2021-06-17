@@ -62,6 +62,12 @@
 
         <!--testiii lisää deployhin-->
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.8</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
             <version>9.0.45</version>
@@ -95,8 +101,8 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>-->
         </dependency>
 
         <dependency>
@@ -152,6 +158,10 @@
                 <exclusion>
                     <artifactId>servlet-api</artifactId>
                     <groupId>javax.servlet</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -246,7 +256,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.6.3.Final</version>
+            <version>5.5.2.Final</version>
         </dependency>
         <dependency>
             <groupId>org.dbunit</groupId>
@@ -320,22 +330,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <excludes>-->
-<!--                        <exclude>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                        </exclude>-->
-<!--                        <exclusion>-->
-<!--                            <artifactId>servlet-api</artifactId>-->
-<!--                            <groupId>javax.servlet</groupId>-->
-<!--                        </exclusion>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -346,6 +341,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -374,6 +370,7 @@
             </snapshots>
             <url>file://${project.basedir}/lib</url>
         </repository>
+
     </repositories>
 
 </project>
