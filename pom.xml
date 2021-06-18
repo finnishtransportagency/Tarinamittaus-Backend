@@ -86,11 +86,9 @@
 <!--            </exclusions>-->
 <!--        </dependency>-->
         <dependency>
-            <groupId>com.oracle</groupId>
+            <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>-->
+            <version>11.2.0.4</version>
         </dependency>
 
         <dependency>
