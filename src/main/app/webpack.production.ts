@@ -1,9 +1,12 @@
 import path from 'path';
-import { Configuration } from 'webpack';
+import { Configuration, optimize } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+
 // import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin';
 
 import * as paths from './config/paths'
@@ -19,6 +22,9 @@ const shouldUseRelativeAssetPaths = publicPath === "./";
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
+
+// Note: defined here because it will be used more than once.
+const cssFilename = "static/css/[name].[contenthash:8].css";
 // ----- THESE ARE FROM TIETOKATALOGI -----
 
 // Assert this just to be safe.
@@ -36,10 +42,15 @@ const webpackConfig = (): Configuration => ({
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
     libraryTarget: 'umd',
     libraryExport: 'default',
-    publicPath: publicPath
+    // Generated JS file names (with nested folders).
+    // There will be one main bundle, and one file per asynchronous chunk.
+    // We don't currently advertise code splitting but Webpack supports it.
+    filename: "static/js/[name].[chunkhash:8].js",
+    chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
+    // We inferred the "public path" (such as / or /my-project) from homepage.
+    publicPath: publicPath,
   },
   module: {
     rules: [
@@ -56,7 +67,7 @@ const webpackConfig = (): Configuration => ({
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]',
+              name: "static/media/[name].[hash:8].[ext]"
             },
           },
         ],
@@ -67,7 +78,7 @@ const webpackConfig = (): Configuration => ({
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -84,6 +95,7 @@ const webpackConfig = (): Configuration => ({
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({filename: cssFilename}),
     new HtmlWebpackPlugin({ template: './public/index.html', manifest: './public/manifest.json' }),
     new Dotenv({ path: './environment/.env.production' }),
     new CompressionPlugin({
