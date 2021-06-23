@@ -77,4 +77,9 @@ public class MittausController {
         }
     }
 
+    @GetMapping("test")
+    public String test() {
+        return "This endpoint works";
+    }
+
 }
