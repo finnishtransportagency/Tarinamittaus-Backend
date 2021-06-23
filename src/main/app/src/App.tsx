@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import './App.css';
 import urljoin from "url-join";
@@ -44,7 +44,7 @@ function App() {
 export default App;
 
 const BaseRestURL =
-    process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/rest";
+    process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus";
 
 export function fullURL(...urls: string[]) {
     // NB: user with browserhistory

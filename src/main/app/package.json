@@ -86,7 +86,7 @@
   },
   "homepage": ".",
   "proxy": {
-    "/tarinamittaus/rest": {
+    "/tarinamittaus/mittaus": {
       "target": "http://localhost:8080"
     }
   }
