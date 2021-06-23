@@ -43,8 +43,9 @@ function App() {
 
 export default App;
 
-const BaseRestURL =
-    process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus";
+// This comes as undefined for some reason
+// const BaseRestURL =
+//     process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus";
 
 export function fullURL(...urls: string[]) {
     // NB: user with browserhistory
@@ -53,5 +54,13 @@ export function fullURL(...urls: string[]) {
 }
 
 export function fullRestURL(...urls: string[]) {
+    // This works
+    const BaseRestURL =
+        process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus";
+
+    //--- degugging ---
+    const urlstring = urljoin(`/${BaseRestURL}`, ...urls);
+    console.log(`urlstring: ${urlstring}, baserestURL ${BaseRestURL}`);
+    //---
     return urljoin(`/${BaseRestURL}`, ...urls);
 }
