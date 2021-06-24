@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/mittaus")
+@RequestMapping(path = "/rest/mittaus")
 public class MittausController {
 
     private MittausService mittausService;

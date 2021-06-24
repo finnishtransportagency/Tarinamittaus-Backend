@@ -174,6 +174,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Haluatko varmasti poistaa mittauksen?'))
       deleteData(id)
+      history.push('/mittauslista');
   }
   
   const onClickUpdate = (values: any) => {
@@ -211,7 +212,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
             console.log(res);
             console.log(res.data);
             setSubmitting(false);
-            history.push('/');
+            history.push('/mittauslista');
           })
           .catch(err => {
             console.log(err);
