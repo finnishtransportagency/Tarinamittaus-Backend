@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, HashRouter } from 'react-router-dom';
 
 import './App.css';
 import urljoin from "url-join";
@@ -11,7 +11,7 @@ import routes from './App.routes';
 
 function App() {
     return (
-        <Router>
+        <HashRouter>
             <Container fluid>
                 <Row>
                     <Col sm={2}>
@@ -37,7 +37,7 @@ function App() {
 
                 </Row>
             </Container>
-        </Router>
+        </HashRouter>
     );
 }
 
@@ -56,7 +56,7 @@ export function fullURL(...urls: string[]) {
 export function fullRestURL(...urls: string[]) {
     // This works
     const BaseRestURL =
-        process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus/";
+        process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/rest/mittaus/";
 
     //--- degugging ---
     const urlstring = urljoin(`/${BaseRestURL}`, ...urls);

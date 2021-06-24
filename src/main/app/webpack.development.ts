@@ -66,7 +66,7 @@ const webpackConfig = (): Configuration => ({
     open: true,
     historyApiFallback: true,
     proxy: {
-      '/tarinamittaus/mittaus/': {
+      '/tarinamittaus/rest/mittaus/': {
         target: 'http://localhost:8080',
         secure: false
       }
