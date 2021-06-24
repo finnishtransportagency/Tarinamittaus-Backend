@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "mittaus/")
+@RequestMapping(path = "/mittaus")
 public class MittausController {
 
     private MittausService mittausService;
@@ -25,7 +23,6 @@ public class MittausController {
         this.mittausService = mittausService;
     }
 
-
     @GetMapping
     public List<Mittaus> find(
             MittausSearchParameters parameters
@@ -33,7 +30,8 @@ public class MittausController {
         try {
             return mittausService.searchMittausListByKeyword(parameters);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new CustomBadRequestException();
         }
     }
 
@@ -43,7 +41,8 @@ public class MittausController {
             Mittaus mittaus = mittausService.getMittaus(id);
             return new ResponseEntity<>(mittaus, HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new CustomNotFoundException();
         }
     }
 
@@ -54,7 +53,8 @@ public class MittausController {
             Mittaus savedMittaus = mittausService.saveMittaus(mittausRequest);
             return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new CustomBadRequestException();
         }
     }
 
@@ -64,7 +64,8 @@ public class MittausController {
             this.mittausService.deleteMittaus(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new CustomNotFoundException();
         }
     }
 
@@ -73,13 +74,13 @@ public class MittausController {
         try {
             mittausService.updateMittaus(dto);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new CustomNotFoundException();
         }
     }
 
-    @GetMapping(path = "test")
+    @GetMapping(path = "/test")
     public ResponseEntity<String> test() {
         return new ResponseEntity<>("This works", HttpStatus.OK);
     }
-
 }

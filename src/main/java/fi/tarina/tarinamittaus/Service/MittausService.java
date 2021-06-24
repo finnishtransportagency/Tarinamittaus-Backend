@@ -8,16 +8,14 @@ import fi.tarina.tarinamittaus.Repository.AsennuspaikanTyyppiRepository;
 import fi.tarina.tarinamittaus.Specification.MittausSearchParameters;
 import fi.tarina.tarinamittaus.Specification.MittausSpecifications;
 import fi.tarina.tarinamittaus.Util.MittausMapper;
-import fi.tarina.tarinamittaus.Util.MittausMapperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,15 +116,18 @@ public class MittausService {
     public List<Mittaus> searchMittausListByKeyword(MittausSearchParameters params) throws Exception {
         System.out.println("params?? " + params.toString());
         try {
-            Specification specification1 = MittausSpecifications.mittausKeywordLike(params.getSearchKeyword());
-            Specification specification2 = MittausSpecifications.mittausSquareArea(params);
-            Specification specification3 =
-                    MittausSpecifications.mittausConstructionYear(params);
+            Specification<Mittaus> specification1 = MittausSpecifications.mittausKeywordLike(params.getSearchKeyword());
+            Specification<Mittaus> specification2 = MittausSpecifications.mittausSquareArea(params);
+            Specification<Mittaus> specification3 = MittausSpecifications.mittausConstructionYear(params);
 
-            Specification specification = Specification
+            // TODO - FIX THIS
+            /*
+            Specification<Mittaus> specification = Specification
                     .where(specification1)
                     .and(specification2)
                     .and(specification3);
+            */
+            Specification<Mittaus> specification = specification1;
             return mittausRepository.findAll(specification);
         } catch (Exception e) {
             throw e;
@@ -135,20 +136,26 @@ public class MittausService {
 
     @Transactional
     public Mittaus getMittaus(Integer id) {
+        /*
         Optional<Mittaus> mittausOptional = mittausRepository.findById(id);
         if (mittausOptional.isPresent()) {
             return mittausOptional.get();
         }
         throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
+        */
+        Mittaus mittaus = mittausRepository.findOne(id);
+        return mittaus;
     }
 
     @Transactional
     public void deleteMittaus(Integer id) {
-        boolean exists = mittausRepository.existsById(id);
+        // boolean exists = mittausRepository.existsById(id);
+        boolean exists = mittausRepository.exists(id);
         if (!exists) {
             throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
         } else {
-            mittausRepository.deleteById(id);
+            // mittausRepository.deleteById(id);
+            mittausRepository.delete(id);
         }
     }
 
