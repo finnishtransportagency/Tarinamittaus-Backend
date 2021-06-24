@@ -19,7 +19,7 @@ function App() {
                         <ul className="nav nav-pills">
                             <li className="nav-item" key={"mittauslista"}>
                                 <Link
-                                    to={fullURL("mittauslista")}
+                                    to={fullURL("/mittauslista")}
                                     className="nav-link"
                                 >
                                     Mittauslista

@@ -11,7 +11,7 @@ import { Form as FForm } from 'formik';
 import { Button } from 'react-bootstrap';
 import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import IMittaus from '../types/interfaces/mittaus.interface';
 import { fullRestURL } from '../App';
 
@@ -76,7 +76,6 @@ const validationSchema = Yup.object().shape({
 })
 
 // TODO: move api methods to different file
-// const baseUrl = 'http://localhost:8080/mittaus/';
 const baseUrl = fullRestURL();
 
 const postData = async (url = '', data = {}) => {
@@ -159,11 +158,29 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   React.useEffect(() => {
     const fetchAndSetData = async () => {
       const data = await getData(id);
-      if (!data) return;
+      if (!data) {
+        setFetchedValues(null);
+        return; 
+      }
       setFetchedValues(initializeEmptyFields(data));
     }
     id && fetchAndSetData();
   }, [id]);
+
+  const history = useHistory();
+
+  const onClickDelete = (id: string) => {
+    // TODO: replace with material ui modal
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Haluatko varmasti poistaa mittauksen?'))
+      deleteData(id)
+  }
+  
+  const onClickUpdate = (values: any) => {
+    putData(values)
+    history.go(0);
+  }
+  
 
   if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
@@ -194,6 +211,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
             console.log(res);
             console.log(res.data);
             setSubmitting(false);
+            history.push('/');
           })
           .catch(err => {
             console.log(err);
@@ -300,14 +318,14 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   <Button
                       type="button"
                       variant="danger"
-                      onClick={() => deleteData(id)}
+                      onClick={() => {onClickDelete(id)}}
                     >
                       Poista
                   </Button>
                   <Button
                       type="button"
                       variant="primary"
-                      onClick={() => putData(formik.values)}
+                      onClick={() => onClickUpdate(formik.values)}
                     >
                       Päivitä
                   </Button>
