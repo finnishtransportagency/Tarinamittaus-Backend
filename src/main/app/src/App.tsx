@@ -19,7 +19,7 @@ function App() {
                         <ul className="nav nav-pills">
                             <li className="nav-item" key={"mittauslista"}>
                                 <Link
-                                    to="/mittauslista"
+                                    to={fullURL("mittauslista")}
                                     className="nav-link"
                                 >
                                     Mittauslista
@@ -56,7 +56,7 @@ export function fullURL(...urls: string[]) {
 export function fullRestURL(...urls: string[]) {
     // This works
     const BaseRestURL =
-        process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus";
+        process.env.REACT_APP_BASE_REST_URL || "tarinamittaus/mittaus/";
 
     //--- degugging ---
     const urlstring = urljoin(`/${BaseRestURL}`, ...urls);

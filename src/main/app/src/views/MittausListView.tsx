@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
+import axios from 'axios';
 
 import IMittaus from "../types/interfaces/mittaus.interface";
 import { fullRestURL } from "../App";
@@ -34,9 +35,16 @@ const MittausListView = () => {
     const [nItems, setNItems] = React.useState(0);
 
     const fetchAndSetData = async () => {
-        const data = await getData();
-        setMittausData(data);
-        setNItems(data.length);
+      console.log(`fetching from ${baseUrl}`)
+      axios.get(baseUrl)
+      .then(response => {
+        setMittausData(response.data);
+        setNItems(response.data.length);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     }
 
     React.useEffect(() => {
