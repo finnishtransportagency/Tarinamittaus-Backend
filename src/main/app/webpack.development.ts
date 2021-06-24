@@ -61,7 +61,16 @@ const webpackConfig = (): Configuration => ({
     ],
   },
   devServer: {
+    host: 'localhost',
+    port: 3000,
+    open: true,
     historyApiFallback: true,
+    proxy: {
+      '/tarinamittaus/mittaus/': {
+        target: 'http://localhost:8080',
+        secure: false
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './public/index.html', manifest: './public/manifest.json' }),
