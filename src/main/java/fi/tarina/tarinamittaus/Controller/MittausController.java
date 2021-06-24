@@ -77,9 +77,9 @@ public class MittausController {
         }
     }
 
-    @GetMapping("test")
-    public String test() {
-        return "This endpoint works";
+    @GetMapping(path = "test")
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("This works", HttpStatus.OK);
     }
 
 }
