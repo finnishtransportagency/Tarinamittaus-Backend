@@ -13,12 +13,12 @@ const AsennettuAnturiForm = ({ asennettuAnturi, namespace }: { asennettuAnturi: 
     <>
       <h3>Anturien ja anturikohtaisten arvojen lisääminen</h3>
       <CustomNumber
-        label="gps_lat"
+        label="Anturin sijainti Itä-koordinaatti metreinä (ETRS-TM35FIN)"
         name={`${namespace}.gps_lat`}
         readOnly={false}
       />
       <CustomNumber
-        label="gps_long"
+        label="Anturin sijainti Pohjois-koordinaatti metreinä (ETRS-TM35FIN)"
         name={`${namespace}.gps_long`}
         readOnly={false}
       />
@@ -28,20 +28,15 @@ const AsennettuAnturiForm = ({ asennettuAnturi, namespace }: { asennettuAnturi: 
         readOnly={false}
       />
       <CustomNumber
-        label="Kerros"
+        label="Anturin asennuskerros rakennuksessa"
         name={`${namespace}.kerros`}
         readOnly={false}
       />
       <p>Tip: Asennuskerros: Maa tai sokkeli = 0, 1 kerros = 1 jne. kellari = -1</p>
       <AsennuspaikanTyyppiForm namespace={`${namespace}.asennuspaikanTyyppi`} paikka={asennettuAnturi.asennuspaikanTyyppi} />
       <CustomNumber
-        label="Etaisyys radasta jos eri"
+        label="Anturin etäisyys radasta metreinä"
         name={`${namespace}.etaisyys_radasta_jos_eri`}
-        readOnly={false}
-      />
-      <CustomText
-        label="Malli"
-        name={`${namespace}.malli`}
         readOnly={false}
       />
       <AnturikohtaisetTunnusarvotForm namespace={`${namespace}.anturikohtaisetTunnusarvot`} tunnusarvot={asennettuAnturi.anturikohtaisetTunnusarvot} />

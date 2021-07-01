@@ -32,7 +32,7 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
         <Row>
           {tunnusarvot.map((tunnusarvo, index) => (
             <Col key={index} sm="3">
-              <Form.Label >Tärinän maksimiarvo mm/s ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
+              <Form.Label >Värähtelyn huippuarvo mm/s ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
               <Field
                 type="number"
                 name={`${namespace}.${index}.tarinan_maksimiarvo`}

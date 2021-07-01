@@ -33,9 +33,8 @@ const validationSchemaAsennuspaikanTyyppi = Yup.object({
 })
 
 const validationSchemaAsennettuAnturi = Yup.object({
-  malli: Yup.string().required('Malli vaaditaan'),
-  gps_lat: Yup.number().min(-90).max(90).required('Koordinaatit eivät voi olla tyhjiä'),
-  gps_long: Yup.number().min(0).max(180).required('Koordinaatit eivät voi olla tyhjiä'),
+  gps_lat: Yup.number().required('Koordinaatit eivät voi olla tyhjiä'),
+  gps_long: Yup.number().required('Koordinaatit eivät voi olla tyhjiä'),
   etaisyys_radasta_jos_eri: Yup.number().min(0).required(),
   kerros: Yup.number().integer().required(),
   sijoituspaikan_lisaselite: Yup.string(),
@@ -71,7 +70,7 @@ const validationSchema = Yup.object().shape({
     .matches(/^[0-9]+$/, "Postinumero ei voi sisältää kirjaimia")
     .min(5, 'Täytyy olla 5 numeroa')
     .max(5, 'Täytyy olla 5 numeroa'),
-  created_by_lx: Yup.string().trim().required(),
+  created_by_lx: Yup.string().trim(),
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
@@ -219,7 +218,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               readOnly={false}
             />
             <CustomText
-              label="Lisää mittausraportin linkki"
+              label="Mittausraportin linkki"
               name="pdf_raportin_linkki"
               readOnly={false}
             />
@@ -253,7 +252,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                 </div>
               )}
             />
-            <h4>Kohdetiedot (Anturin 1 sijainnin perusteella</h4>
+            <h4>Mittauskohteentiedot</h4>
             <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
               label="Rakennuksen pinta-ala"
