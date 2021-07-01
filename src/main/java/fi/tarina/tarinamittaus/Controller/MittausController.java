@@ -31,7 +31,7 @@ public class MittausController {
             return mittausService.searchMittausListByKeyword(parameters);
         } catch (Exception e) {
             // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-            throw new CustomBadRequestException();
+            throw new CustomBadRequestException(e.getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ public class MittausController {
             return new ResponseEntity<>(mittaus, HttpStatus.OK);
         } catch (Exception e) {
             // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-            throw new CustomNotFoundException();
+            throw new CustomNotFoundException(e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class MittausController {
             return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
         } catch (Exception e) {
             // throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-            throw new CustomBadRequestException();
+            throw new CustomBadRequestException(e.getMessage());
         }
     }
 
