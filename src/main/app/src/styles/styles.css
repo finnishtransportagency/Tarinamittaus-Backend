@@ -35,3 +35,13 @@ li.nav-item a:hover {
 .nav-level-3 {
     margin-left: 2em;
 }
+
+#button_container {
+    background-color: #a9a9a9;
+    position: sticky;
+    bottom: 0px;
+}
+
+#button_container button {
+    margin: 6px 0px 6px 6px;
+}
