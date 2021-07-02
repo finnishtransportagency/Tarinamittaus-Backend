@@ -303,16 +303,18 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               name="katuosoite"
               readOnly={false}
             />
+            <div style={{'borderBottom': 'aliceblue groove medium'}}>
+              <CustomText
+                label="Postinumero"
+                name="postinumero"
+                readOnly={false}
+              />
+            </div>
             <CustomText
-              label="Postinumero"
-              name="postinumero"
-              readOnly={false}
-            />
-            <CustomText
-              label="created_by_lx"
+              label="Tiedot päivittänyt"
               name="created_by_lx"
               readOnly={false}
-            />
+              />
             <div id="button_container">
               {id ? <>
                   <Button
