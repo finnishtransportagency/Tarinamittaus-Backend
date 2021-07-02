@@ -117,7 +117,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
     <>
-      <h2>Mittauksen tiedot: {id ? `(kohdetunnus ${id})` : "(Uusi mittaus)"}</h2>
+      <h2 style={{ marginBottom: '30px' }}>Mittauksen tiedot: {id ? `kohdetunnus ${id}` : 'Uusi mittaus'}</h2>
       <Formik
         initialValues={ fetchedValues || {
           alkuaika: '',
@@ -182,15 +182,17 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                       <div key={index}>
                         <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} />
                         <Button
+                          variant="danger"
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >
                           -
-                       </Button>
+                        </Button>
                         <Button
+                          style={{ marginLeft: '5px' }}
                           onClick={() => arrayHelpers.insert(index, new AsennettuAnturiStore)} // insert an empty string at a position
                         >
                           +
-                       </Button>
+                        </Button>
                       </div>
                     ))
                   ) : (
