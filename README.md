@@ -4,7 +4,7 @@
 
 2. Once running, create schema's and tables by running script from `db/create_schema.sql` eg. using dbeaver
 
-- Clean install `mvn clean install`
+- Clean install `-Dmaven.test.skip=true`
 - Run locally mvn spring-boot:run`
 
 
