@@ -13,7 +13,7 @@ import SeliteTypeEnum from '../types/enums/seliteType.enum';
 import MittausSuuntaTypeEnum from '../types/enums/mittausSuuntaType.enum';
 import { useParams, useHistory } from 'react-router-dom';
 import IMittaus from '../types/interfaces/mittaus.interface';
-import { fullRestURL } from '../App';
+import { getData, deleteData, putData, postData } from '../api';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
@@ -74,74 +74,6 @@ const validationSchema = Yup.object().shape({
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
 })
 
-// TODO: move api methods to different file
-const baseUrl = fullRestURL();
-
-const postData = async (url = '', data = {}) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data)
-  });
-  return response.json();
-}
-
-const putData = async (data = {}) => {
-  const response = await fetch(baseUrl, {
-    method: 'PUT',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data)
-  });
-  return response.json();
-}
-
-const getData = async (id: string) => {
-  return fetch(baseUrl + id, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-  }).then(data => data.json())
-    .then(json => json.status && json.status !== 200 ? null : json)
-    .catch(err => {
-      console.error(err);
-      return null;
-    });
-}
-
-const deleteData = async (id: string) => {
-  const response = await fetch(baseUrl + id, {
-    method: 'DELETE',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-  });
-  return response.json();
-}
 
 const initializeEmptyFields = (mittaus: IMittaus): IMittaus => Object.entries(mittaus)
   .reduce((acc, [k, v]) => ({
@@ -185,7 +117,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   if (id && !fetchedValues) return <div>ei mittausta</div>;
   return (
     <>
-      <h2>Mittauksen tiedot: {id ? `(kohdetunnus ${id})` : "(Uusi mittaus)"}</h2>
+      <h2 style={{ marginBottom: '30px' }}>Mittauksen tiedot: {id ? `kohdetunnus ${id}` : 'Uusi mittaus'}</h2>
       <Formik
         initialValues={ fetchedValues || {
           alkuaika: '',
@@ -205,8 +137,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
-          console.log(JSON.stringify(values));
-          postData(`${baseUrl}`, { ...values })
+          postData({ ...values })
           .then(res => {
             console.log(res);
             console.log(res.data);
@@ -251,15 +182,17 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                       <div key={index}>
                         <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} />
                         <Button
+                          variant="danger"
                           onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
                         >
                           -
-                       </Button>
+                        </Button>
                         <Button
+                          style={{ marginLeft: '5px' }}
                           onClick={() => arrayHelpers.insert(index, new AsennettuAnturiStore)} // insert an empty string at a position
                         >
                           +
-                       </Button>
+                        </Button>
                       </div>
                     ))
                   ) : (

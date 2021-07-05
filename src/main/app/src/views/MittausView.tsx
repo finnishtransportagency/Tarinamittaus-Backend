@@ -10,7 +10,6 @@ import Container from 'react-bootstrap/Container';
 const MittausView = observer(({ mittaus }: { mittaus: MittausStore }) => {
   return (
     <Container fluid>
-      <h1>Tärinätietojen syöttölomake</h1>
       <MittausForm mittaus={mittaus} />
     </Container>
   )
