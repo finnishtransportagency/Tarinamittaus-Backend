@@ -2,6 +2,7 @@ package fi.tarina.tarinamittaus.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,19 @@ public class AsennettuAnturiDto {
 
     private Integer asennuskohtainen_id;
     private String malli;
+    @JsonProperty("gps_lat")
     private Double gpsLat;
+    @JsonProperty("gps_long")
     private Double gpsLong;
     private Double etaisyysRadastaJosEri;
     private Integer kerros;
     private String sijoituspaikanLisaselite;
     private MittausDto mittausDto;
+
+    @JsonProperty("asennuspaikanTyyppi")
     private AsennuspaikanTyyppiDto asennuspaikanTyyppiDto;
+
+    @JsonProperty("anturikohtaisetTunnusarvot")
     private List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos = new ArrayList<>();
 
     public Integer getAsennuskohtainen_id() {
@@ -103,7 +110,16 @@ public class AsennettuAnturiDto {
     public AsennettuAnturiDto() {
     }
 
-    public AsennettuAnturiDto(Integer asennuskohtainen_id, String malli, Double gpsLat, Double gpsLong, Double etaisyysRadastaJosEri, Integer kerros, String sijoituspaikanLisaselite, MittausDto mittausDto, AsennuspaikanTyyppiDto asennuspaikanTyyppiDto, List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos) {
+    public AsennettuAnturiDto(Integer asennuskohtainen_id,
+                              String malli,
+                              Double gpsLat,
+                              Double gpsLong,
+                              Double etaisyysRadastaJosEri,
+                              Integer kerros,
+                              String sijoituspaikanLisaselite,
+                              MittausDto mittausDto,
+                              AsennuspaikanTyyppiDto asennuspaikanTyyppiDto,
+                              List<AnturikohtaisetTunnusarvotDto> anturikohtaisetTunnusarvotDtos) {
         this.asennuskohtainen_id = asennuskohtainen_id;
         this.malli = malli;
         this.gpsLat = gpsLat;

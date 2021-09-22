@@ -1,16 +1,14 @@
 package fi.tarina.tarinamittaus.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class MittausDto implements Serializable {
 
@@ -34,6 +32,7 @@ public class MittausDto implements Serializable {
     private String katuosoite;
     private String postinumero;
     private String created_by_lx;
+    @JsonProperty("asennettuAnturi")
     private List<AsennettuAnturiDto> asennettuAnturiDtos = new ArrayList<>();
 
     public Integer getKohde_id() {
