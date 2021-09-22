@@ -16,11 +16,9 @@ import org.mapstruct.factory.Mappers;
         uses = {AsennettuAnturiMapper.class})
 public interface MittausMapper {
 
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "asennettuAnturiSet", source = "asennettuAnturiDtos")
     void updateMittausFromDto(MittausDto dto, @MappingTarget Mittaus mittaus);
 
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "asennettuAnturiDtos", source = "asennettuAnturiSet")
     void updateDtoFromMittaus(Mittaus mittaus, @MappingTarget MittausDto mittausDto);
 
