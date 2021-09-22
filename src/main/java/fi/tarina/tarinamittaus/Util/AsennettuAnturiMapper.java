@@ -2,6 +2,7 @@ package fi.tarina.tarinamittaus.Util;
 
 import fi.tarina.tarinamittaus.Model.AsennettuAnturi;
 import fi.tarina.tarinamittaus.Model.AsennettuAnturiDto;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,11 +12,10 @@ import org.mapstruct.Mapping;
         AnturikohtaisetTunnusarvotMapper.class})
 public interface AsennettuAnturiMapper {
 
-    @Mapping(source = "asennuspaikanTyyppi", target = "asennuspaikanTyyppiDto")
-    @Mapping(source = "anturikohtaisetTunnusarvotSet", target = "anturikohtaisetTunnusarvotDtos")
+    @Mapping(target = "asennuspaikanTyyppiDto", source = "asennuspaikanTyyppi")
+    @Mapping(target = "anturikohtaisetTunnusarvotDtos", source = "anturikohtaisetTunnusarvotSet")
     AsennettuAnturiDto asennettuAnturiToDto(AsennettuAnturi anturi);
 
-    @Mapping(source = "asennuspaikanTyyppiDto", target = "asennuspaikanTyyppi")
-    @Mapping(source = "anturikohtaisetTunnusarvotDtos", target = "anturikohtaisetTunnusarvotSet")
+    @InheritInverseConfiguration(name = "asennettuAnturiToDto")
     AsennettuAnturi dtoToAsennettuAnturi(AsennettuAnturiDto dto);
 }

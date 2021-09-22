@@ -1,6 +1,5 @@
 package fi.tarina.tarinamittaus.Util;
 
-import fi.tarina.tarinamittaus.Model.AsennettuAnturiDto;
 import fi.tarina.tarinamittaus.Model.AsennuspaikanTyyppi;
 import fi.tarina.tarinamittaus.Model.AsennuspaikanTyyppiDto;
 import org.mapstruct.Mapper;
@@ -9,5 +8,5 @@ import org.mapstruct.Mapper;
         uses = {AsennuspaikanTyyppiFactory.class})
 public interface AsennuspaikanTyyppiMapper {
     AsennuspaikanTyyppiDto asennuspaikanTyyppiToDto(AsennuspaikanTyyppi tyyppi);
-    AsennuspaikanTyyppi dtoToAsennuspaikanTyyppi(AsennettuAnturiDto dto);
+    AsennuspaikanTyyppi dtoToAsennuspaikanTyyppi(AsennuspaikanTyyppiDto dto);
 }
