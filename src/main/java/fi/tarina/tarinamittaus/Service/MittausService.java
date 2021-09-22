@@ -136,25 +136,17 @@ public class MittausService {
 
     @Transactional
     public Mittaus getMittaus(Integer id) {
-        /*
-        Optional<Mittaus> mittausOptional = mittausRepository.findById(id);
-        if (mittausOptional.isPresent()) {
-            return mittausOptional.get();
-        }
-        throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
-        */
+
         Mittaus mittaus = mittausRepository.findOne(id);
         return mittaus;
     }
 
     @Transactional
     public void deleteMittaus(Integer id) {
-        // boolean exists = mittausRepository.existsById(id);
         boolean exists = mittausRepository.exists(id);
         if (!exists) {
             throw new IllegalStateException("Mittaus with id " + id + " doesn't exist");
         } else {
-            // mittausRepository.deleteById(id);
             mittausRepository.delete(id);
         }
     }
@@ -162,15 +154,8 @@ public class MittausService {
     @Transactional
     public Mittaus updateMittaus(MittausDto dto) throws IllegalStateException {
         Mittaus mittaus = getMittaus(dto.getKohde_id());
+
         mittausMapper.updateMittausFromDto(dto, mittaus);
-//        List<AsennettuAnturi> asennettuAnturiList = mittaus.getAsennettuAnturiSet();
-//        for (AsennettuAnturi anturi: asennettuAnturiList) {
-//            List<AnturikohtaisetTunnusarvot> tunnusarvotList = anturi.getAnturikohtaisetTunnusarvotSet();
-//
-//            for (AnturikohtaisetTunnusarvot tunnusarvot : tunnusarvotList) {
-//                AnturikohtaisetTunnusarvot savedTunnusarvot = tunnusarvotRepository.save(tunnusarvot);
-//            }
-//        }
         mittausRepository.save(mittaus);
         return mittaus;
     }
