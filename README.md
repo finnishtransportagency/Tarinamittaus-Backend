@@ -11,3 +11,9 @@
 
 ## Swagger
 `http://localhost:8080/swagger-ui.html`
+
+## Mapstruct
+`https://mapstruct.org/`
+
+## Spring data specification
+`https://attacomsian.com/blog/spring-data-jpa-specifications`
