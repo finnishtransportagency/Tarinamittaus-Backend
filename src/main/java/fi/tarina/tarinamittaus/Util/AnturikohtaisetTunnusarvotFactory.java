@@ -20,11 +20,10 @@ public class AnturikohtaisetTunnusarvotFactory {
     @ObjectFactory
     public AnturikohtaisetTunnusarvot create(AnturikohtaisetTunnusarvotDto dto){
         if (dto.getTunnusarvo_id() == null) return new AnturikohtaisetTunnusarvot();
-        /*
-        Optional<AnturikohtaisetTunnusarvot> tunnusarvotOptional = repository.findById(dto.getTunnusarvo_id());
-        return tunnusarvotOptional.orElseGet(AnturikohtaisetTunnusarvot::new);
-        */
-        AnturikohtaisetTunnusarvot tunnusarvot = repository.findOne(dto.getTunnusarvo_id());
-        return tunnusarvot;
+
+        if (repository.exists(dto.getTunnusarvo_id()))
+            return repository.getOne(dto.getTunnusarvo_id());
+
+        return new AnturikohtaisetTunnusarvot();
     }
 }

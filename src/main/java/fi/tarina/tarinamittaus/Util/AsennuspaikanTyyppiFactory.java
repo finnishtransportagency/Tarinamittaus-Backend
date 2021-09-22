@@ -18,11 +18,10 @@ public class AsennuspaikanTyyppiFactory {
     @ObjectFactory
     public AsennuspaikanTyyppi create(AsennuspaikanTyyppiDto dto) {
         if (dto.getPaikkatyyppi_id() == null) return new AsennuspaikanTyyppi();
-        /*
-        Optional<AsennuspaikanTyyppi> asennuspaikanTyyppi = repository.findById(dto.getPaikkatyyppi_id());
-        return asennuspaikanTyyppi.orElseGet(AsennuspaikanTyyppi::new);
-        */
-        AsennuspaikanTyyppi asennuspaikanTyyppi = repository.findOne(dto.getPaikkatyyppi_id());
-        return asennuspaikanTyyppi;
+
+        if (repository.exists(dto.getPaikkatyyppi_id()))
+            return repository.findOne(dto.getPaikkatyyppi_id());
+
+        return new AsennuspaikanTyyppi();
     }
 }
