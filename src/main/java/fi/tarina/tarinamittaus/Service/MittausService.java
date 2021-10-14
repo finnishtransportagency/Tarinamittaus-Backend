@@ -154,8 +154,18 @@ public class MittausService {
     @Transactional
     public Mittaus updateMittaus(MittausDto dto) throws IllegalStateException {
         Mittaus mittaus = getMittaus(dto.getKohde_id());
-
         mittausMapper.updateMittausFromDto(dto, mittaus);
+        // add missing references to parent objects
+        for (AsennettuAnturi asennettuAnturi : mittaus.getAsennettuAnturiSet()) {
+            if (asennettuAnturi.getMittaus() == null) {
+                asennettuAnturi.setMittaus(mittaus);
+            }
+            for (AnturikohtaisetTunnusarvot anturikohtaisetTunnusarvot : asennettuAnturi.getAnturikohtaisetTunnusarvotSet()) {
+                if (anturikohtaisetTunnusarvot.getAsennettuAnturi() == null) {
+                    anturikohtaisetTunnusarvot.setAsennettuAnturi(asennettuAnturi);
+                }
+            }
+        }
         mittausRepository.save(mittaus);
         return mittaus;
     }
