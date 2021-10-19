@@ -143,8 +143,6 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         onSubmit={(values, { setSubmitting }) => {
           postData({ ...values })
           .then(res => {
-            console.log(res);
-            console.log(res.data);
             setSubmitting(false);
             history.push('/mittauslista');
           })
@@ -184,16 +182,16 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   {formik.values.asennettuAnturi && formik.values.asennettuAnturi.length > 0 ? (
                     formik.values.asennettuAnturi.map((anturi, index) => (
                       <div key={index}>
-                        <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} />
+                        <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} index={index} />
                         <Button
                           variant="danger"
-                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                          onClick={() => arrayHelpers.remove(index)}
                         >
                           -
                         </Button>
                         <Button
                           style={{ marginLeft: '5px' }}
-                          onClick={() => arrayHelpers.insert(index, new AsennettuAnturiStore)} // insert an empty string at a position
+                          onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}
                         >
                           +
                         </Button>
@@ -201,14 +199,13 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                     ))
                   ) : (
                     <Button onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}>
-                      {/* show this when user has removed all friends from the list */}
                      Lisää anturi
                     </Button>
                   )}
                 </div>
               )}
             />
-            <h4>Mittauskohteentiedot</h4>
+            <h4>Mittauskohteen tiedot</h4>
             <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
               label="Rakennuksen pinta-ala"
