@@ -28,7 +28,7 @@ const validationSchemaAsennuspaikanTyyppi = Yup.object({
   lisatiedot: Yup.string().when(['selite'], {
     is: ( selite: string ) => selite === SeliteTypeEnum.muu,
     then: Yup.string().required('Anna lisätiedot'),
-    otherwise: Yup.string()
+    otherwise: Yup.string().nullable()
   })
 })
 
@@ -37,7 +37,7 @@ const validationSchemaAsennettuAnturi = Yup.object({
   gps_long: Yup.number().required('Koordinaatit eivät voi olla tyhjiä'),
   etaisyys_radasta_jos_eri: Yup.number().min(0).required(),
   kerros: Yup.number().integer().required(),
-  sijoituspaikan_lisaselite: Yup.string(),
+  sijoituspaikan_lisaselite: Yup.string().nullable(),
   asennuspaikanTyyppi: validationSchemaAsennuspaikanTyyppi,
   anturikohtaisetTunnusarvot: Yup.array().of(validationSchemaTunnusarvot).max(3)
 })
