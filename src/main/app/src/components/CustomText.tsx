@@ -8,8 +8,8 @@ export const CustomText = ({ label, name, readOnly }: { label: string, name: str
     const [field, meta] = useField(name);
 
     return (
-        <Form.Group as={Row}>
-            <Form.Label column sm="4" htmlFor={name} >{label}</Form.Label>
+        <Form.Group as={Row} className={meta.error && "has-error"}>
+            <Form.Label column sm="4" htmlFor={name}>{label}</Form.Label>
             <Col sm="8">
 
                 <Form.Control

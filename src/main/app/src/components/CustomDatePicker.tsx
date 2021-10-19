@@ -21,11 +21,12 @@ const isValidDate = (date: Date) => (
 );
 
 export const FormikCustomDatePicker = ({ label, name, readOnly }: {label:string, name:string, readOnly:boolean}) => {
-    const [field, _, helpers] = useField(name);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [field, meta, helpers] = useField(name);
     const dateFormat = "yyyy-MM-dd";
 
     return (
-        <Form.Group as={Row}>
+        <Form.Group as={Row} className={meta.error && "has-error"}>
             <Form.Label column sm="4" htmlFor={name}>
                 {label}
             </Form.Label>
@@ -37,11 +38,16 @@ export const FormikCustomDatePicker = ({ label, name, readOnly }: {label:string,
                     disabled={readOnly}
                     selected={field.value ? parse(field.value, dateFormat, new Date()) : null}
                     onChange={( date : Date )  => {
+                        helpers.setTouched(true);
                         const newDate = isValidDate(date) ? format(date, dateFormat) : null;
                         helpers.setValue(newDate);
                     }}
                 />
             </Col>
+            {meta.touched && meta.error &&
+                <small className="react-form-message react-form-message-error">
+                    {meta.error}
+                </small>}
         </Form.Group>
     );
 };

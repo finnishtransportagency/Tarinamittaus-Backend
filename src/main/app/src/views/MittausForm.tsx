@@ -51,14 +51,17 @@ const validationSchema = Yup.object().shape({
       "Loppuaika ei voi olla ennen alkuaikaa"
     )
     .required(),
-  mittaus_asianhallinta_id: Yup.string().trim(),
-  pdf_raportin_linkki: Yup.string().trim(),
-  //ghost field for checking that both mittaus_asianhallinta_id and pdf_raportin_linkki be null: https://github.com/jquense/yup/issues/176
-  as_id_OR_pdf: Yup.bool().when(['mittaus_asianhallinta_id', 'pdf_raportin_linkki'], {
-    is: (mittaus_asianhallinta_id: string, pdf_raportin_linkki: string) =>
-      (!mittaus_asianhallinta_id && !pdf_raportin_linkki),
-    then: Yup.bool().required('Asianhallinta id tai pdf raportin linkki eivät kumpikaan voi olla tyhjiä'),
-    otherwise: Yup.bool()
+  mittaus_asianhallinta_id: Yup.string().trim()
+    .when('pdf_raportin_linkki', {
+      is: (val: any) => !!val,
+      then: Yup.string(),
+      otherwise: Yup.string().required('Joko asianhallintatunnus tai pdf-raportin linkki vaaditaan')
+    }),
+  pdf_raportin_linkki: Yup.string().trim()
+  .when('mittaus_asianhallinta_id', {
+    is: (val: any) => !!val,
+    then: Yup.string(),
+    otherwise: Yup.string().required('Joko asianhallintatunnus tai pdf-raportin linkki vaaditaan')
   }),
   rakennuksen_pinta_ala: Yup.number().positive(),
   julkisivumateriaali: Yup.string().trim(),
@@ -72,7 +75,7 @@ const validationSchema = Yup.object().shape({
     .max(5, 'Täytyy olla 5 numeroa'),
   created_by_lx: Yup.string().trim(),
   asennettuAnturi: Yup.array().of(validationSchemaAsennettuAnturi)
-})
+}, [['mittaus_asianhallinta_id', 'pdf_raportin_linkki']])
 
 
 const initializeEmptyFields = (mittaus: IMittaus): IMittaus => Object.entries(mittaus)
@@ -136,6 +139,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
         }}
         validationSchema={validationSchema}
         enableReinitialize
+        validateOnMount
         onSubmit={(values, { setSubmitting }) => {
           postData({ ...values })
           .then(res => {
@@ -260,6 +264,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   <Button
                       type="button"
                       variant="primary"
+                      disabled={!formik.isValid}
                       onClick={() => onClickUpdate(formik.values)}
                     >
                       Päivitä
@@ -274,7 +279,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   >
                     Tyhjennä
                   </Button>
-                  <Button type="submit" disabled={formik.isSubmitting}>
+                  <Button type="submit" disabled={formik.isSubmitting || !formik.isValid}>
                     Lähetä
                   </Button>
                 </>
