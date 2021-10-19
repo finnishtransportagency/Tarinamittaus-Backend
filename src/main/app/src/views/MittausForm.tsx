@@ -179,29 +179,23 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
               name="asennettuAnturi"
               render={arrayHelpers => (
                 <div>
-                  {formik.values.asennettuAnturi && formik.values.asennettuAnturi.length > 0 ? (
+                  {formik.values.asennettuAnturi && formik.values.asennettuAnturi.length > 0 && (
                     formik.values.asennettuAnturi.map((anturi, index) => (
                       <div key={index}>
                         <AsennettuAnturiForm asennettuAnturi={anturi} namespace={`asennettuAnturi.${index}`} index={index} />
                         <Button
+                          style={{ margin: '6px' }}
                           variant="danger"
                           onClick={() => arrayHelpers.remove(index)}
                         >
-                          -
-                        </Button>
-                        <Button
-                          style={{ marginLeft: '5px' }}
-                          onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}
-                        >
-                          +
+                          Poista anturi
                         </Button>
                       </div>
                     ))
-                  ) : (
-                    <Button onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}>
-                     Lisää anturi
-                    </Button>
                   )}
+                  <Button style={{ margin: '6px' }} onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}>
+                    Lisää anturi
+                  </Button>
                 </div>
               )}
             />
