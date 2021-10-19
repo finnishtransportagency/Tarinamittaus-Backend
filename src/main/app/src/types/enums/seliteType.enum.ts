@@ -3,7 +3,7 @@ enum SeliteTypeEnum {
   maa = 'maa',
   sokkeli = 'sokkeli',
   lattia = 'lattia',
-  seina = 'seinä',
+  seina = 'seina',
   alapohja = 'alapohja',
   katto = 'katto',
   muu = 'muu',

@@ -43,7 +43,7 @@ const validationSchemaAsennettuAnturi = Yup.object({
 })
 
 const validationSchema = Yup.object().shape({
-  alkuaika: Yup.date().required().default(() => new Date()),
+  alkuaika: Yup.date().required(),
   loppuaika: Yup
     .date()
     .min(
