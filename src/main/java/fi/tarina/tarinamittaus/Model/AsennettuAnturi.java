@@ -41,12 +41,14 @@ public class AsennettuAnturi implements Serializable {
     private Double gpsLong;
 
     @Column(name = "ETAISYYS_RADASTA_JOS_ERI")
+    @JsonProperty("etaisyys_radasta_jos_eri")
     private Double etaisyysRadastaJosEri;
 
     @Column(name = "KERROS")
     private Integer kerros;
 
     @Column(name = "SIJOITUSPAIKAN_LISASELITE")
+    @JsonProperty("sijoituspaikan_lisaselite")
     private String sijoituspaikanLisaselite;
 
     // MITTAUS is foreign key in the table

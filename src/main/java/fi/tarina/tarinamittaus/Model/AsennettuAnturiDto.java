@@ -16,8 +16,10 @@ public class AsennettuAnturiDto {
     private Double gpsLat;
     @JsonProperty("gps_long")
     private Double gpsLong;
+    @JsonProperty("etaisyys_radasta_jos_eri")
     private Double etaisyysRadastaJosEri;
     private Integer kerros;
+    @JsonProperty("sijoituspaikan_lisaselite")
     private String sijoituspaikanLisaselite;
     private MittausDto mittausDto;
 
