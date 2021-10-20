@@ -31,23 +31,27 @@ export const FormikCustomDatePicker = ({ label, name, readOnly }: {label:string,
                 {label}
             </Form.Label>
             <Col sm="8">
-                <DatePicker
-                    locale={fi}
-                    dateFormat={dateFormat}
-                    className="tk-field form-control"
-                    disabled={readOnly}
-                    selected={field.value ? parse(field.value, dateFormat, new Date()) : null}
-                    onChange={( date : Date )  => {
-                        helpers.setTouched(true);
-                        const newDate = isValidDate(date) ? format(date, dateFormat) : null;
-                        helpers.setValue(newDate);
-                    }}
-                />
+                <Row style={{ paddingLeft: '15px'}}>
+                    <DatePicker
+                        locale={fi}
+                        dateFormat={dateFormat}
+                        className="tk-field form-control"
+                        disabled={readOnly}
+                        selected={field.value ? parse(field.value, dateFormat, new Date()) : null}
+                        onChange={( date : Date )  => {
+                            helpers.setTouched(true);
+                            const newDate = isValidDate(date) ? format(date, dateFormat) : null;
+                            helpers.setValue(newDate);
+                        }}
+                    />
+                </Row>
+                <Row style={{ paddingLeft: '15px'}}>
+                {meta.touched && meta.error &&
+                    <small className="react-form-message react-form-message-error">
+                        {meta.error}
+                    </small>}
+                </Row>
             </Col>
-            {meta.touched && meta.error &&
-                <small className="react-form-message react-form-message-error">
-                    {meta.error}
-                </small>}
         </Form.Group>
     );
 };

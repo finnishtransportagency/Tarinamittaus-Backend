@@ -11,7 +11,6 @@ export const CustomText = ({ label, name, readOnly }: { label: string, name: str
         <Form.Group as={Row} className={meta.error && "has-error"}>
             <Form.Label column sm="4" htmlFor={name}>{label}</Form.Label>
             <Col sm="8">
-
                 <Form.Control
                     {...field}
                     id={name}
@@ -19,11 +18,11 @@ export const CustomText = ({ label, name, readOnly }: { label: string, name: str
                     type="text"
                     readOnly={readOnly}
                 />
-            </Col>
             {meta.touched && meta.error &&
                 <small className="react-form-message react-form-message-error">
                     {meta.error}
                 </small>}
+            </Col>
         </Form.Group>
     );
 };

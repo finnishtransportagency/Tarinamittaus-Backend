@@ -25,24 +25,5 @@ export const CustomNumber = ({ label, name, readOnly }: { label: string, name: s
                     </small>}
             </Col>
         </Form.Group>
-        // <Row>
-        //     <label htmlFor={name}>
-        //         {label}
-        //     </label>
-        //     <div>
-        //         <input
-        //             {...field}
-        //             id={name}
-        //             placeholder=""
-        //             type="number"
-        //             className="tk-field form-control"
-        //             readOnly={readOnly}
-        //         />
-        //     </div>
-        //     {meta.touched && meta.error &&
-        //         <small className="react-form-message react-form-message-error">
-        //             {meta.error}
-        //         </small>}
-        // </Row>
     );
 };
