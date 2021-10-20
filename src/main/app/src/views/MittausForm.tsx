@@ -199,7 +199,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                 </div>
               )}
             />
-            <h4>Mittauskohteen tiedot</h4>
+            <h3>Mittauskohteen tiedot</h3>
             <p>Mittaus voidaan tallentaa tietokantaan myös ilman rakennustietoja</p>
             <CustomText
               label="Rakennuksen pinta-ala"
