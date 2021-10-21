@@ -30,7 +30,6 @@ public class MittausController {
         try {
             return mittausService.searchMittausListByKeyword(parameters);
         } catch (Exception e) {
-            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             throw new CustomBadRequestException(e.getMessage());
         }
     }
@@ -41,19 +40,20 @@ public class MittausController {
             Mittaus mittaus = mittausService.getMittaus(id);
             return new ResponseEntity<>(mittaus, HttpStatus.OK);
         } catch (Exception e) {
-            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             throw new CustomNotFoundException(e.getMessage());
         }
     }
 
 
     @PostMapping
-    public ResponseEntity<Mittaus> saveMittaus(@Valid @RequestBody Mittaus mittausRequest) {
+    public ResponseEntity<Mittaus> saveMittaus(
+            @RequestHeader(value = "OAM_REMOTE_USER", defaultValue = "local user") String remoteUser,
+            @Valid @RequestBody Mittaus mittausRequest) {
         try {
+            mittausRequest.setCreated_by_lx(remoteUser);
             Mittaus savedMittaus = mittausService.saveMittaus(mittausRequest);
             return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
         } catch (Exception e) {
-            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             throw new CustomBadRequestException(e.getMessage());
         }
     }
@@ -64,17 +64,18 @@ public class MittausController {
             this.mittausService.deleteMittaus(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             throw new CustomNotFoundException();
         }
     }
 
     @PutMapping
-    public void updateMittaus(@RequestBody MittausDto dto) {
+    public void updateMittaus(
+            @RequestHeader(value = "OAM_REMOTE_USER", defaultValue = "local user") String remoteUser,
+            @RequestBody MittausDto dto) {
         try {
+            dto.setCreated_by_lx(remoteUser);
             mittausService.updateMittaus(dto);
         } catch (Exception e) {
-            // throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             throw new CustomNotFoundException();
         }
     }
