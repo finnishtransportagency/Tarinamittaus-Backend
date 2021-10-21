@@ -11,11 +11,11 @@
     - name: Unarchive local war to remote tomcat folder
       unarchive: src=../../target/TarinamittausUI.war dest=/var/lib/tomcat/webapps/tarinamittaus mode=0755 owner=tomcat group=tomcat
 
-    - name: Copy hibernate config
-      template: src=../../src/main/resources/hibernate.cfg.xml dest=/var/lib/tomcat/webapps/tarinamittaus/WEB-INF/classes/hibernate.cfg.xml mode=0755 owner=tomcat group=tomcat
+#    - name: Copy hibernate config
+#      template: src=../../src/main/resources/hibernate.cfg.xml dest=/var/lib/tomcat/webapps/tarinamittaus/WEB-INF/classes/hibernate.cfg.xml mode=0755 owner=tomcat group=tomcat
 
-    - name: Copy hibernate config
-      template: src=../../src/main/resources/application.properties dest=/var/lib/tomcat/webapps/tarinamittaus/WEB-INF/classes/application.properties mode=0755 owner=tomcat group=tomcat
+    - name: Copy application properties
+      template: src=../../src/main/resources/application.template.properties dest=/var/lib/tomcat/webapps/tarinamittaus/WEB-INF/classes/application.properties mode=0755 owner=tomcat group=tomcat
 #    - name: Copy required jars to right places in server
 #      shell: "{{ item }}"
 #      with_items:

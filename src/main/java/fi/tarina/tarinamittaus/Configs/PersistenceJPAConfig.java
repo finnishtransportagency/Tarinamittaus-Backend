@@ -1,5 +1,6 @@
 package fi.tarina.tarinamittaus.Configs;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -18,6 +19,24 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class PersistenceJPAConfig{
 
+    @Value("${spring.dataSource.username}")
+    private String username;
+
+    @Value("${spring.dataSource.password}")
+    private String password;
+
+    @Value("${spring.dataSource.url}")
+    private String url;
+
+    @Value("${spring.jpa.properties.hibernate.dialect}")
+    private String dialect;
+
+    @Value("${spring.dataSource.driver-class-name}")
+    private String driverClassName;
+
+    public PersistenceJPAConfig() {
+    }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -34,10 +53,17 @@ public class PersistenceJPAConfig{
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        dataSource.setUrl("jdbc:oracle:thin:@localhost:1521/xe");
-        dataSource.setUsername("tarinam");
-        dataSource.setPassword("livirules");
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+
+//        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+//        dataSource.setUrl("jdbc:oracle:thin:@***REMOVED***:1521:***REMOVED***");
+//        dataSource.setUrl("jdbc:oracle:thin:@localhost:1521/xe");
+//        dataSource.setUsername("tarinam");
+//        dataSource.setPassword("***REMOVED***");
+//        dataSource.setPassword("livirules");
         //dataSource.setSchema("TARINAM");
         return dataSource;
     }
@@ -57,7 +83,7 @@ public class PersistenceJPAConfig{
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+        properties.setProperty("hibernate.dialect", dialect);
 
         return properties;
     }
