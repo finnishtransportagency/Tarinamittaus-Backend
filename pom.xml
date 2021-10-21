@@ -323,6 +323,7 @@
                 <includes>
                     <!-- <include>ojdbc6.jar</include>-->
                     <include>hibernate.cfg.xml</include>
+                    <include>application.properties</include>
                     <!--  <include>testhibernate.cfg.xml</include> -->
                 </includes>
                 <excludes>
