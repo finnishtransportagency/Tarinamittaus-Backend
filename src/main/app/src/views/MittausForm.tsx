@@ -27,30 +27,40 @@ const validationSchemaAsennuspaikanTyyppi = Yup.object({
   selite: Yup.mixed<string>().oneOf(Object.values(SeliteTypeEnum)).required(),
   lisatiedot: Yup.string().when(['selite'], {
     is: ( selite: string ) => selite === SeliteTypeEnum.muu,
-    then: Yup.string().required('Anna lisätiedot'),
+    then: Yup.string().required('Lisätiedot vaaditaan, kun sijoituspaikka on "muu"'),
     otherwise: Yup.string().nullable()
   })
 })
 
 const validationSchemaAsennettuAnturi = Yup.object({
-  gps_lat: Yup.number().required('Koordinaatit eivät voi olla tyhjiä'),
-  gps_long: Yup.number().required('Koordinaatit eivät voi olla tyhjiä'),
-  etaisyys_radasta_jos_eri: Yup.number().min(0).required(),
-  kerros: Yup.number().integer().required(),
+  gps_lat: Yup.number()
+    .typeError('Koordinaatin tulee olla numeerinen')
+    .required('Koordinaatit eivät voi olla tyhjiä'),
+  gps_long: Yup.number()
+    .typeError('Koordinaatin tulee olla numeerinen')    
+    .required('Koordinaatit eivät voi olla tyhjiä'),
+  etaisyys_radasta_jos_eri: Yup.number().min(0, "Etäisyyden tulee olla positiivinen")
+    .typeError("Etäisyyden tulee olla numero")
+    .required("Etäisyys vaaditaan"),
+  kerros: Yup.number().integer()
+    .typeError("Kerroksen tulee olla numero")
+    .required("Kerros vaaditaan"),
   sijoituspaikan_lisaselite: Yup.string().nullable(),
   asennuspaikanTyyppi: validationSchemaAsennuspaikanTyyppi,
   anturikohtaisetTunnusarvot: Yup.array().of(validationSchemaTunnusarvot).max(3)
 })
 
 const validationSchema = Yup.object().shape({
-  alkuaika: Yup.date().required(),
+  alkuaika: Yup.date().typeError("Alkuajan tulee olla päivämäärä")
+    .required("Alkuaika vaaditaan"),
   loppuaika: Yup
     .date()
     .min(
       Yup.ref('alkuaika'),
       "Loppuaika ei voi olla ennen alkuaikaa"
     )
-    .required(),
+    .typeError("Loppuajan tulee olla päivämäärä")
+    .required("Loppuaika vaaditaan"),
   mittaus_asianhallinta_id: Yup.string().trim()
     .when('pdf_raportin_linkki', {
       is: (val: any) => !!val,
@@ -63,11 +73,15 @@ const validationSchema = Yup.object().shape({
     then: Yup.string(),
     otherwise: Yup.string().required('Joko asianhallintatunnus tai pdf-raportin linkki vaaditaan')
   }),
-  rakennuksen_pinta_ala: Yup.number().positive(),
+  rakennuksen_pinta_ala: Yup.number()
+    .typeError("Pinta-alan tulee olla numero")
+    .positive("Pinta-alan tulee olla positiivinen"),
   julkisivumateriaali: Yup.string().trim(),
   runkomateriaali: Yup.string().trim(),
   perustamistapa: Yup.string().trim(),
-  rakennusvuosi: Yup.number().positive().integer().min(1500).max(new Date().getFullYear()),
+  rakennusvuosi: Yup.number().positive().integer()
+    .min(1500, "Liian pieni vuosiluku")
+    .max(new Date().getFullYear(), "Liian suuri vuosiluku"),
   katuosoite: Yup.string().trim(),
   postinumero: Yup.string().trim()
     .matches(/^[0-9]+$/, "Postinumero ei voi sisältää kirjaimia")
