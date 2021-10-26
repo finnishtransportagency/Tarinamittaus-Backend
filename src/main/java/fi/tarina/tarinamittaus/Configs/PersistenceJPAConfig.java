@@ -57,14 +57,6 @@ public class PersistenceJPAConfig{
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-
-//        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-//        dataSource.setUrl("jdbc:oracle:thin:@***REMOVED***:1521:***REMOVED***");
-//        dataSource.setUrl("jdbc:oracle:thin:@localhost:1521/xe");
-//        dataSource.setUsername("tarinam");
-//        dataSource.setPassword("***REMOVED***");
-//        dataSource.setPassword("livirules");
-        //dataSource.setSchema("TARINAM");
         return dataSource;
     }
 
