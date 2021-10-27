@@ -12,7 +12,7 @@ pushd src/main/app
 
 npm install
 npm run build
-rm -rf ../webapp/build/*
+rm -rf ../webapp/static/*
 cp -r dist/* ../webapp/
 rm -rf dist
 popd
