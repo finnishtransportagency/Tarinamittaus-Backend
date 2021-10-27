@@ -207,7 +207,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                       </div>
                     ))
                   )}
-                  <Button style={{ margin: '6px' }} onClick={() => arrayHelpers.push(new AsennettuAnturiStore)}>
+                  <Button style={{ margin: '6px' }} onClick={() => arrayHelpers.push(new AsennettuAnturiStore())}>
                     Lisää anturi
                   </Button>
                 </div>

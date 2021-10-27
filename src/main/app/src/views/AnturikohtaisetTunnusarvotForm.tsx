@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Field } from 'formik'
 import { IAnturikohtaisetTunnusarvo } from '../types/interfaces/anturikohtaisetTunnusarvot.interface'
-import { Col, Row, Form } from 'react-bootstrap';
+import { CustomSensorNumber } from '../components/CustomSensorNumber';
+import { Row, Form } from 'react-bootstrap';
 
 
 const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvot: IAnturikohtaisetTunnusarvo[], namespace: string }) => {
@@ -17,42 +17,36 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
       <Form.Group>
         <Row>
           {tunnusarvot.map((tunnusarvo, index) => (
-            <Col key={index} sm="3">
-              <Form.Label >Hallitseva taajuus Hz ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
-              <Field
-                type="number"
-                name={`${namespace}.${index}.hallitseva_taajuus`}
-                readOnly={false}
-              />
-            </Col>
+            <CustomSensorNumber
+              key={index}
+              label={`Hallitseva taajuus Hz (${tunnusarvo.mittaussuunta_xyz}-akseli)`}
+              name={`${namespace}.${index}.hallitseva_taajuus`}
+              readOnly={false}
+            />
           ))}
         </Row>
       </Form.Group>
       <Form.Group>
         <Row>
           {tunnusarvot.map((tunnusarvo, index) => (
-            <Col key={index} sm="3">
-              <Form.Label >Värähtelyn huippuarvo mm/s ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
-              <Field
-                type="number"
-                name={`${namespace}.${index}.tarinan_maksimiarvo`}
-                readOnly={false}
-              />
-            </Col>
+            <CustomSensorNumber
+              key={index}
+              label={`Värähtelyn huippuarvo mm/s (${tunnusarvo.mittaussuunta_xyz}-akseli)`}
+              name={`${namespace}.${index}.tarinan_maksimiarvo`}
+              readOnly={false}
+            />
           ))}
         </Row>
       </Form.Group>
       <Form.Group>
         <Row>
           {tunnusarvot.map((tunnusarvo, index) => (
-            <Col key={index} sm="3">
-              <Form.Label >Tärinän tunnusluku mm/s Vw95_RMS ({tunnusarvo.mittaussuunta_xyz}-akseli)</Form.Label>
-              <Field
-                type="number"
-                name={`${namespace}.${index}.tarinan_tunnusluku_vw95_rms`}
-                readOnly={false}
-              />
-            </Col>
+            <CustomSensorNumber
+              key={index}
+              label={`Tärinän tunnusluku mm/s Vw95_RMS (${tunnusarvo.mittaussuunta_xyz}-akseli)`}
+              name={`${namespace}.${index}.tarinan_tunnusluku_vw95_rms`}
+              readOnly={false}
+            />
           ))}
         </Row>
       </Form.Group>
