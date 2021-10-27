@@ -17,9 +17,15 @@ import { getData, deleteData, putData, postData } from '../api';
 
 const validationSchemaTunnusarvot = Yup.object({
   mittaussuunta_xyz: Yup.mixed<string>().oneOf(Object.values(MittausSuuntaTypeEnum)).required(),
-  tarinan_maksimiarvo: Yup.number().min(0),
-  hallitseva_taajuus: Yup.number().min(0),
-  tarinan_tunnusluku_vw95_rms: Yup.number().min(0)
+  tarinan_maksimiarvo: Yup.number().min(0,
+    "Arvon tulee olla positiivinen"
+  ),
+  hallitseva_taajuus: Yup.number().min(0,
+    "Arvon tulee olla positiivinen"
+  ),
+  tarinan_tunnusluku_vw95_rms: Yup.number().min(0,
+    "Arvon tulee olla positiivinen"
+  )
 })
 
 
