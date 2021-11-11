@@ -1,10 +1,9 @@
 import React from "react";
 
-import { Field } from "formik";
 import AsennuspaikanTyyppiStore from "../stores/AsennuspaikanTyyppiStore";
-import SeliteTypeEnum from "../types/enums/seliteType.enum";
 import { Form, Col, Row } from "react-bootstrap";
 import { StackedText } from "../components/StackedText";
+import { CustomSelect } from "../components/CustomSelect";
 
 const AsennuspaikanTyyppiForm = ({
   paikka,
@@ -16,17 +15,12 @@ const AsennuspaikanTyyppiForm = ({
   return (
     <div key={namespace}>
       <Form.Group as={Row}>
-        <Form.Label column sm="4">
-          Anturin sijoituspaikka
-        </Form.Label>
-        <Col sm="2">
-          <Field name={`${namespace}.selite`} as="select">
-            {Object.keys(SeliteTypeEnum).map((key) => (
-              <option value={key} key={key}>
-                {key}
-              </option>
-            ))}
-          </Field>
+        <Col sm="6">
+          <CustomSelect
+            label="Anturin sijoituspaikka"
+            name={`${namespace}.selite`}
+            readOnly={false}
+          />
         </Col>
         <Col sm="6">
           <StackedText
