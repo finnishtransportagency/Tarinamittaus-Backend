@@ -1,18 +1,32 @@
-import React from 'react';
+import React from "react";
 
-import { IAnturikohtaisetTunnusarvo } from '../types/interfaces/anturikohtaisetTunnusarvot.interface'
-import { CustomSensorNumber } from '../components/CustomSensorNumber';
-import { Row, Form } from 'react-bootstrap';
+import { IAnturikohtaisetTunnusarvo } from "../types/interfaces/anturikohtaisetTunnusarvot.interface";
+import { CustomSensorNumber } from "../components/CustomSensorNumber";
+import { Row, Form, Col } from "react-bootstrap";
 
-
-const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvot: IAnturikohtaisetTunnusarvo[], namespace: string }) => {
-  console.log('AnturikohtaisetTunnusarvotForm', namespace);
+const AnturikohtaisetTunnusarvotForm = ({
+  tunnusarvot,
+  namespace,
+}: {
+  tunnusarvot: IAnturikohtaisetTunnusarvo[];
+  namespace: string;
+}) => {
   return (
     <div key={namespace}>
-      <h4>Tärinän tunnusluvut ja huippuarvot</h4>
-      <p>Suunta x on radansuuntainen</p>
-      <p>Suunta y on kohtisuoraan rataan nähden</p>
-      <p>Suunta z on pystysuuntainen värähtely</p>
+      <Row>
+        <Col sm="12">
+          <h4>Tärinän tunnusluvut ja huippuarvot</h4>
+        </Col>
+        <Col sm="4">
+          <p>Suunta x on radansuuntainen</p>
+        </Col>
+        <Col sm="4">
+          <p>Suunta y on kohtisuoraan rataan nähden</p>
+        </Col>
+        <Col sm="4">
+          <p>Suunta z on pystysuuntainen värähtely</p>
+        </Col>
+      </Row>
 
       <Form.Group>
         <Row>
@@ -51,7 +65,7 @@ const AnturikohtaisetTunnusarvotForm = ({ tunnusarvot, namespace }: { tunnusarvo
         </Row>
       </Form.Group>
     </div>
-  )
-}
+  );
+};
 
-export default AnturikohtaisetTunnusarvotForm
+export default AnturikohtaisetTunnusarvotForm;
