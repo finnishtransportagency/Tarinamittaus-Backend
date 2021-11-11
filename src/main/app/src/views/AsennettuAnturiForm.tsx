@@ -1,8 +1,8 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
-import { CustomNumber } from "../components/CustomNumber";
-import { CustomText } from "../components/CustomText";
+import { StackedNumber } from "../components/StackedNumber";
+import { StackedText } from "../components/StackedText";
 import AsennettuAnturiStore from "../stores/AsennettuAnturiStore";
 import AnturikohtaisetTunnusarvotForm from "./AnturikohtaisetTunnusarvotForm";
 import AsennuspaikanTyyppiForm from "./AsennuspaikanTyyppiForm";
@@ -30,55 +30,55 @@ const AsennettuAnturiForm = ({
           boxShadow: "0px 1px 1px rgb(0 0 0 / 5%)",
         }}
       >
-        <Row>
+        <Form.Group as={Row}>
           <Col sm={6}>
-            <CustomNumber
+            <StackedNumber
               label="Anturin sijainti Itä-koordinaatti metreinä (ETRS-TM35FIN)"
               name={`${namespace}.gps_lat`}
               readOnly={false}
             />
           </Col>
           <Col sm={6}>
-            <CustomNumber
+            <StackedNumber
               label="Anturin sijainti Pohjois-koordinaatti metreinä (ETRS-TM35FIN)"
               name={`${namespace}.gps_long`}
               readOnly={false}
             />
           </Col>
-        </Row>
-        <Row>
+        </Form.Group>
+        <Form.Group as={Row}>
           <Col sm={6}>
-            <CustomText
+            <StackedText
               label="Sijoituspaikan lisäselite"
               name={`${namespace}.sijoituspaikan_lisaselite`}
               readOnly={false}
             />
           </Col>
           <Col sm={6}>
-            <CustomNumber
+            <StackedNumber
               label="Anturin asennuskerros rakennuksessa"
               name={`${namespace}.kerros`}
               readOnly={false}
             />
+            <p>
+              Tip: Asennuskerros: Maa tai sokkeli = 0, 1 kerros = 1 jne. kellari
+              = -1
+            </p>
           </Col>
-        </Row>
-        <p>
-          Tip: Asennuskerros: Maa tai sokkeli = 0, 1 kerros = 1 jne. kellari =
-          -1
-        </p>
+        </Form.Group>
         <AsennuspaikanTyyppiForm
           namespace={`${namespace}.asennuspaikanTyyppi`}
           paikka={asennettuAnturi.asennuspaikanTyyppi}
         />
-        <Row>
+        <Form.Group as={Row}>
           <Col sm={6}>
-            <CustomNumber
+            <StackedNumber
               label="Anturin etäisyys radasta metreinä"
               name={`${namespace}.etaisyys_radasta_jos_eri`}
               readOnly={false}
             />
           </Col>
-        </Row>
+        </Form.Group>
         <AnturikohtaisetTunnusarvotForm
           namespace={`${namespace}.anturikohtaisetTunnusarvot`}
           tunnusarvot={asennettuAnturi.anturikohtaisetTunnusarvot}

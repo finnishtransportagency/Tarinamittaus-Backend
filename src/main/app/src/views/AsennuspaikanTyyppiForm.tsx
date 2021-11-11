@@ -3,8 +3,8 @@ import React from "react";
 import { Field } from "formik";
 import AsennuspaikanTyyppiStore from "../stores/AsennuspaikanTyyppiStore";
 import SeliteTypeEnum from "../types/enums/seliteType.enum";
-import { CustomText } from "../components/CustomText";
 import { Form, Col, Row } from "react-bootstrap";
+import { StackedText } from "../components/StackedText";
 
 const AsennuspaikanTyyppiForm = ({
   paikka,
@@ -29,7 +29,7 @@ const AsennuspaikanTyyppiForm = ({
           </Field>
         </Col>
         <Col sm="6">
-          <CustomText
+          <StackedText
             label="Anturin sijoituspaikan lisätiedot"
             name={`${namespace}.lisatiedot`}
             readOnly={false}
