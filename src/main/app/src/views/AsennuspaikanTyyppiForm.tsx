@@ -1,17 +1,10 @@
 import React from "react";
 
-import AsennuspaikanTyyppiStore from "../stores/AsennuspaikanTyyppiStore";
 import { Form, Col, Row } from "react-bootstrap";
 import { StackedText } from "../components/StackedText";
 import { CustomSelect } from "../components/CustomSelect";
 
-const AsennuspaikanTyyppiForm = ({
-  paikka,
-  namespace,
-}: {
-  paikka: AsennuspaikanTyyppiStore;
-  namespace: string;
-}) => {
+const AsennuspaikanTyyppiForm = ({ namespace }: { namespace: string }) => {
   return (
     <div key={namespace}>
       <Form.Group as={Row}>

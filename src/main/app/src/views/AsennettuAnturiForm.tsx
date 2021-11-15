@@ -68,7 +68,6 @@ const AsennettuAnturiForm = ({
         </Form.Group>
         <AsennuspaikanTyyppiForm
           namespace={`${namespace}.asennuspaikanTyyppi`}
-          paikka={asennettuAnturi.asennuspaikanTyyppi}
         />
         <Form.Group as={Row}>
           <Col sm={6}>

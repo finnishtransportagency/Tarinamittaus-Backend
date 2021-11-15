@@ -110,20 +110,29 @@ const validationSchema = Yup.object().shape(
   [["mittaus_asianhallinta_id", "pdf_raportin_linkki"]]
 );
 
-const initializeEmptyFields = (mittaus: IMittaus): IMittaus =>
-  Object.entries(mittaus).reduce(
-    (acc, [k, v]) => ({
-      ...acc,
-      [k]: v || "",
-    }),
-    {} as IMittaus
-  );
+/**
+ * Replaces null values with "" (recursively)
+ */
+const initializeEmptyFields = (data: any): any => {
+  if (Array.isArray(data)) {
+    return data.map((entry) => initializeEmptyFields(entry));
+  }
+  if (typeof data === "object" && data !== null) {
+    return Object.entries(data).reduce(
+      (acc, [k, v]) => ({
+        ...acc,
+        [k]: initializeEmptyFields(v),
+      }),
+      {}
+    );
+  }
+  return data === null ? "" : data;
+};
 
 const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   const [fetchedValues, setFetchedValues] = React.useState<IMittaus | null>(
     null
   );
-  console.log("mittausform", mittaus);
   const { id } = useParams<{ id: string }>();
 
   React.useEffect(() => {

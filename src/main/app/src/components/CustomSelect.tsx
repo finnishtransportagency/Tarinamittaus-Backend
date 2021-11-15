@@ -16,13 +16,12 @@ export const CustomSelect = ({
   readOnly: boolean;
 }) => {
   const [field, meta, { setValue, setTouched }] = useField(name);
-  console.log("value", field.value);
 
   const options = Object.keys(SeliteTypeEnum).map((k) => ({
     value: k,
     label: k,
   }));
-  console.log("options", options);
+
   return (
     <Col className={meta.error && "has-error"}>
       <Form.Label htmlFor="select">{label}</Form.Label>
