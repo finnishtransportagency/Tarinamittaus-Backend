@@ -152,7 +152,8 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
   const onClickDelete = (id: string) => {
     // TODO: replace with material ui modal
     // eslint-disable-next-line no-restricted-globals
-    if (confirm("Haluatko varmasti poistaa mittauksen?")) deleteData(id);
+    if (!confirm("Haluatko varmasti poistaa mittauksen?")) return;
+    deleteData(id);
     history.push("/mittauslista");
   };
 
