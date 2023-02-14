@@ -50,9 +50,10 @@ public class MittausController {
             @RequestHeader(value = "OAM_REMOTE_USER", defaultValue = "local user") String remoteUser,
             @Valid @RequestBody Mittaus mittausRequest) {
         try {
-            mittausRequest.setCreated_by_lx(remoteUser);
-            Mittaus savedMittaus = mittausService.saveMittaus(mittausRequest);
-            return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
+//            mittausRequest.setCreated_by_lx(remoteUser);
+//            Mittaus savedMittaus = mittausService.saveMittaus(mittausRequest);
+//            return new ResponseEntity<>(savedMittaus, HttpStatus.CREATED);
+            return new ResponseEntity<>(mittausRequest, HttpStatus.OK);
         } catch (Exception e) {
             throw new CustomBadRequestException(e.getMessage());
         }
@@ -61,7 +62,7 @@ public class MittausController {
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Mittaus> deleteMittaus(@PathVariable("id") Integer id) {
         try {
-            this.mittausService.deleteMittaus(id);
+//            this.mittausService.deleteMittaus(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             throw new CustomNotFoundException();
@@ -73,8 +74,8 @@ public class MittausController {
             @RequestHeader(value = "OAM_REMOTE_USER", defaultValue = "local user") String remoteUser,
             @RequestBody MittausDto dto) {
         try {
-            dto.setCreated_by_lx(remoteUser);
-            mittausService.updateMittaus(dto);
+//            dto.setCreated_by_lx(remoteUser);
+//            mittausService.updateMittaus(dto);
         } catch (Exception e) {
             throw new CustomNotFoundException();
         }
