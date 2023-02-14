@@ -305,6 +305,7 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   <Button
                     type="button"
                     variant="danger"
+                    disabled
                     onClick={() => {
                       onClickDelete(id);
                     }}
@@ -314,7 +315,8 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   <Button
                     type="button"
                     variant="primary"
-                    disabled={!formik.isValid}
+                    // disabled={!formik.isValid}
+                    disabled
                     onClick={() => onClickUpdate(formik.values)}
                   >
                     Päivitä
@@ -332,7 +334,8 @@ const MittausForm = ({ mittaus }: { mittaus: MittausStore }) => {
                   </Button>
                   <Button
                     type="submit"
-                    disabled={formik.isSubmitting || !formik.isValid}
+                    // disabled={formik.isSubmitting || !formik.isValid}
+                    disabled
                   >
                     Lähetä
                   </Button>
